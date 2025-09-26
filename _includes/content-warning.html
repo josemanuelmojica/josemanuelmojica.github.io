@@ -1,0 +1,30 @@
+{% if page.cw %}
+<div class="content-warning">
+  <div class="content-warning-header">
+    <h3>⚠️ Content Warning</h3>
+    {% if page.cw_text %}
+    <p class="cw-description">{{ page.cw_text }}</p>
+    {% else %}
+    <p class="cw-description">This post contains content that may be sensitive or disturbing to some readers.</p>
+    {% endif %}
+  </div>
+  
+  <div class="content-warning-actions">
+    <button class="cw-show-content" onclick="showContent()" type="button">
+      Show Content
+    </button>
+    <a href="javascript:history.back()" class="cw-go-back">
+      Go Back
+    </a>
+  </div>
+  
+  <div class="content-warning-details">
+    <details>
+      <summary>Why content warnings?</summary>
+      <p>Content warnings help readers make informed decisions about what they consume. They're not censorship—they're consideration for the diverse experiences and sensitivities of readers.</p>
+    </details>
+  </div>
+</div>
+
+<div id="main-content" class="content-hidden">
+{% endif %}
