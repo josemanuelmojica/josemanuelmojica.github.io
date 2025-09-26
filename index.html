@@ -1,0 +1,294 @@
+---
+layout: splash
+title: "Personal Journal"
+excerpt: "A digital space for thoughts, reflections, and daily observations"
+intro:
+  - excerpt: 'Welcome to my personal journal. This is a space for exploring ideas, documenting experiences, and reflecting on the journey of life. Start with the [**Start Here**](/start-here/) page to learn more about how this journal is organized.'
+feature_row:
+  - image_path: /assets/images/essays-feature.jpg
+    alt: "Essays"
+    title: "Essays"
+    excerpt: "Longer-form explorations of ideas, experiences, and observations about life, society, and the human condition."
+    url: "/essays/"
+    btn_label: "Read Essays"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/daybook-feature.jpg
+    alt: "Daybook"
+    title: "Daybook"
+    excerpt: "Daily observations, brief thoughts, and moments worth capturing in this digital commonplace book."
+    url: "/daybook/"
+    btn_label: "Browse Daybook"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/letters-feature.jpg
+    alt: "Letters"
+    title: "Letters"
+    excerpt: "Correspondence and open letters - writings addressed to specific people, groups, or the world at large."
+    url: "/letters/"
+    btn_label: "Read Letters"
+    btn_class: "btn--primary"
+feature_row2:
+  - image_path: /assets/images/timeline-feature.jpg
+    alt: "Timeline"
+    title: "Timeline View"
+    excerpt: 'See how thoughts and ideas have evolved over time with a chronological view of all journal entries.'
+    url: "/timeline/"
+    btn_label: "View Timeline"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/topics-feature.jpg
+    alt: "Topics"
+    title: "Browse by Topic"
+    excerpt: "Explore content organized by themes and subjects for alternative navigation through the journal."
+    url: "/topics/"
+    btn_label: "Browse Topics"
+    btn_class: "btn--primary"
+  - image_path: /assets/images/about-feature.jpg
+    alt: "About"
+    title: "About This Journal"
+    excerpt: "Learn more about the philosophy, approach, and person behind this digital journal space."
+    url: "/about/"
+    btn_label: "Learn More"
+    btn_class: "btn--primary"
+---
+
+{% include feature_row id="intro" type="center" %}
+
+<div class="recent-entries">
+  <h2>Recent Entries</h2>
+  
+  {% assign all_posts = site.posts | concat: site.essays | concat: site.daybook | concat: site.letters %}
+  {% assign recent_posts = all_posts | sort: 'date' | reverse %}
+  
+  <div class="entries-grid">
+    {% for post in recent_posts limit: 6 %}
+    <article class="entry-card">
+      <header class="entry-header">
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <div class="entry-meta">
+          <span class="entry-date">{{ post.date | date: "%B %d, %Y" }}</span>
+          <span class="entry-type">{{ post.collection | capitalize | default: "Post" }}</span>
+          {% if post.cw %}
+          <span class="entry-cw">⚠️ CW</span>
+          {% endif %}
+        </div>
+      </header>
+      {% if post.excerpt %}
+      <div class="entry-excerpt">
+        {{ post.excerpt | strip_html | truncate: 150 }}
+      </div>
+      {% endif %}
+      {% if post.tags and post.tags.size > 0 %}
+      <div class="entry-tags">
+        {% for tag in post.tags limit: 3 %}
+        <span class="entry-tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  
+  {% if recent_posts.size == 0 %}
+  <div class="no-entries">
+    <p>Welcome to this new journal space. Content will appear here as thoughts and reflections are added.</p>
+    <p>Visit the <a href="/start-here/">Start Here</a> page to learn more about how this journal is organized.</p>
+  </div>
+  {% endif %}
+</div>
+
+{% include feature_row %}
+
+{% include feature_row id="feature_row2" %}
+
+<div class="journal-navigation">
+  <h2>Navigation</h2>
+  <div class="nav-grid">
+    <a href="/start-here/" class="nav-card">
+      <h3>🚀 Start Here</h3>
+      <p>New to this journal? Begin here to understand the structure and approach.</p>
+    </a>
+    <a href="/timeline/" class="nav-card">
+      <h3>📅 Timeline</h3>
+      <p>Browse entries chronologically to see the evolution of thoughts over time.</p>
+    </a>
+    <a href="/topics/" class="nav-card">
+      <h3>🏷️ Topics</h3>
+      <p>Explore content organized by themes and subjects of interest.</p>
+    </a>
+    <a href="/subscribe/" class="nav-card">
+      <h3>📡 Subscribe</h3>
+      <p>Stay updated with new entries through RSS feeds or GitHub notifications.</p>
+    </a>
+  </div>
+</div>
+
+<style>
+.recent-entries {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.recent-entries h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.entries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.entry-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.entry-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.entry-header h3 a {
+  color: #333;
+  text-decoration: none;
+}
+
+.entry-header h3 a:hover {
+  color: #007acc;
+}
+
+.entry-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.entry-type {
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.entry-cw {
+  background: #dc3545;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.entry-excerpt {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.entry-tag {
+  background: #007acc;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
+.no-entries {
+  text-align: center;
+  color: #666;
+  padding: 3rem 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.journal-navigation {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.journal-navigation h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.nav-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  transition: border-color 0.2s, transform 0.2s;
+  display: block;
+}
+
+.nav-card:hover {
+  border-color: #007acc;
+  transform: translateY(-1px);
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.nav-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .entries-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .entry-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .nav-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+</style>

@@ -1,0 +1,167 @@
+# Jekyll configuration for personal journal site
+# Using GitHub Pages supported plugins only
+
+# Site Settings
+title: "Personal Journal"
+name: "Jose Manuel Mojica"
+description: "A personal journal exploring thoughts, essays, and daily reflections"
+url: "https://josemanuelmojica.github.io"
+baseurl: ""
+repository: "josemanuelmojica/josemanuelmojica.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+# Theme - Using remote_theme for GitHub Pages compatibility
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+
+# GitHub Pages supported plugins only
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-include-cache
+  - jekyll-remote-theme
+
+# Pagination
+paginate: 5
+paginate_path: /page:num/
+
+# Collections
+collections:
+  essays:
+    output: true
+    permalink: /:collection/:name/
+  daybook:
+    output: true
+    permalink: /:collection/:name/
+  letters:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # _essays
+  - scope:
+      path: ""
+      type: essays
+    values:
+      layout: post
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # _daybook
+  - scope:
+      path: ""
+      type: daybook
+    values:
+      layout: post
+      author_profile: true
+      read_time: true
+      comments: false
+      share: false
+      related: false
+  # _letters
+  - scope:
+      path: ""
+      type: letters
+    values:
+      layout: post
+      author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+# Site Author
+author:
+  name: "Jose Manuel Mojica"
+  avatar: "/assets/images/bio-photo.jpg"
+  bio: "Writer, thinker, observer of life's small moments and grand themes."
+  location: ""
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/josemanuelmojica"
+
+# Site Footer
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/josemanuelmojica"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - Rakefile
+  - README
+  - tmp
+  - /docs
+  - /test
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# HTML Compression
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+# Navigation - Add this to _data/navigation.yml instead
+
+# Analytics (optional - uncomment and configure if needed)
+# analytics:
+#   provider: "google"
+#   google:
+#     tracking_id: "UA-XXXXXXXX-X"
