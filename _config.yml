@@ -158,24 +158,7 @@ compress_html:
   ignore:
     envs: development
 
-# Navigation
-main_nav:
-  - title: "Start Here"
-    url: /start-here/
-  - title: "Essays"
-    url: /essays/
-  - title: "Daybook"
-    url: /daybook/
-  - title: "Letters"
-    url: /letters/
-  - title: "Timeline"
-    url: /timeline/
-  - title: "Topics"
-    url: /topics/
-  - title: "About"
-    url: /about/
-  - title: "Subscribe"
-    url: /subscribe/
+# Navigation - Add this to _data/navigation.yml instead
 
 # Analytics (optional - uncomment and configure if needed)
 # analytics:
