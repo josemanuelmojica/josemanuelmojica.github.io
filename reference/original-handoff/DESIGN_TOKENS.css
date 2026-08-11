@@ -1,0 +1,36 @@
+:root {
+  --paper: #faf8f5;
+  --wash: #e8e4e0;
+  --ash: #b8b8b8;
+  --graphite: #4a4a4a;
+  --ink: #2c2c2c;
+  --vermilion: #8b2500;
+
+  --display: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+  --body: Inter, "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+  --utility: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+
+  --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
+  --rule: color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+html { color: var(--ink); background: var(--paper); }
+body { margin: 0; overflow-x: clip; font-family: var(--body); }
+::selection { color: var(--paper); background: var(--vermilion); }
+
+/* Keep the paper texture nearly invisible; the maps remain the subject. */
+.paper-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: repeating-linear-gradient(87deg, transparent 0 7px, var(--ink) 8px 8.5px);
+  mix-blend-mode: multiply;
+}

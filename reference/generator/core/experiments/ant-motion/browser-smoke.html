@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Ant motion browser smoke test</title>
+<div id="result" data-status="running">RUNNING</div>
+<div id="stage"></div>
+<script type="module">
+  import { processMap } from "../../packages/map-pieces/src/index.js";
+  import { AntSequence, RingFormation } from "../../packages/map-motion/src/index.js";
+
+  const output = document.querySelector("#result");
+  let sequence;
+  let queuedFrames = [];
+  let frameTime = 0;
+  window.requestAnimationFrame = (callback) => { queuedFrames.push(callback); return queuedFrames.length; };
+  window.cancelAnimationFrame = () => {};
+  const framePump = setInterval(() => {
+    const current = queuedFrames;
+    queuedFrames = [];
+    frameTime += 16.667;
+    for (const callback of current) callback(frameTime);
+  }, 0);
+  const watchdog = setTimeout(() => {
+    output.dataset.status = "failed";
+    output.textContent = `FAILED timeout state=${sequence?.state} animations=${sequence?.engine.animations.size}`;
+  }, 3000);
+  try {
+    const source = await (await fetch("../map-source/sf-vector-test.svg")).text();
+    const processed = processMap(source);
+    document.querySelector("#stage").innerHTML = processed.processedSvg;
+    const root = document.querySelector("svg");
+    const frames = [];
+    sequence = new AntSequence(processed.pieces, {
+      root,
+      onFrame: ({ timestamp, activeCount }) => frames.push([timestamp, activeCount]),
+    });
+    await sequence.start({
+      count: 200,
+      strategy: "chain",
+      formation: new RingFormation(),
+      stagger: 0,
+      staggerJitter: 0,
+      duration: 180,
+      durationJitter: 0,
+      autoReturn: false,
+    });
+    await sequence.returnHome({ duration: 180 });
+    const selected = sequence.activePieces;
+    const returned = selected.every((piece) => root.querySelector(piece.element).getAttribute("transform") === "");
+    sequence.reset();
+    const reset = processed.pieces.every((piece) => root.querySelector(piece.element).getAttribute("transform") === "");
+    const maxActive = Math.max(...frames.map(([, active]) => active));
+    if (!returned || !reset || maxActive < 20) throw new Error(`return=${returned} reset=${reset} maxActive=${maxActive}`);
+    output.dataset.status = "passed";
+    output.textContent = `PASSED pieces=${processed.pieces.length} selected=200 maxActive=${maxActive} frames=${frames.length}`;
+    clearTimeout(watchdog);
+    clearInterval(framePump);
+  } catch (error) {
+    output.dataset.status = "failed";
+    output.textContent = `FAILED ${error.stack ?? error}`;
+    clearInterval(framePump);
+  }
+</script>

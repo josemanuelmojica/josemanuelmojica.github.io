@@ -1,0 +1,18 @@
+{
+  "name": "maptoposter-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": ["web", "packages/*"],
+  "scripts": {
+    "build": "npm --workspace web run build",
+    "dev": "npm --workspace web run dev",
+    "server": "node server/index.js",
+    "test": "node --test packages/map-pieces/test/*.test.js packages/map-motion/test/*.test.js server/test/*.test.js web/test/*.test.js",
+    "build:motion-asset": "npm --workspace @maptoposter/map-pieces run build:motion-asset",
+    "build:city-collection": "node scripts/build-city-collection.js",
+    "build:japanese-ink-scroll": "node scripts/build-japanese-ink-scroll.js",
+    "render:japanese-ink-scroll": "node scripts/render-japanese-ink-scroll-assets.js",
+    "pack:japanese-ink-scroll": "node scripts/build-sites-asset-pack.js",
+    "package:japanese-ink-sites": "node scripts/package-japanese-ink-sites-assets.js"
+  }
+}

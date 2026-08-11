@@ -1,0 +1,104 @@
+{
+  "collection": "Street Choreographies / Volume 01",
+  "visibleLabels": false,
+  "candidateLimit": 3000,
+  "activePieceDefault": 120,
+  "studies": [
+    {
+      "id": "study-01",
+      "city": "San Francisco",
+      "state": "CA",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "radius": 10000,
+      "theme": "sunset",
+      "formation": "ring",
+      "propagation": "chain",
+      "artDirection": "Fog-soft coral lines, pale bay, and a measured ring drawn from the peninsula grid."
+    },
+    {
+      "id": "study-02",
+      "city": "San Diego",
+      "state": "CA",
+      "latitude": 32.7157,
+      "longitude": -117.1611,
+      "radius": 12000,
+      "theme": "ocean",
+      "formation": "spiral",
+      "propagation": "streams",
+      "artDirection": "Salt blue layers with the bay held quiet and coastal roads moving like a current."
+    },
+    {
+      "id": "study-03",
+      "city": "Portland",
+      "state": "OR",
+      "latitude": 45.5051,
+      "longitude": -122.675,
+      "radius": 12000,
+      "theme": "emerald",
+      "formation": "ring",
+      "propagation": "wave",
+      "artDirection": "Deep evergreen field, mint road hierarchy, and a bridge-led wave across the river."
+    },
+    {
+      "id": "study-04",
+      "city": "New York City",
+      "state": "NY",
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "radius": 18000,
+      "theme": "japanese_ink",
+      "formation": "spiral",
+      "propagation": "wave",
+      "artDirection": "Paper-white ground, compressed black grids, and restrained rust-red arterial marks."
+    },
+    {
+      "id": "study-05",
+      "city": "Austin",
+      "state": "TX",
+      "latitude": 30.2672,
+      "longitude": -97.7431,
+      "radius": 10000,
+      "theme": "terracotta",
+      "formation": "spiral",
+      "propagation": "chain",
+      "artDirection": "Clay and limestone tones with movement that follows the river bend before coiling."
+    },
+    {
+      "id": "study-06",
+      "city": "Chicago",
+      "state": "IL",
+      "latitude": 41.8781,
+      "longitude": -87.6298,
+      "radius": 15000,
+      "theme": "blueprint",
+      "formation": "ring",
+      "propagation": "wave",
+      "artDirection": "Architectural navy, ice-blue orthogonal streets, and a precise lakefront radial."
+    },
+    {
+      "id": "study-07",
+      "city": "Minneapolis",
+      "state": "MN",
+      "latitude": 44.9778,
+      "longitude": -93.265,
+      "radius": 13000,
+      "theme": "copper_patina",
+      "formation": "spiral",
+      "propagation": "streams",
+      "artDirection": "Oxidized teal and copper with lake gaps acting as deliberate pauses in the grid."
+    },
+    {
+      "id": "study-08",
+      "city": "Charlotte",
+      "state": "NC",
+      "latitude": 35.2271,
+      "longitude": -80.8431,
+      "radius": 10000,
+      "theme": "warm_beige",
+      "formation": "ring",
+      "propagation": "streams",
+      "artDirection": "Warm paper and tobacco-brown radial roads, with the center gathering into a restrained orbit."
+    }
+  ]
+}

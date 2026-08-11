@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Map pieces — ant motion experiment</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-theme="emerald">
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">VECTOR MOTION STUDY / 01</p>
+          <h1>The map leaves in pieces.</h1>
+          <p class="lede">Actual street geometry detaches, follows its neighbors, forms, and returns.</p>
+        </div>
+        <div class="telemetry" aria-live="polite">
+          <span><b id="piece-count">—</b> PIECES</span>
+          <span><b id="active-count">0</b> ACTIVE</span>
+          <span><b id="fps">—</b> FPS</span>
+          <span><b id="state">LOADING</b></span>
+        </div>
+      </header>
+
+      <section class="stage" id="stage" aria-label="Animated vector map"></section>
+
+      <section class="controls" aria-label="Animation controls">
+        <div class="control-group">
+          <span class="label">Propagation</span>
+          <label><input type="radio" name="strategy" value="chain" checked /> Chain</label>
+          <label><input type="radio" name="strategy" value="wave" /> Wave</label>
+          <label><input type="radio" name="strategy" value="streams" /> Streams</label>
+        </div>
+        <div class="control-group">
+          <span class="label">Formation</span>
+          <label><input type="radio" name="formation" value="ring" checked /> Ring</label>
+          <label><input type="radio" name="formation" value="spiral" /> Spiral</label>
+        </div>
+        <div class="control-group count-control">
+          <label class="label" for="count">Moving pieces <output id="count-output">120</output></label>
+          <input id="count" type="range" min="20" max="1000" value="120" step="10" />
+        </div>
+        <div class="buttons">
+          <button class="primary" id="start">March</button>
+          <button id="pause">Pause</button>
+          <button id="home">Return</button>
+          <button id="reset">Reset</button>
+        </div>
+      </section>
+
+      <section class="themes" aria-label="Visual treatments">
+        <span class="label">Text-free treatments</span>
+        <button data-palette="emerald" class="swatch emerald" aria-label="Emerald"></button>
+        <button data-palette="forest" class="swatch forest" aria-label="Forest"></button>
+        <button data-palette="ink" class="swatch ink" aria-label="Ink"></button>
+        <button data-palette="sand" class="swatch sand" aria-label="Sand"></button>
+        <button data-palette="sunset" class="swatch sunset" aria-label="Sunset"></button>
+        <button data-palette="contrast" class="swatch contrast" aria-label="Contrast"></button>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

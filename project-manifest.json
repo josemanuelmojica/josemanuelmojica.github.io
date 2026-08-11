@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "name": "Arχ & Teχt",
+  "updated": "2026-08-10",
+  "status": "local-handoff-ready",
+  "claudeEntry": "CLAUDE.md",
+  "repository": {
+    "branch": "main",
+    "remoteConfigured": false,
+    "published": false,
+    "productionDeployed": false
+  },
+  "runtime": {
+    "framework": "Next.js",
+    "nextVersion": "16.2.6",
+    "reactVersion": "19.2.6",
+    "typescriptVersion": "5.9.3",
+    "node": ">=22.13.0",
+    "rendering": "static-export",
+    "outputDirectory": "out"
+  },
+  "commands": {
+    "install": "npm ci",
+    "development": "npm run dev",
+    "typecheck": "npm run typecheck",
+    "verify": "npm test",
+    "generateStateArt": "npm run generate:state-art",
+    "checkStateArt": "npm run check:state-art"
+  },
+  "routes": [
+    "/",
+    "/previews/",
+    "/previews/datum-rail/",
+    "/previews/plan-legend/",
+    "/previews/compass/",
+    "/previews/sheet-tabs/"
+  ],
+  "brand": {
+    "displayName": "Arχ & Teχt",
+    "chiIsGreek": true,
+    "line": "Be drawn to where you live.",
+    "wordmarkAsset": "public/brand/ark-and-text-source.png",
+    "retypesetAllowed": false
+  },
+  "marketStory": {
+    "endlessScroll": true,
+    "ctaWidth": "100vw",
+    "ctaMinimumHeightPx": 48,
+    "iframeAllowed": false,
+    "automaticArtReveal": false,
+    "artRevealInputs": ["mouse-hover", "keyboard-focus"],
+    "artStatus": "css-placeholder-awaiting-user-art",
+    "markets": [
+      {"id":"study-01","city":"San Francisco","state":"CA","subarea":"Pacific Heights"},
+      {"id":"study-02","city":"San Diego","state":"CA","subarea":"La Jolla"},
+      {"id":"study-03","city":"Portland","state":"OR","subarea":"West Hills"},
+      {"id":"study-04","city":"New York City","state":"NY","subarea":"Tribeca"},
+      {"id":"study-05","city":"Austin","state":"TX","subarea":"West Lake Hills"},
+      {"id":"study-06","city":"Chicago","state":"IL","subarea":"Gold Coast"},
+      {"id":"study-07","city":"Minneapolis","state":"MN","subarea":"Lake of the Isles"},
+      {"id":"study-08","city":"Charlotte","state":"NC","subarea":"Myers Park"}
+    ]
+  },
+  "stateArtCorpus": {
+    "name": "Quiet Watersheds",
+    "corpusVersion": "2026-08-10.1",
+    "status": "asset-corpus-only",
+    "manifest": "public/maps/us-state-studies/v1/manifest.json",
+    "assetDirectory": "public/maps/us-state-studies/v1/states",
+    "fallback": "public/maps/us-state-studies/v1/fallback/unresolved.svg",
+    "stateCount": 50,
+    "svgCount": 50,
+    "webpCount": 50,
+    "declaredAssetBytes": 3250794,
+    "declaredAssetMiB": 3.10,
+    "directoryApproxMb": 3.3,
+    "generator": "scripts/state-ink/generate_state_ink_maps.py",
+    "requirements": "scripts/state-ink/requirements.txt",
+    "source": {
+      "dataset": "Natural Earth 1:10m admin-1 states/provinces and rivers/lake centerlines",
+      "commit": "ca96624a56bd078437bca8184e78163e5039ad19",
+      "path": "reference/geodata/natural-earth",
+      "files": [
+        "reference/geodata/natural-earth/ne_10m_admin_1_states_provinces.geojson",
+        "reference/geodata/natural-earth/ne_10m_rivers_lake_centerlines.geojson"
+      ],
+      "license": "public domain"
+    },
+    "reviewArtifacts": "reference/state-art-corpus/v1",
+    "boiseAsset": {
+      "id": "US-ID",
+      "ready": true
+    },
+    "statesWithoutRecordedNaturalEarthRivers": ["US-DE", "US-HI", "US-RI"],
+    "atlasUiImplemented": false,
+    "leadFormImplemented": false
+  },
+  "referenceArchive": {
+    "originalHandoff": "reference/original-handoff",
+    "fullMapAssets": "reference/generator/full-map-assets",
+    "posterIterations": "reference/generator/posters",
+    "generatorAndMotionLibraries": "reference/generator/core",
+    "previousSite": "reference/previous-site",
+    "userScreenshots": "reference/iteration-screenshots",
+    "naturalEarthSources": "reference/geodata/natural-earth",
+    "stateArtReview": "reference/state-art-corpus/v1",
+    "designLineage": "docs/DESIGN_LINEAGE.md",
+    "decisionLog": "docs/DECISION_LOG.md"
+  },
+  "futureConcepts": [
+    {
+      "id": "lead-capture-map-interview",
+      "spec": "docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md",
+      "implemented": false,
+      "acceptanceExample": "looking/selling in Boise -> Idaho state visual"
+    }
+  ],
+  "integrations": {
+    "realScoutWidgetInstalled": false,
+    "realScoutResourceLinksVerified": false,
+    "appwriteCredentialsPresent": false,
+    "appwriteConfiguredExternally": false
+  },
+  "deployment": {
+    "appwrite": "docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md",
+    "githubPagesWorkflow": ".github/workflows/pages.yml",
+    "basePathHelper": "app/lib/publicPath.ts"
+  }
+}

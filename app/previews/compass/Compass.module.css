@@ -1,0 +1,379 @@
+.header {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 6.6rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8vw;
+  border-bottom: 1px solid color-mix(in srgb, var(--plan-ink) 32%, transparent);
+  background: color-mix(in srgb, var(--plan-paper) 82%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: block;
+  text-decoration: none;
+}
+
+.brand:focus-visible,
+.radialNav a:focus-visible,
+.trigger:focus-visible {
+  outline: 2px solid var(--plan-blue);
+  outline-offset: 5px;
+}
+
+.headerNote {
+  display: flex;
+  gap: 2rem;
+  color: var(--plan-blue-deep);
+  font: 650 0.56rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scrim {
+  position: fixed;
+  z-index: 35;
+  inset: 0;
+  pointer-events: none;
+  background: rgb(6 54 87 / 0%);
+  transition: background-color 300ms ease;
+}
+
+.scrimOpen {
+  pointer-events: auto;
+  background: rgb(6 54 87 / 16%);
+}
+
+.compassDock {
+  --instrument-size: clamp(10.5rem, 15vw, 13rem);
+  position: fixed;
+  z-index: 50;
+  top: 50%;
+  right: clamp(1.5rem, 4vw, 4rem);
+  width: var(--instrument-size);
+  height: var(--instrument-size);
+  border: 1px solid var(--plan-ink);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 31%, color-mix(in srgb, var(--plan-blue) 13%, transparent) 31.5% 32%, transparent 32.5%),
+    color-mix(in srgb, var(--plan-paper) 88%, transparent);
+  box-shadow: 0 1.2rem 4rem rgb(6 54 87 / 14%);
+  transform: translateY(-50%);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1), height 420ms cubic-bezier(0.22, 1, 0.36, 1), background-color 250ms ease;
+  backdrop-filter: blur(16px);
+}
+
+.compassDock::before,
+.compassDock::after {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  background: color-mix(in srgb, var(--plan-ink) 50%, transparent);
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.compassDock::before {
+  width: calc(100% + 3rem);
+  height: 1px;
+}
+
+.compassDock::after {
+  width: 1px;
+  height: calc(100% + 3rem);
+}
+
+.isOpen {
+  --instrument-size: min(31rem, calc(100vw - 3rem));
+  background-color: rgb(251 252 252 / 96%);
+}
+
+.dockLabel {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  width: 10rem;
+  margin: 0;
+  color: var(--plan-blue-deep);
+  font: 650 0.54rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.instrument {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid color-mix(in srgb, var(--plan-blue) 55%, transparent);
+  border-radius: 50%;
+}
+
+.axisNorth,
+.axisEast,
+.axisSouth,
+.axisWest {
+  position: absolute;
+  color: var(--plan-blue-deep);
+  font: 700 0.55rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.axisNorth,
+.axisSouth {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.axisEast,
+.axisWest {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.axisNorth { top: 0.55rem; }
+.axisEast { right: 0.55rem; }
+.axisSouth { bottom: 0.55rem; }
+.axisWest { left: 0.55rem; }
+
+.needle {
+  position: absolute;
+  top: 18%;
+  bottom: 18%;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(var(--plan-blue) 0 50%, var(--plan-ink) 50% 100%);
+  transform: rotate(28deg);
+}
+
+.needle::before {
+  position: absolute;
+  top: -0.25rem;
+  left: -0.2rem;
+  width: 0;
+  height: 0;
+  border-right: 0.22rem solid transparent;
+  border-bottom: 0.5rem solid var(--plan-blue);
+  border-left: 0.22rem solid transparent;
+  content: "";
+}
+
+.centerMark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--plan-blue-deep);
+  border-radius: 50%;
+  background: var(--plan-paper);
+  transform: translate(-50%, -50%);
+}
+
+.trigger {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 4.85rem;
+  height: 4.85rem;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--plan-blue-deep);
+  border-radius: 50%;
+  background: var(--plan-paper);
+  color: var(--plan-blue-deep);
+  transform: translate(-50%, -50%);
+}
+
+.trigger span {
+  margin-bottom: -0.7rem;
+  font: 300 1.25rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.trigger strong {
+  font: 700 0.45rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.trigger:hover {
+  background: var(--plan-blue-deep);
+  color: white;
+}
+
+.radialNav,
+.radialNav ol {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.radialNav[hidden] {
+  display: none;
+}
+
+.radialNav ol {
+  list-style: none;
+}
+
+.radialNav li {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7.9rem;
+  transform: translate(-50%, -50%) rotate(var(--bearing)) translateY(calc(var(--instrument-size) * -0.37)) rotate(var(--counter-bearing));
+  animation: plot-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.radialNav a {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid var(--plan-ink);
+  background: var(--plan-paper);
+  text-align: center;
+  text-decoration: none;
+}
+
+.radialNav a:hover,
+.radialNav a:focus-visible {
+  background: var(--plan-blue-deep);
+  color: white;
+}
+
+.radialNav span {
+  font: 650 0.46rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.12em;
+}
+
+.radialNav strong {
+  font: 500 0.82rem/1 "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+}
+
+.coordinateCard {
+  position: absolute;
+  z-index: 3;
+  top: 8.8rem;
+  right: 8vw;
+  display: grid;
+  width: 13rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.45rem 1rem;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--plan-ink) 42%, transparent);
+  background: color-mix(in srgb, var(--plan-paper) 86%, transparent);
+  font: 600 0.5rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.coordinateCard strong {
+  color: var(--plan-blue);
+  text-align: right;
+}
+
+.coordinateCard small {
+  grid-column: 1 / -1;
+  color: color-mix(in srgb, var(--plan-ink) 67%, transparent);
+  font-size: 0.48rem;
+  letter-spacing: 0.06em;
+}
+
+@keyframes plot-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--bearing)) translateY(calc(var(--instrument-size) * -0.2)) rotate(var(--counter-bearing));
+  }
+}
+
+@media (max-width: 760px) {
+  .header {
+    height: 5.8rem;
+    padding: 0 1.25rem;
+  }
+
+  .headerNote {
+    display: none;
+  }
+
+  .coordinateCard {
+    display: none;
+  }
+
+  .compassDock {
+    top: auto;
+    right: 1.25rem;
+    bottom: 5.5rem;
+    transform: none;
+  }
+
+  .isOpen {
+    --instrument-size: calc(100vw - 2.5rem);
+    border-radius: 0;
+  }
+
+  .isOpen::before,
+  .isOpen::after,
+  .isOpen .instrument {
+    display: none;
+  }
+
+  .isOpen .trigger {
+    top: auto;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    left: auto;
+    width: 3.9rem;
+    height: 3.9rem;
+    transform: none;
+  }
+
+  .isOpen .radialNav,
+  .isOpen .radialNav ol {
+    position: static;
+  }
+
+  .isOpen .radialNav ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    padding: 1rem 1rem 5.4rem;
+  }
+
+  .isOpen .radialNav li {
+    position: static;
+    width: auto;
+    transform: none;
+    animation-name: fade-in;
+  }
+
+  .isOpen .radialNav a {
+    min-height: 4.2rem;
+    align-content: center;
+  }
+
+  .dockLabel {
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .compassDock,
+  .radialNav li {
+    transition: none;
+    animation: none;
+  }
+}

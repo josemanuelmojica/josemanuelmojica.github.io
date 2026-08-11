@@ -1,0 +1,151 @@
+id,place,state,lat,lon,radius_m,theme,interaction,terrain_note
+1,San Francisco,CA,37.7749,-122.4194,10000,sunset,formation,bay peninsula, hills, bridges
+2,San Jose,CA,37.3382,-121.8863,8000,blueprint,swarm,silicon valley grid
+3,Oakland,CA,37.8044,-122.2711,7000,midnight_blue,dissolve,bay + industrial waterfront
+4,Los Angeles,CA,34.0522,-118.2437,15000,neon_cyberpunk,swarm,coastal metro with freeways
+5,Long Beach,CA,33.7701,-118.1937,8000,ocean,formation,harbor & shoreline
+6,Santa Monica,CA,34.0195,-118.4912,5000,coastal,spiral,beachfront grid
+7,Malibu,CA,34.0259,-118.7798,7000,sunset,dissolve,coastal cliffs
+8,Pasadena,CA,34.1478,-118.1445,6000,terracotta,formation,radial boulevards
+9,Palmdale,CA,34.5794,-118.1165,12000,monochrome_blue,swarm,desert-adjacent sprawl
+10,Palm Springs,CA,33.8303,-116.5453,10000,desert,relax,desert resort grid
+11,San Diego,CA,32.7157,-117.1611,12000,ocean,formation,coastal bay + beaches
+12,La Jolla,CA,32.8328,-117.2713,6000,ocean,dissolve,rocky coastline
+13,Monterey,CA,36.6002,-121.8947,8000,blueprint,formation,coastal peninsula & bay
+14,Big Sur,CA,36.2704,-121.8081,15000,pastel_dream,swarm,dramatic coastline (cliffs)
+15,Santa Cruz,CA,36.9741,-122.0308,8000,forest,formation,coastal + hills
+16,Sacramento,CA,38.5816,-121.4944,12000,warm_beige,swarm,river confluence & grid
+17,Redding,CA,40.5865,-122.3917,20000,emerald,dissolve,river + mountainous north
+18,Truckee,CA,39.3270,-120.1833,10000,autumn,formation,mountain gateway near Tahoe
+19,South Lake Tahoe,CA,38.9351,-119.9823,10000,forest,formation,lake + mountain
+20,Yosemite (near),CA,37.8651,-119.5383,15000,forest,spiral,national park granite valleys
+21,Los Angeles County — Hollywood,CA,34.0928,-118.3287,6000,neon_cyberpunk,swarm,urban entertainment district
+22,San Bernardino,CA,34.1083,-117.2898,15000,monochrome_blue,dissolve,inland valley sprawl
+23,Palos Verdes,CA,33.7446,-118.3870,7000,ocean,formation,coastal promontory
+24,Santa Barbara,CA,34.4208,-119.6982,9000,terracotta,formation,coastal + mountains
+25,Santa Fe,NM,35.6870,-105.9378,8000,terracotta,dissolve,high-desert + pueblos
+26,Albuquerque,NM,35.0844,-106.6504,12000,contrast_zones,swarm,desert basin + grid
+27,Taos,NM,36.4072,-105.5731,8000,autumn,formation,mountain town
+28,Tucson,AZ,32.2226,-110.9747,12000,desert,swarm,sonoran desert + grid
+29,Phoenix,AZ,33.4484,-112.0740,15000,sunrise,swarm,desert metro
+30,Scottsdale,AZ,33.4942,-111.9261,10000,warm_beige,formation,resort suburbs
+31,Flagstaff,AZ,35.1983,-111.6513,10000,forest,formation,pine forests + high desert
+32,Grand Canyon (South Rim),AZ,36.1069,-112.1129,20000,blueprint,dissolve,canyon terrain
+33,Las Vegas,NV,36.1699,-115.1398,15000,neon_cyberpunk,swarm,strip & desert
+34,Reno,NV,39.5296,-119.8138,10000,monochrome_blue,formation,mountain basin
+35,Sparks,NV,39.5406,-119.6830,8000,blueprint,swarm,riverfront + grid
+36,Boise,ID,43.6150,-116.2023,12000,forest,formation,river valley & hills
+37,Portland,OR,45.5051,-122.6750,12000,emerald,formation,river confluence & bridges
+38,Salem,OR,44.9429,-123.0351,10000,warm_beige,swarm,agriculture + small city
+39,Eugene,OR,44.0521,-123.0868,8000,forest,dissolve,river valley + universities
+40,Coos Bay,OR,43.3665,-124.2179,10000,ocean,formation,coastal estuary
+41,Seattle,WA,47.6062,-122.3321,12000,midnight_blue,swarm,peninsula & waterways
+42,Spokane,WA,47.6588,-117.4260,12000,forest,formation,river + inland city
+43,Wenatchee,WA,47.4235,-120.3103,8000,autumn,formation,apple orchards + river
+44,Olympia,WA,47.0379,-122.9007,8000,ocean,formation,capitol + harbor
+45,Friday Harbor (San Juan Is.),WA,48.5458,-123.0126,6000,ocean,dissolve,islands & channels
+46,Anchorage,AK,61.2181,-149.9003,20000,monochrome_blue,formation,coastal + mountains
+47,Juneau,AK,58.3019,-134.4197,15000,ocean,dissolve,coastal fjords
+48,Fairbanks,AK,64.8378,-147.7164,20000,autumn,formation,interior arctic environments
+49,Honolulu,HI,21.3069,-157.8583,10000,ocean,formation,tropical island city
+50,Hilo,HI,19.7071,-155.0888,8000,forest,dissolve,volcanic island east coast
+51,Kahului (Maui),HI,20.8987,-156.5111,8000,pastel_dream,formation,island town & coast
+52,Miami,FL,25.7617,-80.1918,12000,neon_cyberpunk,swarm,coastal + barrier islands
+53,Key West,FL,24.5551,-81.7800,6000,ocean,dissolve,island end-of-road
+54,West Palm Beach,FL,26.7153,-80.0534,8000,sunset,formation,coastal metro
+55,Ft. Lauderdale,FL,26.1224,-80.1373,8000,neon_cyberpunk,formation,waterways & canals
+56,Tampa,FL,27.9506,-82.4572,10000,ocean,swarm,bay & estuary
+57,St. Petersburg,FL,27.7676,-82.6403,10000,ocean,formation,peninsula beaches
+58,Sarasota,FL,27.3364,-82.5307,8000,terracotta,dissolve,coastal & barrier islands
+59,Naples,FL,26.1420,-81.7948,8000,warm_beige,relax,coastal estuary
+60,Orlando,FL,28.5383,-81.3792,10000,pastel_dream,formation,theme-park dominated sprawl
+61,Jacksonville,FL,30.3322,-81.6557,15000,contrast_zones,swarm,river & coastline
+62,Mobile,AL,30.6954,-88.0399,10000,ocean,dissolve,port + bay
+63,Biloxi,MS,30.3960,-88.8853,8000,ocean,formation,gulf coast
+64,New Orleans,LA,29.9511,-90.0715,12000,noir,dissolve,river delta & canals
+65,Baton Rouge,LA,30.4515,-91.1871,10000,contrast_zones,formation,river & state capital
+66,Houston,TX,29.7604,-95.3698,15000,contrast_zones,swarm,huge metro + bayous
+67,Galveston,TX,29.3013,-94.7977,8000,ocean,dissolve,barrier island
+68,Austin,TX,30.2672,-97.7431,10000,terracotta,formation,lake & hill country
+69,San Antonio,TX,29.4241,-98.4936,12000,warm_beige,formation,riverwalk + historic core
+70,Dallas,TX,32.7767,-96.7970,15000,noir,swarm,urban grid + highways
+71,Fort Worth,TX,32.7555,-97.3308,12000,warm_beige,formation,western + cultural core
+72,Arlington,TX,32.7357,-97.1081,10000,blueprint,swarm,stadiums & suburbs
+73,El Paso,TX,31.7619,-106.4850,15000,desert,dissolve,borderland desert city
+74,Amarillo,TX,35.2220,-101.8313,20000,monochrome_blue,dissolve,plains + grid
+75,Lubbock,TX,33.5779,-101.8552,20000,warm_beige,formation,plains college town
+76,Corpus Christi,TX,27.8006,-97.3964,10000,ocean,formation,coastal bay & port
+77,Ft. Myers,FL,26.6406,-81.8723,8000,sunset,relax,coastal estuary
+78,Charleston,SC,32.7765,-79.9311,8000,terracotta,dissolve,historic port & waterways
+79,Beaufort,SC,32.4313,-80.6690,6000,terracotta,formation,coastal marsh town
+80,Hilton Head,SC,32.2163,-80.7526,8000,ocean,relax,island resort
+81,Savannah,GA,32.0809,-81.0912,8000,warm_beige,formation,historic river port
+82,Augusta,GA,33.4735,-82.0105,10000,contrast_zones,swarm,river & green corridors
+83,Atlanta,GA,33.7490,-84.3880,15000,contrast_zones,swarm,hub + highways
+84,Greenville,SC,34.8526,-82.3940,8000,forest,formation,hilly small metro
+85,Asheville,NC,35.5951,-82.5515,10000,forest,formation,blue ridge mountains
+86,Charlotte,NC,35.2271,-80.8431,15000,warm_beige,swarm,banking hub + grid
+87,Raleigh,NC,35.7796,-78.6382,12000,pastel_dream,formation,research triangle
+88,Durham,NC,35.9940,-78.8986,8000,pastel_dream,formation,university town
+89,Greensboro,NC,36.0726,-79.7920,10000,warm_beige,swarm,textile-era grid
+90,Richmond,VA,37.5407,-77.4360,12000,blueprint,formation,river meanders
+91,Alexandria,VA,38.8048,-77.0469,6000,blueprint,dissolve,historic riverfront
+92,Washington,DC,38.9072,-77.0369,12000,noir,formation,civic grid & monuments
+93,Baltimore,MD,39.2904,-76.6122,10000,contrast_zones,swarm,harbor & industrial
+94,Annapolis,MD,38.9784,-76.4922,6000,blueprint,formation,waterfront & marinas
+95,Philadelphia,PA,39.9526,-75.1652,15000,noir,swarm,colonial grid + river
+96,Pittsburgh,PA,40.4406,-79.9959,10000,midnight_blue,formation,river confluence & hills
+97,Cleveland,OH,41.4993,-81.6944,10000,emerald,formation,lakefront + industrial
+98,Columbus,OH,39.9612,-82.9988,12000,warm_beige,swarm,state capital & grid
+99,Cincinnati,OH,39.1031,-84.5120,10000,blueprint,formation,riverbend historic core
+100,Louisville,KY,38.2527,-85.7585,10000,terracotta,formation,river + bourbon region
+101,Nashville,TN,36.1627,-86.7816,12000,neon_cyberpunk,formation,music city grid
+102,Memphis,TN,35.1495,-90.0490,12000,monochrome_blue,swarm,riverport + blues heritage
+103,Little Rock,AR,34.7465,-92.2896,10000,warm_beige,formation,river & capital
+104,Jackson,MS,32.2988,-90.1848,12000,terracotta,swarm,capital + piney forest
+105,Milwaukee,WI,43.0389,-87.9065,10000,blueprint,formation,lakefront + brewing heritage
+106,Madison,WI,43.0731,-89.4012,8000,emerald,formation,lakes & capital
+107,Chicago,IL,41.8781,-87.6298,15000,noir,swarm,lakefront & grid
+108,Rockford,IL,42.2711,-89.0937,10000,warm_beige,formation,river + manufacturing
+109,Peoria,IL,40.6936,-89.5889,12000,blueprint,swarm,river & midwest town
+110,Indianapolis,IN,39.7684,-86.1581,15000,contrast_zones,swarm,loop road grid
+111,Fort Wayne,IN,41.0793,-85.1394,10000,warm_beige,formation,river city
+112,South Bend,IN,41.6764,-86.2520,10000,blueprint,formation,industrial+river
+113,Lansing,MI,42.7325,-84.5555,10000,warm_beige,formation,capital + river
+114,Detroit,MI,42.3314,-83.0458,15000,noir,swarm,lakefront + industrial
+115,Ann Arbor,MI,42.2808,-83.7430,8000,pastel_dream,formation,university town
+116,Traverse City,MI,44.7631,-85.6206,10000,ocean,formation,lakefront + dunes
+117,Marquette,MI,46.5448,-87.3954,15000,monochrome_blue,dissolve,Great Lakes upper peninsula coast
+118,Burlington,VT,44.4759,-73.2121,8000,emerald,formation,lake champlain shore
+119,Montpelier,VT,44.2601,-72.5754,6000,warm_beige,formation,small capital
+120,Stowe,VT,44.4654,-72.6874,10000,autumn,formation,ski town + mountains
+121,Portland,ME,43.6591,-70.2568,8000,ocean,formation,harbor & islands
+122,Bar Harbor,ME,44.3876,-68.2039,10000,ocean,dissolve,coastal national park gateway
+123,Provincetown,MA,42.0584,-70.1783,6000,ocean,formation,cape end-point
+124,Boston,MA,42.3601,-71.0589,12000,noir,swarm,harbor & historical grid
+125,Salem,MA,42.5195,-70.8967,6000,terracotta,formation,coastal history
+126,Newport,RI,41.4901,-71.3128,6000,ocean,formation,yacht harbor & coast
+127,Providence,RI,41.8240,-71.4128,8000,blueprint,swarm,river + industrial
+128,Syracuse,NY,43.0481,-76.1474,10000,warm_beige,formation,Great Lakes hinterland
+129,Buffalo,NY,42.8864,-78.8784,10000,monochrome_blue,formation,lakefront + industrial
+130,Rochester,NY,43.1566,-77.6088,10000,warm_beige,formation,river & lake
+131,Ithaca,NY,42.4430,-76.5019,8000,forest,formation,college town + gorges
+132,Hudson,NY,42.2529,-73.7901,6000,terracotta,dissolve,river valley small city
+133,Albany,NY,42.6526,-73.7562,10000,blueprint,formation,capital river
+134,New York City,NY,40.7128,-74.0060,20000,neon_cyberpunk,swarm,islands + dense grid
+135,Staten Island (NYC),NY,40.5795,-74.1502,8000,blueprint,formation,harbor island
+136,Newark,NJ,40.7357,-74.1724,9000,contrast_zones,swarm,port + airport
+137,Jersey City,NJ,40.7178,-74.0431,8000,monochrome_blue,formation,waterfront + skyline
+138,Philadelphia Suburbs — King of Prussia,PA,40.0875,-75.3839,8000,warm_beige,swarm,suburban nodes
+139,Burlington (NJ),NJ,40.0939,-74.8560,6000,terracotta,formation,river town
+140,Baltimore Inner Harbor,MD,39.2870,-76.6094,6000,blueprint,formation,harbor
+141,New Haven,CT,41.3083,-72.9279,8000,warm_beige,formation,coastal + university
+142,Hartford,CT,41.7658,-72.6734,8000,blueprint,formation,river capital
+143,Scranton,PA,41.4089,-75.6624,8000,autumn,formation,coal region hills
+144,Harrisburg,PA,40.2732,-76.8867,8000,blueprint,formation,river capital
+145,Milford (CT coastline),CT,41.2225,-73.0520,6000,ocean,formation,coastal town
+146,Jackson Hole,WY,43.4799,-110.7624,15000,forest,formation,mountain valley
+147,Yellowstone NP (gateway West Yellowstone),MT,44.6580,-111.1046,20000,monochrome_blue,dissolve,geothermal + wild
+148,Grand Teton (Jackson),WY,43.7904,-110.6818,15000,forest,formation,dramatic peaks
+149,Bozeman,MT,45.6769,-111.0429,12000,emerald,formation,mountain college town
+150,Missoula,MT,46.8721,-113.9940,12000,forest,formation,river valley and mountains

@@ -1,0 +1,11 @@
+{
+  "name": "@maptoposter/map-pieces",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "build:sample": "node scripts/build-sample.js",
+    "build:motion-asset": "node scripts/build-motion-asset.js"
+  }
+}

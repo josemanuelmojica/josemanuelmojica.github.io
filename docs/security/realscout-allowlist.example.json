@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "default": "deny",
+  "publicResourceLinkHosts": [
+    "support.realscout.com",
+    "learn.realscout.com"
+  ],
+  "widget": {
+    "scriptOrigins": [],
+    "connectOrigins": [],
+    "frameOrigins": [],
+    "imageOrigins": [],
+    "styleOrigins": [],
+    "fontOrigins": [],
+    "formActionOrigins": []
+  },
+  "functionProxy": {
+    "enabled": false,
+    "upstreamOrigins": [],
+    "allowedProductionOrigins": [],
+    "allowedStagingOrigins": []
+  },
+  "notes": [
+    "A public-link hostname does not grant script, connection, frame, image, style, font, form, or proxy permission.",
+    "Add the RealScout Academy hostname only after the authenticated work account verifies its canonical HTTPS origin.",
+    "Replace origin arrays only from the reviewed widget network contract; do not add wildcard domains."
+  ]
+}

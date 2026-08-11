@@ -1,0 +1,21 @@
+{
+  "projectId": "",
+  "projectName": "Arχ & Teχt",
+  "sites": [
+    {
+      "$id": "",
+      "name": "Arχ & Teχt",
+      "enabled": true,
+      "logging": true,
+      "framework": "nextjs",
+      "timeout": 15,
+      "installCommand": "npm ci",
+      "buildCommand": "npm test",
+      "outputDirectory": "./out",
+      "buildRuntime": "node-22",
+      "adapter": "static",
+      "fallbackFile": "",
+      "path": "."
+    }
+  ]
+}

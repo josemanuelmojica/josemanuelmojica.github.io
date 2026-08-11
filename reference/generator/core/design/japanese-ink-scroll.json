@@ -1,0 +1,25 @@
+{
+  "collection": "Eight Impressions / Japanese Ink Scroll",
+  "publicBaseUrl": "/maps/japanese-ink-scroll",
+  "visibleLabels": false,
+  "candidateLimit": 3000,
+  "activePieceDefault": 120,
+  "palette": {
+    "paper": "#FAF8F5",
+    "wash": "#E8E4E0",
+    "ash": "#B8B8B8",
+    "graphite": "#4A4A4A",
+    "ink": "#2C2C2C",
+    "vermilion": "#8B2500"
+  },
+  "studies": [
+    { "id": "study-01", "city": "San Francisco", "state": "CA", "latitude": 37.7749, "longitude": -122.4194, "radius": 10000, "theme": "japanese_ink", "formation": "ring", "propagation": "chain", "visibleCaption": "Pacific edge / 01", "line": "A grid loosens at the water." },
+    { "id": "study-02", "city": "San Diego", "state": "CA", "latitude": 32.7157, "longitude": -117.1611, "radius": 12000, "theme": "japanese_ink", "formation": "spiral", "propagation": "streams", "visibleCaption": "Southern coast / 02", "line": "The shoreline keeps the quiet." },
+    { "id": "study-03", "city": "Portland", "state": "OR", "latitude": 45.5051, "longitude": -122.675, "radius": 12000, "theme": "japanese_ink", "formation": "ring", "propagation": "wave", "visibleCaption": "River crossing / 03", "line": "Bridges hold two halves together." },
+    { "id": "study-04", "city": "New York City", "state": "NY", "latitude": 40.7128, "longitude": -74.006, "radius": 18000, "theme": "japanese_ink", "formation": "spiral", "propagation": "wave", "visibleCaption": "Harbor density / 04", "line": "Every margin becomes a route." },
+    { "id": "study-05", "city": "Austin", "state": "TX", "latitude": 30.2672, "longitude": -97.7431, "radius": 10000, "theme": "japanese_ink", "formation": "spiral", "propagation": "chain", "visibleCaption": "River bend / 05", "line": "The current interrupts the grid." },
+    { "id": "study-06", "city": "Chicago", "state": "IL", "latitude": 41.8781, "longitude": -87.6298, "radius": 15000, "theme": "japanese_ink", "formation": "ring", "propagation": "wave", "visibleCaption": "Lake plane / 06", "line": "An exact grid meets open water." },
+    { "id": "study-07", "city": "Minneapolis", "state": "MN", "latitude": 44.9778, "longitude": -93.265, "radius": 13000, "theme": "japanese_ink", "formation": "spiral", "propagation": "streams", "visibleCaption": "Water interval / 07", "line": "Lakes leave pauses in the drawing." },
+    { "id": "study-08", "city": "Charlotte", "state": "NC", "latitude": 35.2271, "longitude": -80.8431, "radius": 10000, "theme": "japanese_ink", "formation": "ring", "propagation": "streams", "visibleCaption": "Inland orbit / 08", "line": "Radial roads gather and release." }
+  ]
+}

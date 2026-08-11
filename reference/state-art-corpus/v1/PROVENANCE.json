@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "corpusVersion": "2026-08-10.1",
+  "name": "Quiet Watersheds",
+  "generatedDate": "2026-08-10",
+  "generator": {
+    "path": "scripts/state-ink/generate_state_ink_maps.py",
+    "sha256": "e00db16cbba5e81777c762dad514097ec407bebc4f455f8509fa135a71d1b431",
+    "requirements": "scripts/state-ink/requirements.txt",
+    "deterministic": true,
+    "canvas": {
+      "width": 1200,
+      "height": 900
+    },
+    "projection": "state-local equirectangular fit with latitude correction and Alaska antimeridian unwrap"
+  },
+  "philosophy": {
+    "path": "docs/art/STATE_INK_ALGORITHMIC_PHILOSOPHY.md",
+    "sha256": "6b18df1d3c78894577790ba1942394e1dffcf0192164e694f24c5ea10ad679c4"
+  },
+  "sources": [
+    {
+      "name": "ne_10m_admin_1_states_provinces.geojson",
+      "path": "reference/geodata/natural-earth/ne_10m_admin_1_states_provinces.geojson",
+      "sha256": "22d0e3ad85eb3e27f17cabf8ba2d50e554fbc27a87796ff891d958185da62fb5",
+      "upstreamCommit": "ca96624a56bd078437bca8184e78163e5039ad19",
+      "license": "Natural Earth public domain",
+      "retrieved": "2026-08-10"
+    },
+    {
+      "name": "ne_10m_rivers_lake_centerlines.geojson",
+      "path": "reference/geodata/natural-earth/ne_10m_rivers_lake_centerlines.geojson",
+      "sha256": "bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a",
+      "upstreamCommit": "ca96624a56bd078437bca8184e78163e5039ad19",
+      "license": "Natural Earth public domain",
+      "retrieved": "2026-08-10"
+    }
+  ],
+  "outputs": {
+    "manifest": {
+      "path": "public/maps/us-state-studies/v1/manifest.json",
+      "sha256": "501be54ef46aad0b6ea6846a0c451281eebbdd0159fd380300eb2254de0348ae"
+    },
+    "contactSheet": {
+      "path": "reference/state-art-corpus/v1/contact-sheet.webp",
+      "sha256": "d409567467f462e3df2e3fd81314c30a0f32460d7a1a8ff590e542ec54f35f31"
+    }
+  },
+  "limitations": [
+    "Editorial state-level art, not a legal, parcel, navigation, or availability map.",
+    "Natural Earth 1:10m centerlines omit smaller waterways; no missing rivers are fabricated.",
+    "State artwork contains no city, county, or property-level precision.",
+    "Hawaii is framed to its main islands; the distant Northwestern Hawaiian Islands are omitted from the editorial plate."
+  ]
+}

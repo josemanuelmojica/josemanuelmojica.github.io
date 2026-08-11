@@ -1,0 +1,15 @@
+*.jpg binary
+*.png binary
+*.webp binary
+*.zip binary
+*.geojson -diff
+*.svg -whitespace
+reference/** -whitespace
+
+# Preserve generated archival assets in Git while avoiding unusable line diffs.
+reference/generator/full-map-assets/*.svg -diff
+reference/generator/full-map-assets/*.json -diff
+reference/generator/posters/*.svg -diff
+reference/generator/core/sample/*.svg -diff
+reference/generator/core/sample/*.json -diff
+public/maps/us-state-studies/v1/states/*.svg -diff

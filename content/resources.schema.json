@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verified RealScout learning resources",
+  "type": "array",
+  "$defs": {
+    "source": {
+      "enum": [
+        "support.realscout.com",
+        "learn.realscout.com",
+        "RealScout Academy",
+        "RealScout platform",
+        "other verified official source"
+      ]
+    },
+    "audience": { "enum": ["agent", "team_admin", "broker_admin"] },
+    "journey_stage": {
+      "enum": ["setup", "daily_work", "collaboration", "training", "troubleshooting", "escalation"]
+    },
+    "content_type": {
+      "enum": ["article", "course", "video", "academy_program", "product_page", "support_contact", "other"]
+    },
+    "access_level": { "enum": ["public", "login_required", "internal_only"] },
+    "placement": { "enum": ["page", "popup", "widget", "troubleshooting"] }
+  },
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "title",
+      "url",
+      "source",
+      "audience",
+      "journey_stage",
+      "customer_goal",
+      "description",
+      "content_type",
+      "access_level",
+      "safe_for_public_site",
+      "recommended_placement",
+      "suggested_cta",
+      "verified"
+    ],
+    "properties": {
+      "title": { "type": "string", "minLength": 1 },
+      "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+      "source": { "$ref": "#/$defs/source" },
+      "audience": { "type": "array", "items": { "$ref": "#/$defs/audience" }, "minItems": 1, "uniqueItems": true },
+      "journey_stage": { "$ref": "#/$defs/journey_stage" },
+      "customer_goal": { "type": "string" },
+      "description": { "type": "string" },
+      "content_type": { "$ref": "#/$defs/content_type" },
+      "access_level": { "$ref": "#/$defs/access_level" },
+      "safe_for_public_site": { "type": "boolean" },
+      "recommended_placement": { "$ref": "#/$defs/placement" },
+      "suggested_popup_trigger": { "type": ["string", "null"] },
+      "suggested_cta": { "type": "string" },
+      "verified": { "const": true }
+    }
+  }
+}

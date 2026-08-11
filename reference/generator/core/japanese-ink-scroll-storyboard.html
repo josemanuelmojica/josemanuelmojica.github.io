@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eight Impressions — Japanese Ink storyboard</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #faf8f5;
+        --wash: #e8e4e0;
+        --ink: #2c2c2c;
+        --graphite: #4a4a4a;
+        --ash: #b8b8b8;
+        --seal: #8b2500;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 100%; min-height: 100%; background: var(--paper); }
+      body {
+        color: var(--ink);
+        font-family: Inter, "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+        background-image:
+          linear-gradient(92deg, rgba(44, 44, 44, 0.018) 1px, transparent 1px),
+          linear-gradient(2deg, rgba(44, 44, 44, 0.012) 1px, transparent 1px);
+        background-size: 11px 100%, 100% 13px;
+      }
+
+      main {
+        width: 1600px;
+        height: 1800px;
+        margin: 0 auto;
+        padding: 82px 86px 54px;
+        overflow: hidden;
+      }
+
+      header {
+        height: 238px;
+        display: grid;
+        grid-template-columns: 1.7fr 1fr;
+        align-items: end;
+        border-bottom: 1px solid rgba(44, 44, 44, 0.3);
+        padding-bottom: 42px;
+      }
+
+      .eyebrow,
+      .index,
+      .annotation {
+        font-family: ui-monospace, "SFMono-Regular", monospace;
+        letter-spacing: 0.19em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow { font-size: 14px; color: var(--seal); margin-bottom: 18px; }
+      h1 {
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+        font-weight: 400;
+        font-size: 88px;
+        letter-spacing: -0.055em;
+        line-height: 0.92;
+        margin: 0;
+      }
+
+      .thesis {
+        justify-self: end;
+        max-width: 430px;
+        margin: 0;
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+        font-size: 26px;
+        line-height: 1.42;
+        color: var(--graphite);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 650px);
+        margin-top: 36px;
+      }
+
+      article {
+        min-width: 0;
+        position: relative;
+        padding: 0 22px 28px;
+        border-right: 1px solid rgba(44, 44, 44, 0.18);
+      }
+      article:nth-child(4n) { border-right: 0; }
+      article:nth-child(n + 5) { border-top: 1px solid rgba(44, 44, 44, 0.18); padding-top: 28px; }
+
+      .map {
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .map img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: contrast(1.025);
+        mix-blend-mode: multiply;
+      }
+      .map::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        box-shadow: inset 0 -56px 55px var(--paper), inset 0 25px 30px rgba(250, 248, 245, 0.22);
+        pointer-events: none;
+      }
+
+      .seal {
+        position: absolute;
+        left: 80%;
+        top: 70%;
+        width: 13px;
+        height: 13px;
+        border-radius: 48% 52% 45% 55%;
+        background: var(--seal);
+        z-index: 2;
+        box-shadow: 0 0 0 8px rgba(139, 37, 0, 0.08), 0 0 0 18px rgba(139, 37, 0, 0.035);
+      }
+      article:nth-child(even) .seal { transform: rotate(17deg) scale(0.88, 1.12); }
+
+      .caption {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        align-items: baseline;
+        margin-top: 12px;
+      }
+      .index { font-size: 13px; color: var(--seal); }
+      h2 {
+        margin: 0;
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+        font-size: 29px;
+        font-weight: 400;
+        letter-spacing: -0.025em;
+      }
+      article p { margin: 8px 0 0 45px; font-size: 14px; color: rgba(44,44,44,.63); }
+
+      footer {
+        height: 126px;
+        border-top: 1px solid rgba(44, 44, 44, 0.3);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+      .annotation { font-size: 12px; color: var(--graphite); }
+      footer strong {
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+        font-size: 22px;
+        font-weight: 400;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <div class="eyebrow">Single-scroll website / visual direction</div>
+          <h1>Eight impressions</h1>
+        </div>
+        <p class="thesis">One sheet of paper. Eight street networks gather into the same vermilion seal, then return home.</p>
+      </header>
+
+      <section class="grid" aria-label="Eight Japanese Ink map studies">
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-01.png" alt="Japanese Ink street study 01" /><span class="seal"></span></div><div class="caption"><span class="index">01</span><h2>Pacific edge</h2></div><p>A grid loosens at the water.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-02.png" alt="Japanese Ink street study 02" /><span class="seal"></span></div><div class="caption"><span class="index">02</span><h2>Southern coast</h2></div><p>The shoreline keeps the quiet.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-03.png" alt="Japanese Ink street study 03" /><span class="seal"></span></div><div class="caption"><span class="index">03</span><h2>River crossing</h2></div><p>Bridges hold two halves together.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-04.png" alt="Japanese Ink street study 04" /><span class="seal"></span></div><div class="caption"><span class="index">04</span><h2>Harbor density</h2></div><p>Every margin becomes a route.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-05.png" alt="Japanese Ink street study 05" /><span class="seal"></span></div><div class="caption"><span class="index">05</span><h2>River bend</h2></div><p>The current interrupts the grid.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-06.png" alt="Japanese Ink street study 06" /><span class="seal"></span></div><div class="caption"><span class="index">06</span><h2>Lake plane</h2></div><p>An exact grid meets open water.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-07.png" alt="Japanese Ink street study 07" /><span class="seal"></span></div><div class="caption"><span class="index">07</span><h2>Water interval</h2></div><p>Lakes leave pauses in the drawing.</p></article>
+        <article><div class="map"><img src="./maps/japanese-ink-scroll/previews/study-08.png" alt="Japanese Ink street study 08" /><span class="seal"></span></div><div class="caption"><span class="index">08</span><h2>Inland orbit</h2></div><p>Radial roads gather and release.</p></article>
+      </section>
+
+      <footer>
+        <span class="annotation">Transition grammar: hold → gather → dissolve → settle</span>
+        <strong>Every street returns to where it began.</strong>
+      </footer>
+    </main>
+  </body>
+</html>

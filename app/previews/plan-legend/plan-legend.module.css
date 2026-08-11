@@ -1,0 +1,326 @@
+.preview {
+  --legend-blue: #075f9b;
+  --legend-blue-dark: #073a60;
+  --legend-blue-pale: #dceefa;
+  --legend-ink: #152c39;
+  --legend-paper: #fbfdfd;
+  min-height: 100dvh;
+  background: var(--legend-paper);
+}
+
+.preview > main {
+  margin-left: 19rem;
+}
+
+.legend {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 19rem;
+  flex-direction: column;
+  border-right: 1px solid var(--legend-ink);
+  background:
+    linear-gradient(color-mix(in srgb, var(--legend-blue) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--legend-blue) 6%, transparent) 1px, transparent 1px),
+    var(--legend-paper);
+  background-size: 18px 18px;
+  box-shadow: 1.4rem 0 4rem rgb(7 57 91 / 8%);
+}
+
+.legendHead {
+  display: flex;
+  min-height: 6.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.2rem;
+  border-bottom: 1px solid var(--legend-ink);
+  background: rgb(255 255 255 / 78%);
+}
+
+.brand {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--legend-blue);
+  outline-offset: 5px;
+}
+
+.legendHead p {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+  place-items: center;
+  border: 1px solid var(--legend-ink);
+  color: var(--legend-blue);
+  font: 700 0.5rem/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+  letter-spacing: 0.05em;
+}
+
+.sheetTitle {
+  display: grid;
+  gap: 0.42rem;
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--legend-ink);
+  background: color-mix(in srgb, white 82%, transparent);
+}
+
+.sheetTitle span,
+.sheetTitle small,
+.sheetIndex b,
+.sheetIndex small,
+.issueBlock {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  text-transform: uppercase;
+}
+
+.sheetTitle span,
+.sheetTitle small {
+  color: color-mix(in srgb, var(--legend-ink) 57%, transparent);
+  font-size: 0.49rem;
+  letter-spacing: 0.14em;
+}
+
+.sheetTitle strong {
+  font: 500 1.1rem/1.08 "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+}
+
+.sheetIndex {
+  display: grid;
+  flex: 1;
+  grid-template-rows: repeat(6, minmax(4.15rem, 1fr));
+}
+
+.sheetIndex a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.3rem 1fr;
+  grid-template-rows: auto auto;
+  align-content: center;
+  padding: 0.75rem 1.1rem 0.75rem 0;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--legend-ink) 52%, transparent);
+  color: var(--legend-ink);
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.sheetIndex a::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.3rem;
+  content: "";
+  background: linear-gradient(180deg, var(--legend-blue-dark), var(--legend-blue), #63b6e5);
+  opacity: 0;
+}
+
+.sheetIndex b {
+  grid-row: 1 / 3;
+  align-self: stretch;
+  padding-top: 0.14rem;
+  border-right: 1px solid color-mix(in srgb, var(--legend-ink) 36%, transparent);
+  color: var(--legend-blue);
+  font-size: 0.53rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.sheetIndex span,
+.sheetIndex small {
+  margin-left: 0.85rem;
+}
+
+.sheetIndex span {
+  font: 550 0.9rem/1.1 Inter, system-ui, sans-serif;
+}
+
+.sheetIndex small {
+  margin-top: 0.25rem;
+  color: color-mix(in srgb, var(--legend-ink) 56%, transparent);
+  font-size: 0.43rem;
+  letter-spacing: 0.08em;
+}
+
+.sheetIndex a:hover,
+.sheetIndex a:focus-visible,
+.sheetIndex a[aria-current="location"] {
+  background: color-mix(in srgb, var(--legend-blue-pale) 72%, white);
+  color: var(--legend-blue-dark);
+}
+
+.sheetIndex a:hover::before,
+.sheetIndex a:focus-visible::before,
+.sheetIndex a[aria-current="location"]::before {
+  opacity: 1;
+}
+
+.sheetIndex a:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--legend-blue);
+  outline-offset: -3px;
+}
+
+.issueBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  border-top: 1px solid var(--legend-ink);
+  background: white;
+}
+
+.issueBlock div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  padding: 0.68rem 0.75rem;
+  border-right: 1px solid var(--legend-ink);
+  border-bottom: 1px solid var(--legend-ink);
+}
+
+.issueBlock div:nth-child(even) {
+  border-right: 0;
+}
+
+.issueBlock dt,
+.issueBlock dd {
+  margin: 0;
+  font-size: 0.48rem;
+  letter-spacing: 0.09em;
+}
+
+.issueBlock dt {
+  color: color-mix(in srgb, var(--legend-ink) 55%, transparent);
+}
+
+.issueBlock dd {
+  color: var(--legend-blue);
+  font-weight: 700;
+}
+
+.orientation {
+  position: absolute;
+  z-index: 3;
+  top: 8.5rem;
+  right: 7vw;
+  display: grid;
+  width: 4rem;
+  place-items: center;
+  color: var(--legend-blue);
+}
+
+.orientation span {
+  font: 500 1rem/1 "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+}
+
+.orientation i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 2.8rem;
+  margin: 0.35rem 0;
+  background: var(--legend-blue);
+}
+
+.orientation i::before {
+  position: absolute;
+  top: 0;
+  left: -0.27rem;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-top: 1px solid var(--legend-blue);
+  border-left: 1px solid var(--legend-blue);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.orientation small {
+  font: 600 0.42rem/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+@media (max-width: 880px) {
+  .preview > main {
+    margin-left: 0;
+  }
+
+  .legend {
+    position: fixed;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 7.7rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--legend-ink);
+    box-shadow: 0 1.2rem 3rem rgb(7 57 91 / 8%);
+  }
+
+  .legendHead {
+    min-height: 3.7rem;
+    padding: 0.55rem 1rem;
+  }
+
+  .legendHead p {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  .sheetTitle,
+  .issueBlock {
+    display: none;
+  }
+
+  .sheetIndex {
+    display: flex;
+    min-width: 100%;
+    overflow-x: auto;
+    border-top: 1px solid var(--legend-ink);
+    scrollbar-width: none;
+  }
+
+  .sheetIndex::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sheetIndex a {
+    min-width: 7rem;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 0.58rem 0.7rem;
+    border-right: 1px solid var(--legend-ink);
+    border-bottom: 0;
+  }
+
+  .sheetIndex b {
+    grid-row: auto;
+    align-self: center;
+    padding: 0 0.55rem 0 0;
+  }
+
+  .sheetIndex span {
+    margin-left: 0.55rem;
+    font-size: 0.69rem;
+  }
+
+  .sheetIndex small {
+    display: none;
+  }
+
+  .orientation {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheetIndex a {
+    transition: none;
+  }
+}
