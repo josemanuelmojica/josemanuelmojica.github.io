@@ -15,7 +15,7 @@
     "manifest:reference": "node scripts/build-reference-inventory.mjs",
     "typecheck": "tsc --noEmit",
     "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs",
-    "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs"
+    "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs"
   },
   "dependencies": {
     "next": "16.2.6",

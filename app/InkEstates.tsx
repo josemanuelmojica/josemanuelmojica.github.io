@@ -10,6 +10,7 @@ import {
 } from "react";
 import marketLinkOrigins from "../content/market-link-origins.json";
 import marketLinks from "../content/market-links.json";
+import { LeadInterview } from "./LeadInterview";
 import { publicPath } from "./lib/publicPath";
 
 type Study = {
@@ -728,7 +729,6 @@ export function InkEstates() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [favoritesHydrated, setFavoritesHydrated] = useState(false);
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
-  const [inquirySent, setInquirySent] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -1017,36 +1017,7 @@ export function InkEstates() {
           <h2>Tell us what you’re looking forward to.</h2>
           <p>A person will reply.</p>
         </div>
-        {inquirySent ? (
-          <div className="inquiry-success" role="status">
-            <span className="wordmark__seal"><img src={publicPath("/icons/freehand-calendar.png")} alt="" /></span>
-            <h3>Your inquiry is prepared.</h3>
-            <p>This concept form works locally. Connect your preferred CRM or inbox before using it with live clients.</p>
-            <button type="button" onClick={() => setInquirySent(false)}>Send another</button>
-          </div>
-        ) : (
-          <form
-            className="inquiry-form"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setInquirySent(true);
-            }}
-          >
-            <label><span>Name</span><input name="name" autoComplete="name" required /></label>
-            <label><span>Email</span><input name="email" type="email" autoComplete="email" required /></label>
-            <label>
-              <span>I am considering</span>
-              <select name="interest" defaultValue="A purchase">
-                <option>A purchase</option>
-                <option>A sale</option>
-                <option>Both</option>
-                <option>A private market conversation</option>
-              </select>
-            </label>
-            <label className="inquiry-form__message"><span>A little context</span><textarea name="message" rows={3} required /></label>
-            <button type="submit">Request a private conversation <span>↗</span></button>
-          </form>
-        )}
+        <LeadInterview />
       </section>
 
       <footer className="site-footer">
