@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: github-pages-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
   cancel-in-progress: true
 
 jobs:

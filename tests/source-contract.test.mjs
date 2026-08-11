@@ -243,7 +243,10 @@ test("keeps static export configuration aligned for Appwrite and GitHub Pages", 
   assert.match(workflow, /path:\s*\.\/out/);
   assert.match(workflow, /run:\s*npm ci/);
   assert.match(workflow, /pull_request:/);
-  assert.match(workflow, /group:\s*github-pages-\$\{\{\s*github\.ref\s*\}\}/);
+  assert.match(
+    workflow,
+    /group:\s*\$\{\{\s*github\.workflow\s*\}\}-\$\{\{\s*github\.event_name\s*==\s*'pull_request'\s*&&\s*github\.ref\s*\|\|\s*'production'\s*\}\}/,
+  );
   assert.match(workflow, /deploy:\s*[\s\S]*pages: write/);
   assert.doesNotMatch(workflow, /uses:\s*[^\s]+@v\d+/);
 
