@@ -1,0 +1,105 @@
+{
+  "collection": "Eight Impressions / Japanese Ink Scroll — runtime subset",
+  "assetBase": ".",
+  "urlResolution": "Resolve asset URLs relative to this collection document.",
+  "visibleLabels": false,
+  "activePieceDefault": 160,
+  "studies": [
+    {
+      "id": "study-01",
+      "city": "San Francisco",
+      "state": "CA",
+      "subarea": "Pacific Heights",
+      "visibleCaption": "Pacific edge / 01",
+      "line": "A grid loosens at the water.",
+      "baseUrl": "base/study-01.webp",
+      "activeOverlayUrl": "study-01.active-overlay.svg",
+      "activeMetadataUrl": "study-01.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-02",
+      "city": "San Diego",
+      "state": "CA",
+      "subarea": "La Jolla",
+      "visibleCaption": "Southern coast / 02",
+      "line": "The shoreline keeps the quiet.",
+      "baseUrl": "base/study-02.webp",
+      "activeOverlayUrl": "study-02.active-overlay.svg",
+      "activeMetadataUrl": "study-02.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-03",
+      "city": "Portland",
+      "state": "OR",
+      "subarea": "West Hills",
+      "visibleCaption": "River crossing / 03",
+      "line": "Bridges hold two halves together.",
+      "baseUrl": "base/study-03.webp",
+      "activeOverlayUrl": "study-03.active-overlay.svg",
+      "activeMetadataUrl": "study-03.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-04",
+      "city": "New York City",
+      "state": "NY",
+      "subarea": "Tribeca",
+      "visibleCaption": "Harbor density / 04",
+      "line": "Every margin becomes a route.",
+      "baseUrl": "base/study-04.webp",
+      "activeOverlayUrl": "study-04.active-overlay.svg",
+      "activeMetadataUrl": "study-04.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-05",
+      "city": "Austin",
+      "state": "TX",
+      "subarea": "West Lake Hills",
+      "visibleCaption": "River bend / 05",
+      "line": "The current interrupts the grid.",
+      "baseUrl": "base/study-05.webp",
+      "activeOverlayUrl": "study-05.active-overlay.svg",
+      "activeMetadataUrl": "study-05.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-06",
+      "city": "Chicago",
+      "state": "IL",
+      "subarea": "Gold Coast",
+      "visibleCaption": "Lake plane / 06",
+      "line": "An exact grid meets open water.",
+      "baseUrl": "base/study-06.webp",
+      "activeOverlayUrl": "study-06.active-overlay.svg",
+      "activeMetadataUrl": "study-06.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-07",
+      "city": "Minneapolis",
+      "state": "MN",
+      "subarea": "Lake of the Isles",
+      "visibleCaption": "Water interval / 07",
+      "line": "Lakes leave pauses in the drawing.",
+      "baseUrl": "base/study-07.webp",
+      "activeOverlayUrl": "study-07.active-overlay.svg",
+      "activeMetadataUrl": "study-07.active.json",
+      "activeCount": 160
+    },
+    {
+      "id": "study-08",
+      "city": "Charlotte",
+      "state": "NC",
+      "subarea": "Myers Park",
+      "visibleCaption": "Inland orbit / 08",
+      "line": "Radial roads gather and release.",
+      "baseUrl": "base/study-08.webp",
+      "activeOverlayUrl": "study-08.active-overlay.svg",
+      "activeMetadataUrl": "study-08.active.json",
+      "activeCount": 160
+    }
+  ]
+}

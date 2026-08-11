@@ -1,0 +1,12 @@
+[
+  { "place": "portland", "candidateStates": ["OR", "ME"] },
+  { "place": "springfield", "candidateStates": ["IL", "MO", "MA", "OH"] },
+  { "place": "columbus", "candidateStates": ["OH", "GA", "IN"] },
+  { "place": "richmond", "candidateStates": ["VA", "CA"] },
+  { "place": "arlington", "candidateStates": ["VA", "TX"] },
+  { "place": "franklin", "candidateStates": ["TN", "MA"] },
+  { "place": "salem", "candidateStates": ["OR", "MA"] },
+  { "place": "greenville", "candidateStates": ["SC", "NC"] },
+  { "place": "auburn", "candidateStates": ["AL", "WA"] },
+  { "place": "manchester", "candidateStates": ["NH", "CT"] }
+]

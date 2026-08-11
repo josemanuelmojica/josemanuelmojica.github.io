@@ -1,0 +1,10 @@
+[
+  { "id": "study-01", "city": "San Francisco", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-02", "city": "San Diego", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-03", "city": "Portland", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-04", "city": "New York City", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-05", "city": "Austin", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-06", "city": "Chicago", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-07", "city": "Minneapolis", "url": null, "verified": false, "safe_for_public_site": false },
+  { "id": "study-08", "city": "Charlotte", "url": null, "verified": false, "safe_for_public_site": false }
+]

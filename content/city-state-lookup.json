@@ -1,0 +1,18 @@
+[
+  { "city": "san francisco", "state": "CA" },
+  { "city": "pacific heights", "state": "CA" },
+  { "city": "san diego", "state": "CA" },
+  { "city": "la jolla", "state": "CA" },
+  { "city": "new york city", "state": "NY" },
+  { "city": "new york", "state": "NY" },
+  { "city": "tribeca", "state": "NY" },
+  { "city": "austin", "state": "TX" },
+  { "city": "west lake hills", "state": "TX" },
+  { "city": "chicago", "state": "IL" },
+  { "city": "gold coast", "state": "IL" },
+  { "city": "minneapolis", "state": "MN" },
+  { "city": "lake of the isles", "state": "MN" },
+  { "city": "charlotte", "state": "NC" },
+  { "city": "myers park", "state": "NC" },
+  { "city": "boise", "state": "ID" }
+]

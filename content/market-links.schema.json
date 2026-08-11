@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verified RealScout market search links",
+  "type": "array",
+  "minItems": 8,
+  "maxItems": 8,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "city", "url", "verified", "safe_for_public_site"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^study-0[1-8]$" },
+      "city": { "type": "string", "minLength": 1 },
+      "url": { "type": ["string", "null"] },
+      "verified": { "type": "boolean" },
+      "safe_for_public_site": { "type": "boolean" }
+    }
+  }
+}

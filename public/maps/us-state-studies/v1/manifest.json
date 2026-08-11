@@ -1,0 +1,1565 @@
+{
+  "schemaVersion": 1,
+  "corpusVersion": "2026-08-10.1",
+  "name": "Quiet Watersheds",
+  "visualScope": "state",
+  "assetBase": ".",
+  "fallbackAsset": "fallback/unresolved.svg",
+  "source": {
+    "dataset": "Natural Earth 1:10m admin-1 states/provinces and rivers/lake centerlines",
+    "commit": "ca96624a56bd078437bca8184e78163e5039ad19",
+    "license": "public domain"
+  },
+  "states": [
+    {
+      "id": "US-AK",
+      "name": "Alaska",
+      "postalCode": "AK",
+      "fips": "02",
+      "accessibleLabel": "Blueprint study of the state of Alaska",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 16,
+      "assets": [
+        {
+          "path": "states/US-AK.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 195249,
+          "sha256": "b496d1271e5fd26cf4ec7d206db51c21b93cdd57ea042ac4038013cb241e25f7"
+        },
+        {
+          "path": "states/US-AK.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 59106,
+          "sha256": "7dba4e38d4afc98cfd4f5b5d3d13cc4eeef445c6ccae8505eb468736769d65c6"
+        }
+      ]
+    },
+    {
+      "id": "US-AL",
+      "name": "Alabama",
+      "postalCode": "AL",
+      "fips": "01",
+      "accessibleLabel": "Blueprint study of the state of Alabama",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-AL.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33248,
+          "sha256": "48bd974ec6f84fdfc25b8ac16e13ed622313608c73be621c8f5caf67dd5ab2ab"
+        },
+        {
+          "path": "states/US-AL.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 32144,
+          "sha256": "c904bce83e1a76a7b37d80d8b54ed836e3852700fe3eda3f3f79a6d99d1e83e0"
+        }
+      ]
+    },
+    {
+      "id": "US-AR",
+      "name": "Arkansas",
+      "postalCode": "AR",
+      "fips": "05",
+      "accessibleLabel": "Blueprint study of the state of Arkansas",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-AR.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 36664,
+          "sha256": "2f2782317f51264d6c5e107ce3167cbc77565e7ba5a115c60b361d2fd213cdfa"
+        },
+        {
+          "path": "states/US-AR.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 35478,
+          "sha256": "391327695c07505ad85339a8bbbcd4ed2d95232062ff28d2cfa08bad1d623bb2"
+        }
+      ]
+    },
+    {
+      "id": "US-AZ",
+      "name": "Arizona",
+      "postalCode": "AZ",
+      "fips": "04",
+      "accessibleLabel": "Blueprint study of the state of Arizona",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 4,
+      "assets": [
+        {
+          "path": "states/US-AZ.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 24241,
+          "sha256": "2856f82c0540c1f54b785fb186e55cc5ee6e508f33a69aa8e4f813dfc699c080"
+        },
+        {
+          "path": "states/US-AZ.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25324,
+          "sha256": "6fe9df50037ede06b456121217c0fce8ca2df5c78ccdac55137cfb29a02c6852"
+        }
+      ]
+    },
+    {
+      "id": "US-CA",
+      "name": "California",
+      "postalCode": "CA",
+      "fips": "06",
+      "accessibleLabel": "Blueprint study of the state of California",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 17,
+      "assets": [
+        {
+          "path": "states/US-CA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 49894,
+          "sha256": "3ca777bcadf00a376a7bf6edb5bc23500056d30cd57603f4de9cfee2a7aa6d19"
+        },
+        {
+          "path": "states/US-CA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34164,
+          "sha256": "1d9c21b4d50308236fae62060ab063822891a89e30fe4681e3d25b50496f5560"
+        }
+      ]
+    },
+    {
+      "id": "US-CO",
+      "name": "Colorado",
+      "postalCode": "CO",
+      "fips": "08",
+      "accessibleLabel": "Blueprint study of the state of Colorado",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-CO.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 22859,
+          "sha256": "5d912c74d97a692814b6d477fa63e82c30de236b9b8adfb63ea9ce667df2dfff"
+        },
+        {
+          "path": "states/US-CO.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 28974,
+          "sha256": "499b1123e13935ad6d3fded86ac9b998fb649a7a387404a07ecb8c120792f45f"
+        }
+      ]
+    },
+    {
+      "id": "US-CT",
+      "name": "Connecticut",
+      "postalCode": "CT",
+      "fips": "09",
+      "accessibleLabel": "Blueprint study of the state of Connecticut",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 1,
+      "assets": [
+        {
+          "path": "states/US-CT.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 14529,
+          "sha256": "861dfaa21bdba6c668a0431ff036240b518e3bea9738b13c86eae6a9e45a3d81"
+        },
+        {
+          "path": "states/US-CT.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26990,
+          "sha256": "0b2a66ba86378f0322b60e6ae7a34d1eb4be8a7b253ffc09d94f86ac9ab2227b"
+        }
+      ]
+    },
+    {
+      "id": "US-DE",
+      "name": "Delaware",
+      "postalCode": "DE",
+      "fips": "10",
+      "accessibleLabel": "Blueprint study of the state of Delaware",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 0,
+      "assets": [
+        {
+          "path": "states/US-DE.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 12093,
+          "sha256": "00567e4d31392aabe04346593284b26219b4c855a49bac4753a80a44e14f8ec0"
+        },
+        {
+          "path": "states/US-DE.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 22850,
+          "sha256": "c833624b1badf8d41afea325c3cade2c333308ec663a9b32bb6a5a81eb83af03"
+        }
+      ]
+    },
+    {
+      "id": "US-FL",
+      "name": "Florida",
+      "postalCode": "FL",
+      "fips": "12",
+      "accessibleLabel": "Blueprint study of the state of Florida",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-FL.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 51218,
+          "sha256": "dab29d01bac4725a5c75b6091905b825a633844a5c96efe15f6d2e1afc2b5b1e"
+        },
+        {
+          "path": "states/US-FL.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 37694,
+          "sha256": "7a8f825b0c5c08b4e5894ef533625858d79db1d5650de04e17b41f4a20ed224b"
+        }
+      ]
+    },
+    {
+      "id": "US-GA",
+      "name": "Georgia",
+      "postalCode": "GA",
+      "fips": "13",
+      "accessibleLabel": "Blueprint study of the state of Georgia",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 11,
+      "assets": [
+        {
+          "path": "states/US-GA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34705,
+          "sha256": "b3cb16329ec65c06c3327b31abc63de8d23face92b1866bd6731aadd38291e1f"
+        },
+        {
+          "path": "states/US-GA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 31146,
+          "sha256": "955bac749d24271f634fbfb22e3902d017950904407b304d3aff8f5398b28792"
+        }
+      ]
+    },
+    {
+      "id": "US-HI",
+      "name": "Hawaii",
+      "postalCode": "HI",
+      "fips": "15",
+      "accessibleLabel": "Blueprint study of the state of Hawaii",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 0,
+      "assets": [
+        {
+          "path": "states/US-HI.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 21663,
+          "sha256": "982551467be0dc606c9d8f7a96cca8de15a7c0f330b361f07310a45d5bb7791b"
+        },
+        {
+          "path": "states/US-HI.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27332,
+          "sha256": "c1f54d19101c8985c6386ed01bd94c967197700a844fd1fb2118a420c770ac95"
+        }
+      ]
+    },
+    {
+      "id": "US-IA",
+      "name": "Iowa",
+      "postalCode": "IA",
+      "fips": "19",
+      "accessibleLabel": "Blueprint study of the state of Iowa",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-IA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 30864,
+          "sha256": "d349a14e7e40ec692a394798ed96b4415e794201b12cd808a9128828ca398ad4"
+        },
+        {
+          "path": "states/US-IA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 31668,
+          "sha256": "55038f00f4fe1fd16932cce4363a9f8caa86de0c04feee6080d21d5586892a2f"
+        }
+      ]
+    },
+    {
+      "id": "US-ID",
+      "name": "Idaho",
+      "postalCode": "ID",
+      "fips": "16",
+      "accessibleLabel": "Blueprint study of the state of Idaho",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-ID.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 29633,
+          "sha256": "9e26d6ee1ce3621dcabc950e2753303b72bfcfb78d15449fd89abc0bbf27f9dc"
+        },
+        {
+          "path": "states/US-ID.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26926,
+          "sha256": "0001eee71a84a5dd34e76df7f1b1c54891fd680fd3ef6f7e49a54a9722b98d1d"
+        }
+      ]
+    },
+    {
+      "id": "US-IL",
+      "name": "Illinois",
+      "postalCode": "IL",
+      "fips": "17",
+      "accessibleLabel": "Blueprint study of the state of Illinois",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 10,
+      "assets": [
+        {
+          "path": "states/US-IL.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 30806,
+          "sha256": "7be3e9ec985fe51d34fb8b4b7e096adf1e004d9e05c0381fcaa785f86604cda0"
+        },
+        {
+          "path": "states/US-IL.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27498,
+          "sha256": "3afa81771868ffe2b74231418d771a83a1721669604a5b32b112615338297981"
+        }
+      ]
+    },
+    {
+      "id": "US-IN",
+      "name": "Indiana",
+      "postalCode": "IN",
+      "fips": "18",
+      "accessibleLabel": "Blueprint study of the state of Indiana",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 3,
+      "assets": [
+        {
+          "path": "states/US-IN.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25355,
+          "sha256": "db4d9fc653c6a994e180361e8ac76caba8e947ed5905133bbd71ccee65669efd"
+        },
+        {
+          "path": "states/US-IN.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 28658,
+          "sha256": "fbceaf76f68826e005a71ed3688149770db9bf976a32c6dba3209193e187d254"
+        }
+      ]
+    },
+    {
+      "id": "US-KS",
+      "name": "Kansas",
+      "postalCode": "KS",
+      "fips": "20",
+      "accessibleLabel": "Blueprint study of the state of Kansas",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 6,
+      "assets": [
+        {
+          "path": "states/US-KS.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 21052,
+          "sha256": "045e24f505807bbaedfe268ad6b6ab89ccecdea1065cd35a0f3d3c9cd7df008b"
+        },
+        {
+          "path": "states/US-KS.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25074,
+          "sha256": "c3b3598ff30b29c25cfda8a3473d124a0a6ecee5245169e2a2460f9eb62f3dd5"
+        }
+      ]
+    },
+    {
+      "id": "US-KY",
+      "name": "Kentucky",
+      "postalCode": "KY",
+      "fips": "21",
+      "accessibleLabel": "Blueprint study of the state of Kentucky",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-KY.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 38702,
+          "sha256": "8bf89caa385aabca410ae8615ee338a7834d9dfcf6ea030df5ef3ed58774d788"
+        },
+        {
+          "path": "states/US-KY.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34764,
+          "sha256": "93a1e51cf8070444b8fd79166302a3c2e392b99a5fe351619f930596e4be7f71"
+        }
+      ]
+    },
+    {
+      "id": "US-LA",
+      "name": "Louisiana",
+      "postalCode": "LA",
+      "fips": "22",
+      "accessibleLabel": "Blueprint study of the state of Louisiana",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 6,
+      "assets": [
+        {
+          "path": "states/US-LA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 54910,
+          "sha256": "6f5ce43d007063b33b8051197b08bdcd8be323eb81aed332c3062081f850e838"
+        },
+        {
+          "path": "states/US-LA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 42722,
+          "sha256": "cfdeff4a06ea6bd156c5aea1b123828f5703735cfaf035c72037e709b2cfd852"
+        }
+      ]
+    },
+    {
+      "id": "US-MA",
+      "name": "Massachusetts",
+      "postalCode": "MA",
+      "fips": "25",
+      "accessibleLabel": "Blueprint study of the state of Massachusetts",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 2,
+      "assets": [
+        {
+          "path": "states/US-MA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26633,
+          "sha256": "3899748f1461a41f05a45b56007539251d6ed54ec45ea445a6924bbbecd7c53c"
+        },
+        {
+          "path": "states/US-MA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 37296,
+          "sha256": "9358f08019d6e2873d69612c98e0bc9a1c61049f4857d05bd1fcd8119de73d83"
+        }
+      ]
+    },
+    {
+      "id": "US-MD",
+      "name": "Maryland",
+      "postalCode": "MD",
+      "fips": "24",
+      "accessibleLabel": "Blueprint study of the state of Maryland",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 3,
+      "assets": [
+        {
+          "path": "states/US-MD.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 37016,
+          "sha256": "cd938bd03ec37a8fd3a3a59cbbe669b44b722daac5bbe6ca4bed3405f298fd72"
+        },
+        {
+          "path": "states/US-MD.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 41832,
+          "sha256": "29b1d5c828cc6b2c33e676c269219df9901c96740e5830a01db5ba876df8ccd3"
+        }
+      ]
+    },
+    {
+      "id": "US-ME",
+      "name": "Maine",
+      "postalCode": "ME",
+      "fips": "23",
+      "accessibleLabel": "Blueprint study of the state of Maine",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 2,
+      "assets": [
+        {
+          "path": "states/US-ME.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 36826,
+          "sha256": "a73a6653157e0967a4b4de73960a958450c5cc6ff0802db86b4eee16139b6812"
+        },
+        {
+          "path": "states/US-ME.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33704,
+          "sha256": "77ea91e03c5187101495d696bd24ca9b195d7b507d057b085a19601bd87d9dd0"
+        }
+      ]
+    },
+    {
+      "id": "US-MI",
+      "name": "Michigan",
+      "postalCode": "MI",
+      "fips": "26",
+      "accessibleLabel": "Blueprint study of the state of Michigan",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 2,
+      "assets": [
+        {
+          "path": "states/US-MI.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 16382,
+          "sha256": "8ed6260fcb6686bb96c597a0e674703480e62a1bb5f65442cdf92a90d6446c63"
+        },
+        {
+          "path": "states/US-MI.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26864,
+          "sha256": "87c594d561936582f9634b525a9a34ff8a191ec5b57bc4a490244442b3bbd5dd"
+        }
+      ]
+    },
+    {
+      "id": "US-MN",
+      "name": "Minnesota",
+      "postalCode": "MN",
+      "fips": "27",
+      "accessibleLabel": "Blueprint study of the state of Minnesota",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-MN.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 30008,
+          "sha256": "de839d66dea22a2193d1b8e873abf3651977fffdf3293b388cd933cbc53b80d9"
+        },
+        {
+          "path": "states/US-MN.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 29838,
+          "sha256": "43fc53f9fb12c118ed333fee47d8e7dcb8d496eb24c8302509cc952e59a79c17"
+        }
+      ]
+    },
+    {
+      "id": "US-MO",
+      "name": "Missouri",
+      "postalCode": "MO",
+      "fips": "29",
+      "accessibleLabel": "Blueprint study of the state of Missouri",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 11,
+      "assets": [
+        {
+          "path": "states/US-MO.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 38842,
+          "sha256": "27f3f7664f3dd58cb3e875fd98fc068dbd7b878a765eb7db3cc3148d803442a4"
+        },
+        {
+          "path": "states/US-MO.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 32862,
+          "sha256": "1f8a7423bdd7956309a150fed58b70ce1d3fc04cd41c9fb3e8b5c21ecbcf4edc"
+        }
+      ]
+    },
+    {
+      "id": "US-MS",
+      "name": "Mississippi",
+      "postalCode": "MS",
+      "fips": "28",
+      "accessibleLabel": "Blueprint study of the state of Mississippi",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 4,
+      "assets": [
+        {
+          "path": "states/US-MS.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25649,
+          "sha256": "2b9aab3ad0296e075d96e59c6a4f13e1de5ec3e1da40d6c8b8f46e4bf53d081b"
+        },
+        {
+          "path": "states/US-MS.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 29040,
+          "sha256": "7ea73fba54186e07845198c82c4a317ea4dadecfab0d9c030aa8b0ee1b5cc1b5"
+        }
+      ]
+    },
+    {
+      "id": "US-MT",
+      "name": "Montana",
+      "postalCode": "MT",
+      "fips": "30",
+      "accessibleLabel": "Blueprint study of the state of Montana",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-MT.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 38129,
+          "sha256": "33790253feccdbcc70d904aceb49b7aa60ff1bfb0480b03b4dbbf1c93de9ab52"
+        },
+        {
+          "path": "states/US-MT.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 36400,
+          "sha256": "e0590c46caea5ecea6559655da1108371325a2f876ac149ab2ef76f7e8c7e11f"
+        }
+      ]
+    },
+    {
+      "id": "US-NC",
+      "name": "North Carolina",
+      "postalCode": "NC",
+      "fips": "37",
+      "accessibleLabel": "Blueprint study of the state of North Carolina",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-NC.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 44094,
+          "sha256": "0201160e2c56ab5daf6dad64d280d76b28371347a537b1c92c4622b4e29850a5"
+        },
+        {
+          "path": "states/US-NC.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 36070,
+          "sha256": "0d92df9f3c62de12643bc400c42042f549492a4dec5adf779da61cbbce93c94e"
+        }
+      ]
+    },
+    {
+      "id": "US-ND",
+      "name": "North Dakota",
+      "postalCode": "ND",
+      "fips": "38",
+      "accessibleLabel": "Blueprint study of the state of North Dakota",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-ND.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 23294,
+          "sha256": "7f655f8c43316dfa5627f2d4bd6351f8a1028432d08ca80a76f6ce033837fe80"
+        },
+        {
+          "path": "states/US-ND.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 24268,
+          "sha256": "c55ef94d493ccd0c79e324010c5b54dfb6b57d14dba82449dd36bb551a4631de"
+        }
+      ]
+    },
+    {
+      "id": "US-NE",
+      "name": "Nebraska",
+      "postalCode": "NE",
+      "fips": "31",
+      "accessibleLabel": "Blueprint study of the state of Nebraska",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-NE.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26287,
+          "sha256": "6ac65326d1841eab4fe55caae5ca8a7007b2da1db4c93c27e2eef3a1404457d6"
+        },
+        {
+          "path": "states/US-NE.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27038,
+          "sha256": "8416bed11adf5427b2ebcfdf32e6b659b9841f090ffd6b4c2ceaac9aa199dc86"
+        }
+      ]
+    },
+    {
+      "id": "US-NH",
+      "name": "New Hampshire",
+      "postalCode": "NH",
+      "fips": "33",
+      "accessibleLabel": "Blueprint study of the state of New Hampshire",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 2,
+      "assets": [
+        {
+          "path": "states/US-NH.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 16728,
+          "sha256": "bc2be421e55be423be42ad2ed8c99695de72bbd5ffe94c916edfbbbe7640f67f"
+        },
+        {
+          "path": "states/US-NH.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26316,
+          "sha256": "cb8a428ffac813671be6900dc30245774adb7a82f053c3a1c3490d8d3ce9b388"
+        }
+      ]
+    },
+    {
+      "id": "US-NJ",
+      "name": "New Jersey",
+      "postalCode": "NJ",
+      "fips": "34",
+      "accessibleLabel": "Blueprint study of the state of New Jersey",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 1,
+      "assets": [
+        {
+          "path": "states/US-NJ.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 20632,
+          "sha256": "2249d3c592a969520367bcbbce02108157d4b3288f988be8f08d4924f3a5c061"
+        },
+        {
+          "path": "states/US-NJ.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27880,
+          "sha256": "cd801266716a81558dfed9dc2f84fb98bd7d380ec4f37b77c4bc2f5f2b559720"
+        }
+      ]
+    },
+    {
+      "id": "US-NM",
+      "name": "New Mexico",
+      "postalCode": "NM",
+      "fips": "35",
+      "accessibleLabel": "Blueprint study of the state of New Mexico",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 8,
+      "assets": [
+        {
+          "path": "states/US-NM.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 24947,
+          "sha256": "283f26269c6acb5e2e95a680746d472fac2ca2e49f5b7600a28d8f973f0975b1"
+        },
+        {
+          "path": "states/US-NM.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25374,
+          "sha256": "6b6e39738a72673055ffa216a2009a6d253e121a9fc9d815b430a3a24f7169fb"
+        }
+      ]
+    },
+    {
+      "id": "US-NV",
+      "name": "Nevada",
+      "postalCode": "NV",
+      "fips": "32",
+      "accessibleLabel": "Blueprint study of the state of Nevada",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-NV.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 16064,
+          "sha256": "f798789b577d9d958312bfa6d375a3b135de64f9ef9396939d7e33b5ffe4568a"
+        },
+        {
+          "path": "states/US-NV.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 22612,
+          "sha256": "3e031cf99c0c28ae84829d49199804d571b146f861165b5f5082d5aaeeb34671"
+        }
+      ]
+    },
+    {
+      "id": "US-NY",
+      "name": "New York",
+      "postalCode": "NY",
+      "fips": "36",
+      "accessibleLabel": "Blueprint study of the state of New York",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-NY.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34444,
+          "sha256": "1fd1da62a5c7d4e36346e69e4122339d948a9b48a6bcb902052bd6d9fbd10154"
+        },
+        {
+          "path": "states/US-NY.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34174,
+          "sha256": "6e40065381c8af01573f145ac9cc12d32eb14766393b58c06bc8a3dcb024477d"
+        }
+      ]
+    },
+    {
+      "id": "US-OH",
+      "name": "Ohio",
+      "postalCode": "OH",
+      "fips": "39",
+      "accessibleLabel": "Blueprint study of the state of Ohio",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-OH.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 25644,
+          "sha256": "447f61e12131d7ffc153ed5d528eb2fc587135432cf032287a819994297628eb"
+        },
+        {
+          "path": "states/US-OH.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27604,
+          "sha256": "3c96f1cd50d4ca23b7d033dab9fd48f7c708acb0b2c8cc94ad4f31f7a6a828c3"
+        }
+      ]
+    },
+    {
+      "id": "US-OK",
+      "name": "Oklahoma",
+      "postalCode": "OK",
+      "fips": "40",
+      "accessibleLabel": "Blueprint study of the state of Oklahoma",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 4,
+      "assets": [
+        {
+          "path": "states/US-OK.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26634,
+          "sha256": "b11750a5010e5f9880b6d4e247adbe8576b5571820800a84bd09f8a9da376005"
+        },
+        {
+          "path": "states/US-OK.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26326,
+          "sha256": "b06f45b5af196b9a5582eadf033000607116057a44a2731ce8a9c2fa3c2aab5c"
+        }
+      ]
+    },
+    {
+      "id": "US-OR",
+      "name": "Oregon",
+      "postalCode": "OR",
+      "fips": "41",
+      "accessibleLabel": "Blueprint study of the state of Oregon",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-OR.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 39575,
+          "sha256": "589cbbfe1b8a11b06f72a28ef8e339b76d217bf2e126930e03bb3a55b7554023"
+        },
+        {
+          "path": "states/US-OR.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33262,
+          "sha256": "a218130e21a01b28e2137caaa20d9ee07ce314d5451f7e642eaa3b151baf4416"
+        }
+      ]
+    },
+    {
+      "id": "US-PA",
+      "name": "Pennsylvania",
+      "postalCode": "PA",
+      "fips": "42",
+      "accessibleLabel": "Blueprint study of the state of Pennsylvania",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 6,
+      "assets": [
+        {
+          "path": "states/US-PA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 32087,
+          "sha256": "f35c793eb48ad7df397298ea260de6ac4389e98b2bc0c9d44bde587267319d40"
+        },
+        {
+          "path": "states/US-PA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33600,
+          "sha256": "dddf69663ab9fcfbe8326e9debe297a9875baf417a71050877495edb41df7f3f"
+        }
+      ]
+    },
+    {
+      "id": "US-RI",
+      "name": "Rhode Island",
+      "postalCode": "RI",
+      "fips": "44",
+      "accessibleLabel": "Blueprint study of the state of Rhode Island",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 0,
+      "assets": [
+        {
+          "path": "states/US-RI.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 14985,
+          "sha256": "8bb08ba48abde43d132e6ae17c9929dd1e6f51cd67e3d551f66eeed3cac07f69"
+        },
+        {
+          "path": "states/US-RI.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27654,
+          "sha256": "a223d30df4dc013d252aeae6730d88f862bac5c1b307b085e988c78f1b05dfcb"
+        }
+      ]
+    },
+    {
+      "id": "US-SC",
+      "name": "South Carolina",
+      "postalCode": "SC",
+      "fips": "45",
+      "accessibleLabel": "Blueprint study of the state of South Carolina",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 9,
+      "assets": [
+        {
+          "path": "states/US-SC.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 31021,
+          "sha256": "dd8314f9dcf056b3eea287118d7bc6e6b69b307ca9d4b20422daabf8e7069381"
+        },
+        {
+          "path": "states/US-SC.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33202,
+          "sha256": "c545a9393bbed5f42eb9ab144943c37085e37d3d43c14a67292e37c31c3016bd"
+        }
+      ]
+    },
+    {
+      "id": "US-SD",
+      "name": "South Dakota",
+      "postalCode": "SD",
+      "fips": "46",
+      "accessibleLabel": "Blueprint study of the state of South Dakota",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-SD.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 26449,
+          "sha256": "5ce253be095982e1967ae56ebf5c833a993036d52193e6352c62ca4e65c996df"
+        },
+        {
+          "path": "states/US-SD.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 28960,
+          "sha256": "aa606df20483a8b8a4a560e66c2cbc8b930da15961ecf06ee6989521e9ec7471"
+        }
+      ]
+    },
+    {
+      "id": "US-TN",
+      "name": "Tennessee",
+      "postalCode": "TN",
+      "fips": "47",
+      "accessibleLabel": "Blueprint study of the state of Tennessee",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 6,
+      "assets": [
+        {
+          "path": "states/US-TN.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 28313,
+          "sha256": "500c8907dd7c3e4294d5e8de419796f411c65b2f50b20453c2f532a9803a902f"
+        },
+        {
+          "path": "states/US-TN.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27578,
+          "sha256": "d2098ac465398629dd2761dd75a354c0b434ed1f9357ca6a00063226c413adb5"
+        }
+      ]
+    },
+    {
+      "id": "US-TX",
+      "name": "Texas",
+      "postalCode": "TX",
+      "fips": "48",
+      "accessibleLabel": "Blueprint study of the state of Texas",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 13,
+      "assets": [
+        {
+          "path": "states/US-TX.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 64493,
+          "sha256": "a164e8f67883462c8233b394b777f1cee8b8c1b4f49ec9f8b4d16f4bc9b94b65"
+        },
+        {
+          "path": "states/US-TX.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 34784,
+          "sha256": "5507038aebe0872314434d5cd5ec144d067407a12836fa0e1e91c8f42a92ef5d"
+        }
+      ]
+    },
+    {
+      "id": "US-UT",
+      "name": "Utah",
+      "postalCode": "UT",
+      "fips": "49",
+      "accessibleLabel": "Blueprint study of the state of Utah",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 8,
+      "assets": [
+        {
+          "path": "states/US-UT.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 21122,
+          "sha256": "4c67f65c5919b25a7a227616dbe7d84eb7c75c2ae7ba35311348dcb7dee8fc7b"
+        },
+        {
+          "path": "states/US-UT.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 24276,
+          "sha256": "180d3a0d755eef12de4467006c23ec05f8a2656e8ba198aa96ca28912d2e0805"
+        }
+      ]
+    },
+    {
+      "id": "US-VA",
+      "name": "Virginia",
+      "postalCode": "VA",
+      "fips": "51",
+      "accessibleLabel": "Blueprint study of the state of Virginia",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 8,
+      "assets": [
+        {
+          "path": "states/US-VA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 43777,
+          "sha256": "f9619490d2c63f270883b1ee2588075f240fdefe27cad3591cf5a088be621009"
+        },
+        {
+          "path": "states/US-VA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 37714,
+          "sha256": "dc7eb83303d25de1dc15ffc68a5e9b9009789f4393a4021eb8141e084b5b612f"
+        }
+      ]
+    },
+    {
+      "id": "US-VT",
+      "name": "Vermont",
+      "postalCode": "VT",
+      "fips": "50",
+      "accessibleLabel": "Blueprint study of the state of Vermont",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 1,
+      "assets": [
+        {
+          "path": "states/US-VT.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 16380,
+          "sha256": "107e94ebcb668e835c887cd23839694185889cd6e4546ee93fe9f9335ae69c9d"
+        },
+        {
+          "path": "states/US-VT.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 23610,
+          "sha256": "ec6a0a2e19eec8c97cc005b953689af41919e75e36d5529613f6c1ae215251d6"
+        }
+      ]
+    },
+    {
+      "id": "US-WA",
+      "name": "Washington",
+      "postalCode": "WA",
+      "fips": "53",
+      "accessibleLabel": "Blueprint study of the state of Washington",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-WA.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 49140,
+          "sha256": "027e3919fe6df57b956d7f6b494111c3678b3207521ef05992057d1f1ec4181d"
+        },
+        {
+          "path": "states/US-WA.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 42174,
+          "sha256": "e445f50540a5deca232e5f7e88f7042360ac4aa31446f3d047edc5cdb65d756a"
+        }
+      ]
+    },
+    {
+      "id": "US-WI",
+      "name": "Wisconsin",
+      "postalCode": "WI",
+      "fips": "55",
+      "accessibleLabel": "Blueprint study of the state of Wisconsin",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 5,
+      "assets": [
+        {
+          "path": "states/US-WI.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 22576,
+          "sha256": "6df47127b4a1d1863aaccb00820cb2bbd3241740602f661bd5b82b1e8ed73689"
+        },
+        {
+          "path": "states/US-WI.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 31612,
+          "sha256": "f68108961efd3c146859234c7756ab2d714a4cfd32faa3201296d475fdf9f376"
+        }
+      ]
+    },
+    {
+      "id": "US-WV",
+      "name": "West Virginia",
+      "postalCode": "WV",
+      "fips": "54",
+      "accessibleLabel": "Blueprint study of the state of West Virginia",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 7,
+      "assets": [
+        {
+          "path": "states/US-WV.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33499,
+          "sha256": "6b593d91bd75fc681698f4a749c22643e6e6d7fe006b7c39a93fda5a77f61cfc"
+        },
+        {
+          "path": "states/US-WV.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 33168,
+          "sha256": "a0cac0e38799aa6b91bb1bed7e8191cda9f0539baf83f8914db7d72e96d9a2d7"
+        }
+      ]
+    },
+    {
+      "id": "US-WY",
+      "name": "Wyoming",
+      "postalCode": "WY",
+      "fips": "56",
+      "accessibleLabel": "Blueprint study of the state of Wyoming",
+      "aspectRatio": "4:3",
+      "reviewStatus": "generated",
+      "safeForPublicSite": true,
+      "recordedWaterFeatures": 14,
+      "assets": [
+        {
+          "path": "states/US-WY.svg",
+          "format": "svg",
+          "mediaType": "image/svg+xml",
+          "width": 1200,
+          "height": 900,
+          "bytes": 27667,
+          "sha256": "579eaf21997302865f6a54e8c26e0d408a6f46b7f485111da2ef651c1d878588"
+        },
+        {
+          "path": "states/US-WY.webp",
+          "format": "webp",
+          "mediaType": "image/webp",
+          "width": 1200,
+          "height": 900,
+          "bytes": 28168,
+          "sha256": "8d4ba0a183fea51391d2640cb9f5546b23817fb1c2b407a4ae00fb980cb06f61"
+        }
+      ]
+    }
+  ]
+}
