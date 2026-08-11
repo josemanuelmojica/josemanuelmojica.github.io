@@ -153,10 +153,67 @@ previews.
   keep passing unchanged — no LLM SDK, no new external secrets, no iframe.
 - Manual keyboard/touch/reduced-motion/200%-zoom pass on the interview flow.
 
+## Addendum: RealScout widget integration (approved)
+
+The owner supplied three verified RealScout web-component snippets (not
+placeholders — real, agent-scoped markup):
+
+- `realscout-simple-search` (agent-encoded-id `QWdlbnQtMTM3NjM5`)
+- `realscout-home-value` (same agent id)
+- `realscout-office-listings` (same agent id)
+
+All three load from one shared script:
+`https://em.realscout.com/widgets/realscout-web-components.umd.js`
+(`type="module"`). This is a real custom-element script tag, not an iframe,
+so it satisfies the site's "no iframe" non-negotiable. The `agent-encoded-id`
+is a public site identifier embedded directly in the vendor's own published
+markup (matching `docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md` §4's
+guidance that public widget identifiers do not need a Function proxy).
+
+**Layout decision — Option D ("search/listings lead, interview follows"):**
+mocked up and approved by the owner. Order on the homepage:
+
+1. `realscout-simple-search` near the top of the existing `#properties`
+   section (`app/InkEstates.tsx:883-967`), replacing/augmenting the concept
+   filter line as the primary entry point.
+2. `realscout-office-listings` as the live listings source in the same
+   section.
+3. The new lead-capture interview (this spec's core feature) appears further
+   down as a contextual, non-blocking offer — it replaces the existing
+   "Tell us what you're looking forward to" concept form at
+   `app/InkEstates.tsx:1007-1050` (`#contact` section), keeping that
+   section's id, heading language, and paper-stage visual treatment.
+4. `realscout-home-value` closes the page as a secondary CTA near/inside the
+   `#contact` section, after the interview.
+
+**CSP impact:** `app/layout.tsx`'s `contentSecurityPolicy` array must allow
+loading and executing the vendor script. Minimum required directive change:
+add `https://em.realscout.com` to `script-src`. `connect-src` may also need
+`https://em.realscout.com` (and possibly other RealScout API origins) once
+the widgets' live network calls are inspected in the browser — this must be
+verified by loading the built site and inspecting the Network tab, not
+guessed. Per the security doc, do **not** use a wildcard
+(`*.realscout.com` or `script-src https:`); allow-list only the exact
+origins observed. If the widgets call additional RealScout origins beyond
+`em.realscout.com`, add each exact origin only after confirming it in a
+live network trace.
+
+**Existing origin allowlist** (`content/market-link-origins.json`) already
+contains `https://www.realscout.com` for outbound links — that is a
+separate, narrower allowlist (used for `<a href>` validation, not script
+execution) and needs no change for the widget script itself.
+
+**No Appwrite Function proxy needed for the widgets** — the agent id is
+public, matching the security doc's explicit guidance to avoid adding proxy
+complexity without a private credential to protect.
+
 ## Out of scope for this pass
 
 - Which of the four `/previews/` nav studies becomes production navigation
   (separate decision, not addressed here).
-- Real RealScout widget integration.
 - Non-US locations (Census Geocoder and the bundled table are US-only,
   matching the current 8 US markets).
+- Verifying every RealScout network origin beyond `em.realscout.com` before
+  first live browser render — the plan allow-lists the known script origin
+  now and requires a live network check before widening `connect-src`
+  further.
