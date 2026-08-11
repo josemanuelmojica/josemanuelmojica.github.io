@@ -8,6 +8,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const output = path.join(root, "out");
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
 const stateArtRelativeDirectory = path.join("maps", "us-state-studies", "v1");
+const release = JSON.parse(
+  await readFile(path.join(root, "content", "release.json"), "utf8"),
+);
 
 const pages = [
   ["home", "index.html"],
@@ -68,10 +71,16 @@ test("exports the home page, preview index, and four navigation studies", async 
   }
 });
 
-test("preserves the key home and RealScout learning copy", async () => {
+test("preserves the selected release homepage and RealScout learning copy", async () => {
   const homeText = visibleText(await readOutput("index.html"));
-  assert.match(homeText, /Be drawn to where you live\./i);
   assert.match(homeText, /Arχ\s*&\s*Teχt/i);
+
+  if (release.id === "current-scroll" || release.id === "previous-scroll") {
+    assert.match(homeText, /Be drawn to where you live\./i);
+  } else {
+    assert.match(homeText, /Find the answer\./i);
+    assert.match(homeText, /Get back to the client\./i);
+  }
 
   const previewIndexText = visibleText(await readOutput("previews/index.html"));
   assert.match(previewIndexText, /Four ways into the same field guide\./i);
@@ -94,8 +103,29 @@ test("emits the static security boundary without framed content", async () => {
   }
 });
 
-test("renders market-aware links and neighborhood targets without portal photography", async () => {
+test("renders the selected release's defining homepage behavior", async () => {
   const home = await readOutput("index.html");
+
+  if (release.id === "previous-scroll") {
+    assert.match(home, /properties\/residence-0[1-3]\.jpg/);
+    assert.match(home, /Eight markets/);
+    return;
+  }
+
+  const previewSignatures = {
+    "datum-rail": /Datum rail/i,
+    "plan-legend": /Customer learning plan/i,
+    compass: /Set a bearing/i,
+    "sheet-tabs": /Drawing index/i,
+  };
+  const previewSignature = previewSignatures[release.id];
+  if (previewSignature) {
+    assert.match(visibleText(home), previewSignature);
+    assert.doesNotMatch(home, /<iframe\b/i);
+    return;
+  }
+
+  assert.equal(release.id, "current-scroll", `unhandled release id: ${release.id}`);
   const markets = [
     "San Francisco",
     "San Diego",

@@ -11,6 +11,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const execFileAsync = promisify(execFile);
 const stateArtDirectory = path.join(root, "public", "maps", "us-state-studies", "v1");
 
+const releaseHomepages = new Map([
+  ["current-scroll", "./InkEstates"],
+  ["previous-scroll", "../reference/previous-site/app/InkEstates"],
+  ["datum-rail", "./previews/datum-rail/page"],
+  ["plan-legend", "./previews/plan-legend/page"],
+  ["compass", "./previews/compass/page"],
+  ["sheet-tabs", "./previews/sheet-tabs/page"],
+]);
+
 const stateFipsByPostalCode = new Map([
   ["AL", "01"], ["AK", "02"], ["AZ", "04"], ["AR", "05"], ["CA", "06"],
   ["CO", "08"], ["CT", "09"], ["DE", "10"], ["FL", "12"], ["GA", "13"],
@@ -47,6 +56,25 @@ const publicAssets = [
 async function source(relativePath) {
   return readFile(path.join(root, relativePath), "utf8");
 }
+
+test("declares a known, correctly wired release homepage", async () => {
+  const release = JSON.parse(await source("content/release.json"));
+  const page = await source("app/page.tsx");
+  const layout = await source("app/layout.tsx");
+  const expectedImport = releaseHomepages.get(release.id);
+
+  assert.ok(expectedImport, `unknown release id: ${release.id}`);
+  assert.equal(typeof release.label, "string");
+  assert.ok(release.label.length > 0, "release label is empty");
+  assert.equal(typeof release.homepage, "string");
+  assert.match(page, new RegExp(expectedImport.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+
+  if (release.id === "previous-scroll") {
+    assert.match(layout, /reference\/previous-site\/app\/globals\.css/);
+  } else {
+    assert.match(layout, /\.\/globals\.css/);
+  }
+});
 
 function assertSafeRelativePath(relativePath, label) {
   assert.equal(typeof relativePath, "string", `${label} must be a string`);
