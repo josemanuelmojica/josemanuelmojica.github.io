@@ -2,6 +2,7 @@
   "name": "ark-and-text",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=22.13.0"
   },
@@ -13,7 +14,7 @@
     "check:state-art": "python3 scripts/state-ink/generate_state_ink_maps.py --check",
     "manifest:reference": "node scripts/build-reference-inventory.mjs",
     "typecheck": "tsc --noEmit",
-    "test:source": "node --test tests/source-contract.test.mjs",
+    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs",
     "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs"
   },
   "dependencies": {
