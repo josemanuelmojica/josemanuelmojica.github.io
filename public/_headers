@@ -5,10 +5,8 @@
 # Mutable files (HTML, the un-hashed masters) are intentionally NOT listed
 # here and fall back to Cloudflare's default caching.
 
-# Content-hashed responsive derivatives (generate-derivatives.mjs).
+# Content-hashed responsive derivatives (generate-derivatives.mjs) and the
+# content-hashed seamless atlas tiles (generate-atlas-tile.mjs), which live at
+# /derived/atlas-tile/* and are covered by this same prefix.
 /derived/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# Content-hashed atlas tapestry variants (generate-atlas.mjs).
-/derived/atlas/*
   Cache-Control: public, max-age=31536000, immutable

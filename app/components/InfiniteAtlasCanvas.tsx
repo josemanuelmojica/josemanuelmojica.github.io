@@ -2,27 +2,31 @@
 
 /**
  * InfiniteAtlasCanvas — a site-wide, fixed, decorative atlas plane behind all
- * page content. It replaces the section-scoped vertical AtlasRail with one
- * continuous field the whole site appears to travel across.
+ * page content: one continuous field the whole site appears to travel across.
  *
- * Behavior:
- *   - A single fixed, full-viewport layer paints one seamless (4-edge toroidal)
- *     tile via CSS background-repeat, so it fills any viewport by tiling.
+ * Architecture (compositor-oriented):
+ *   - A clipped, fixed, full-viewport container holds ONE oversized repeating
+ *     plane (viewport + one tile of slack on each axis).
  *   - Movement is SCROLL-COUPLED: page scroll drives a very slow diagonal drift
- *     of the background-position through the infinite plane (modulo-wrapped, so
- *     it never runs out). It is not a user-controlled map and not an autonomous
- *     carousel — the site and atlas travel together.
- *   - The drift is applied to background-position inside a rAF loop reading a
- *     scroll value captured by a passive listener; NO React state updates per
- *     frame.
- *   - Deferred: the tile image is only requested after mount (idle), so it never
- *     competes with critical content / LCP.
+ *     applied as `transform: translate3d(...)` on that single plane, wrapped
+ *     modulo the tile size so the slack always covers the viewport and the
+ *     field never runs out. The site and atlas travel together.
+ *   - Transform is a compositor-friendly property: the plane rasters once and
+ *     subsequent frames only update its transform, rather than repainting a
+ *     full-viewport background every frame.
+ *   - The rAF loop is demand-driven: it only runs while the scroll position is
+ *     still converging on its target, and stops when the field is at rest. It
+ *     is additionally suspended while the tab is hidden.
+ *   - Deferred: the tile image is only requested after mount (idle), so it
+ *     never competes with critical content / LCP.
  *   - prefers-reduced-motion: no drift; a static tiled field.
  *   - Decorative: pointer-events:none, aria-hidden.
  *
- * The tile asset comes from the responsive tile manifest; the runtime is
- * agnostic to which tile ships, so a refined seamless tile can replace the
- * current one with no code change.
+ * Candidate selection is delegated to the browser via CSS `image-set()`, which
+ * picks AVIF where supported and WebP otherwise. This replaces a canvas-based
+ * capability probe that produced false negatives: that probe asked the canvas
+ * to *encode* AVIF, which Chrome cannot do even though it decodes AVIF fine,
+ * so every Chrome user was served the larger WebP.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -38,6 +42,9 @@ const TILES = Object.values(tileManifest.sizes as Record<string, TileEntry>).sor
 const DRIFT_Y = 0.18;
 const DRIFT_X = 0.11;
 
+// Below this delta (px) the plane is considered at rest and the loop parks.
+const REST_EPSILON = 0.05;
+
 function pickTile(): TileEntry {
   // Choose the smallest tile whose size covers the viewport's smaller side,
   // so phones decode the 512 tile and large screens the 1024. SSR falls back
@@ -47,17 +54,20 @@ function pickTile(): TileEntry {
   return TILES.find((t) => t.size >= min) ?? TILES[TILES.length - 1];
 }
 
-function supportsAvif(): boolean {
-  // Cheap runtime AVIF check via canvas toDataURL; defaults to webp on failure.
-  if (typeof document === "undefined") return false;
-  const c = document.createElement("canvas");
-  c.width = c.height = 1;
-  return c.toDataURL("image/avif").startsWith("data:image/avif");
+/**
+ * Browser-native candidate selection. `image-set()` lets the UA choose the
+ * first type it can decode, so no JS capability detection is involved and no
+ * unused candidate is fetched.
+ */
+function tileImageSet(tile: TileEntry): string {
+  const avif = publicPath(tile.avif.path);
+  const webp = publicPath(tile.webp.path);
+  return `image-set(url("${avif}") type("image/avif"), url("${webp}") type("image/webp"))`;
 }
 
 export function InfiniteAtlasCanvas() {
-  const layerRef = useRef<HTMLDivElement>(null);
-  const [tileUrl, setTileUrl] = useState<string | null>(null);
+  const planeRef = useRef<HTMLDivElement>(null);
+  const [tile, setTile] = useState<TileEntry | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -70,13 +80,11 @@ export function InfiniteAtlasCanvas() {
 
   // Defer the tile fetch until after the critical frame, during idle.
   useEffect(() => {
-    const tile = pickTile();
-    const url = publicPath(supportsAvif() ? tile.avif.path : tile.webp.path);
     const win = window as typeof window & {
       requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
       cancelIdleCallback?: (id: number) => void;
     };
-    const load = () => setTileUrl(url);
+    const load = () => setTile(pickTile());
     const id =
       typeof win.requestIdleCallback === "function"
         ? win.requestIdleCallback(load, { timeout: 2500 })
@@ -87,55 +95,97 @@ export function InfiniteAtlasCanvas() {
     };
   }, []);
 
-  // Scroll-coupled diagonal drift. A passive scroll listener records the latest
-  // scrollY; a rAF loop writes background-position with modulo wrapping. No
-  // per-frame React state, so this stays compositor-friendly.
+  // Scroll-coupled diagonal drift via compositor transform. A passive scroll
+  // listener records the latest scrollY; a demand-driven rAF loop writes the
+  // plane's transform and parks itself once the field is at rest.
   useEffect(() => {
-    if (!tileUrl || reducedMotion) return;
-    const layer = layerRef.current;
-    if (!layer) return;
+    if (!tile || reducedMotion) return;
+    const plane = planeRef.current;
+    if (!plane) return;
 
-    const tileSize = pickTile().size;
-    let scrollY = window.scrollY || 0;
+    const tileSize = tile.size;
+    let targetY = window.scrollY || 0;
+    let renderedY: number | null = null;
     let raf = 0;
+    let running = false;
 
-    const onScroll = () => {
-      scrollY = window.scrollY || 0;
+    const draw = (scrollValue: number) => {
+      const x = -((scrollValue * DRIFT_X) % tileSize);
+      const y = -((scrollValue * DRIFT_Y) % tileSize);
+      plane.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      renderedY = scrollValue;
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
 
     const tick = () => {
-      // Wrap with modulo so the position never grows unbounded; the tile
-      // repeats, so any multiple of tileSize is visually identical.
-      const x = -((scrollY * DRIFT_X) % tileSize);
-      const y = -((scrollY * DRIFT_Y) % tileSize);
-      layer.style.backgroundPosition = `${x}px ${y}px`;
+      // Park when the rendered position already matches the target: an idle
+      // page performs no per-frame work at all.
+      if (renderedY !== null && Math.abs(targetY - renderedY) < REST_EPSILON) {
+        running = false;
+        raf = 0;
+        return;
+      }
+      draw(targetY);
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
+
+    const start = () => {
+      if (running || document.hidden) return;
+      running = true;
+      raf = requestAnimationFrame(tick);
+    };
+
+    const onScroll = () => {
+      targetY = window.scrollY || 0;
+      start();
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        // Suspend: no decorative work while the tab is backgrounded.
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        running = false;
+      } else {
+        // Resume seamlessly at the current scroll position.
+        targetY = window.scrollY || 0;
+        start();
+      }
+    };
+
+    // Paint the initial position once, then wait for scroll.
+    draw(targetY);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibility);
+      if (raf) cancelAnimationFrame(raf);
     };
-  }, [tileUrl, reducedMotion]);
+  }, [tile, reducedMotion]);
 
-  const tileSize = TILES.length ? pickTile().size : 768;
+  const tileSize = tile?.size ?? (TILES.length ? TILES[Math.floor(TILES.length / 2)].size : 768);
 
   return (
-    <div
-      ref={layerRef}
-      className="infinite-atlas"
-      aria-hidden="true"
-      style={
-        tileUrl
-          ? {
-              backgroundImage: `url(${tileUrl})`,
-              backgroundRepeat: "repeat",
-              backgroundSize: `${tileSize}px ${tileSize}px`,
-            }
-          : undefined
-      }
-    />
+    <div className="infinite-atlas" aria-hidden="true">
+      <div
+        ref={planeRef}
+        className="infinite-atlas__plane"
+        style={
+          tile
+            ? {
+                backgroundImage: tileImageSet(tile),
+                backgroundRepeat: "repeat",
+                backgroundSize: `${tileSize}px ${tileSize}px`,
+                // Slack of one tile on each axis so a wrapped translate never
+                // exposes an edge of the plane.
+                width: `calc(100vw + ${tileSize}px)`,
+                height: `calc(100vh + ${tileSize}px)`,
+              }
+            : undefined
+        }
+      />
+    </div>
   );
 }
