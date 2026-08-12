@@ -11,7 +11,9 @@ import {
 import marketLinkOrigins from "../content/market-link-origins.json";
 import marketLinks from "../content/market-links.json";
 import { LeadInterview } from "./LeadInterview";
+import { AtlasRail } from "./components/AtlasRail";
 import { publicPath } from "./lib/publicPath";
+import { responsiveSources } from "./lib/derivedMedia";
 
 type Study = {
   id: string;
@@ -714,10 +716,67 @@ function MarketStory({ reducedMotion }: { reducedMotion: boolean }) {
   );
 }
 
+const WORDMARK_SOURCES = responsiveSources("brand/ark-and-text-source.png");
+const HERO_SOURCES = responsiveSources("maps/japanese-ink-scroll/base/study-01.webp");
+
+function HeroMap() {
+  // The hero ink map is the LCP visual: eager, high priority, never lazy, with
+  // responsive derivatives so a phone fetches ~49 KB AVIF instead of the 324 KB
+  // 1200px master. Width/height set to prevent layout shift.
+  const alt = "San Francisco street network rendered as a Japanese ink drawing";
+  if (!HERO_SOURCES) {
+    return (
+      <img
+        className="hero__map"
+        src={publicPath("/maps/japanese-ink-scroll/base/study-01.webp")}
+        alt={alt}
+        decoding="async"
+        fetchPriority="high"
+      />
+    );
+  }
+  return (
+    <picture>
+      <source type="image/avif" srcSet={HERO_SOURCES.avifSrcSet} sizes="100vw" />
+      <source type="image/webp" srcSet={HERO_SOURCES.webpSrcSet} sizes="100vw" />
+      <img
+        className="hero__map"
+        src={HERO_SOURCES.fallbackSrc}
+        alt={alt}
+        decoding="async"
+        fetchPriority="high"
+        width={HERO_SOURCES.masterWidth ?? undefined}
+        height={HERO_SOURCES.masterHeight ?? undefined}
+      />
+    </picture>
+  );
+}
+
 function BrandName() {
+  // The wordmark sits in the header and is on the critical path (near-LCP), so
+  // it is eager + high priority. Responsive derivatives replace the 1.77 MB PNG
+  // master with a few-KB AVIF/WebP; the master remains a preservation asset.
+  if (!WORDMARK_SOURCES) {
+    return (
+      <span className="wordmark__art" aria-hidden="true">
+        <img src={publicPath("/brand/ark-and-text-source.png")} alt="" fetchPriority="high" />
+      </span>
+    );
+  }
   return (
     <span className="wordmark__art" aria-hidden="true">
-      <img src={publicPath("/brand/ark-and-text-source.png")} alt="" />
+      <picture>
+        <source type="image/avif" srcSet={WORDMARK_SOURCES.avifSrcSet} sizes="(max-width: 640px) 200px, 260px" />
+        <source type="image/webp" srcSet={WORDMARK_SOURCES.webpSrcSet} sizes="(max-width: 640px) 200px, 260px" />
+        <img
+          src={WORDMARK_SOURCES.fallbackSrc}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          width={WORDMARK_SOURCES.masterWidth ?? undefined}
+          height={WORDMARK_SOURCES.masterHeight ?? undefined}
+        />
+      </picture>
     </span>
   );
 }
@@ -830,13 +889,7 @@ export function InkEstates() {
       </header>
 
       <section className="hero paper-stage" id="top">
-        <img
-          className="hero__map"
-          src={publicPath("/maps/japanese-ink-scroll/base/study-01.webp")}
-          alt="San Francisco street network rendered as a Japanese ink drawing"
-          decoding="async"
-          fetchPriority="high"
-        />
+        <HeroMap />
         <div className="hero__wash" />
         <div className="hero__content">
           <p className="eyebrow">Private real estate / eight American markets</p>
@@ -966,13 +1019,16 @@ export function InkEstates() {
         )}
       </section>
 
-      <section className="markets-intro">
-        <p className="eyebrow">A place-first practice</p>
-        <h2>A map tells you what a listing cannot.</h2>
-        <p>
-          Scroll eight real street networks. Each city gathers at the same
-          point. Then the next map takes over.
-        </p>
+      <section className="markets-intro markets-intro--atlas">
+        <AtlasRail />
+        <div className="markets-intro__copy">
+          <p className="eyebrow">A place-first practice</p>
+          <h2>A map tells you what a listing cannot.</h2>
+          <p>
+            Scroll eight real street networks. Each city gathers at the same
+            point. Then the next map takes over.
+          </p>
+        </div>
       </section>
 
       <MarketStory reducedMotion={reducedMotion} />

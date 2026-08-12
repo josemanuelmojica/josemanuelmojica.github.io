@@ -2011,3 +2011,69 @@ img {
     transition: none;
   }
 }
+
+/* Ambient luxury atlas rail — decorative vertical map tapestry.
+   Transform-only motion; strictly cheaper than the interactive MarketStory. */
+.atlas-rail {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.atlas-rail__track {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  will-change: transform;
+}
+
+.atlas-rail__track--animate {
+  animation-name: atlas-rail-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.atlas-rail__frame {
+  display: block;
+  width: 100%;
+}
+
+.atlas-rail__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes atlas-rail-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* Shift up by exactly one atlas copy (half the two-copy track). */
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-rail__track--animate {
+    animation: none;
+  }
+}
+
+.markets-intro--atlas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(28rem, 60vh, 44rem);
+  display: flex;
+  align-items: center;
+}
+
+.markets-intro__copy {
+  position: relative;
+  z-index: 1;
+}

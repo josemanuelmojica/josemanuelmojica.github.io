@@ -159,8 +159,13 @@ test("copies required public assets and references the real wordmark", async () 
 
   for (const [, relativePath] of pages) {
     const html = await readOutput(relativePath);
+    // The supplied wordmark artwork must be used (not a browser-typeset
+    // recreation). It is now delivered via responsive derivatives generated
+    // from the master PNG, so accept either the derived wordmark or the
+    // original master at the configured base path.
     assert.ok(
-      html.includes(`${basePath}/brand/ark-and-text-source.png`),
+      html.includes(`${basePath}/derived/ark-and-text-source-`) ||
+        html.includes(`${basePath}/brand/ark-and-text-source.png`),
       `${relativePath} does not reference the supplied wordmark artwork at the configured base path`,
     );
     assert.ok(

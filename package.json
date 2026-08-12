@@ -12,10 +12,12 @@
     "start": "next start",
     "generate:state-art": "python3 scripts/state-ink/generate_state_ink_maps.py",
     "check:state-art": "python3 scripts/state-ink/generate_state_ink_maps.py --check",
+    "generate:media": "node scripts/media/generate-derivatives.mjs && node scripts/media/generate-atlas.mjs",
+    "check:media": "node scripts/media/generate-derivatives.mjs --check && node scripts/media/generate-atlas.mjs --check && node scripts/media/check-derivatives.mjs",
     "manifest:reference": "node scripts/build-reference-inventory.mjs",
     "typecheck": "tsc --noEmit",
-    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs tests/worker-contract.test.mjs",
-    "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs",
+    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs tests/worker-contract.test.mjs tests/atlas-media.test.mjs",
+    "test": "npm run check:media && npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs",
     "cf:dev": "wrangler dev",
     "cf:dry": "wrangler deploy --dry-run",
     "cf:deploy": "wrangler deploy"
@@ -30,6 +32,7 @@
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "sharp": "^0.34.5",
     "typescript": "5.9.3",
     "wrangler": "4.121.0"
   }

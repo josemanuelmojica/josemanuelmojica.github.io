@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { publicPath } from "../lib/publicPath";
+import { responsiveSources } from "../lib/derivedMedia";
 import styles from "./PreviewShared.module.css";
+
+const WORDMARK_SOURCES = responsiveSources("brand/ark-and-text-source.png");
 
 export const learningLinks = [
   { code: "A.01", label: "Start", href: "#start" },
@@ -21,7 +24,22 @@ const previewLinks = [
 export function ArtworkWordmark({ compact = false }: { compact?: boolean }) {
   return (
     <span className={compact ? `${styles.wordmark} ${styles.wordmarkCompact}` : styles.wordmark}>
-      <img src={publicPath("/brand/ark-and-text-source.png")} alt="" aria-hidden="true" />
+      {WORDMARK_SOURCES ? (
+        <picture>
+          <source type="image/avif" srcSet={WORDMARK_SOURCES.avifSrcSet} sizes="260px" />
+          <source type="image/webp" srcSet={WORDMARK_SOURCES.webpSrcSet} sizes="260px" />
+          <img
+            src={WORDMARK_SOURCES.fallbackSrc}
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            width={WORDMARK_SOURCES.masterWidth ?? undefined}
+            height={WORDMARK_SOURCES.masterHeight ?? undefined}
+          />
+        </picture>
+      ) : (
+        <img src={publicPath("/brand/ark-and-text-source.png")} alt="" aria-hidden="true" />
+      )}
       <span className={styles.srOnly}>Arχ &amp; Teχt</span>
     </span>
   );
