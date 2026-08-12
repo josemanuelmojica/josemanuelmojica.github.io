@@ -189,8 +189,8 @@ export function LeadInterview() {
       {step === "confirm" && interpretation && (
         <div className="lead-interview__step lead-interview__confirmation">
           <div className="lead-interview__plate">
-            <img src={visualUrl} alt={`${visualName} rendered as a quiet blue watershed study`} />
-            <span>Search study / {interpretation.visualId ?? "unresolved"}</span>
+            <img src={visualUrl} alt={`${visualName} rendered as a quiet blue watershed drawing`} />
+            <span>{visualName}</span>
           </div>
           <div className="lead-interview__confirm-copy">
             {interpretation.candidateStates.length > 0 ? (
