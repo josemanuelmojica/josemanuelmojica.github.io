@@ -2077,3 +2077,110 @@ img {
   position: relative;
   z-index: 1;
 }
+
+/* Hero architectural reveal — editorial opening sequence behind hero content.
+   Sits above the hero map (z -3) and wash (z -2), below content. Resolves to
+   stillness; the street draw-on is the only transient motion. */
+.hero-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-reveal__grid,
+.hero-reveal__map,
+.hero-reveal__buildings,
+.hero-reveal__marks {
+  position: absolute;
+  inset: 0;
+}
+
+/* Street/footprint trace canvas is inset to the right where the hero map sits. */
+.hero-reveal__map,
+.hero-reveal__buildings {
+  left: auto;
+  right: 0;
+  width: min(60vw, 62rem);
+  opacity: 0.85;
+}
+
+.hero-reveal__trace {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-reveal__road {
+  stroke: color-mix(in srgb, var(--ink) 62%, transparent);
+}
+
+.hero-reveal__footprint {
+  stroke: var(--blueprint);
+  fill: color-mix(in srgb, var(--blueprint) 6%, transparent);
+}
+
+/* Stroke draw-on: each road path starts fully dashed (invisible) and the dash
+   offset animates to 0, tracing the street. pathLength normalization via a
+   large dasharray keeps it resolution-independent. */
+.hero-reveal__trace--draw .hero-reveal__road {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: hero-trace-draw 1.1s var(--ease-ink, ease) forwards;
+}
+
+@keyframes hero-trace-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-reveal__datum {
+  position: absolute;
+  top: 28%;
+  right: 22%;
+}
+
+.hero-reveal__coords {
+  position: absolute;
+  top: calc(28% + 2.4rem);
+  right: 22%;
+  font-family: var(--utility);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-reveal__coords .coordinate-stamp__value {
+  color: var(--blueprint);
+}
+
+.hero-reveal__north {
+  position: absolute;
+  top: 12%;
+  right: 8%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal__trace--draw .hero-reveal__road {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* On small screens the marks would crowd the headline; keep only the grid
+     and a faint trace, hide the mark cluster. */
+  .hero-reveal__marks {
+    display: none;
+  }
+  .hero-reveal__map,
+  .hero-reveal__buildings {
+    width: 84vw;
+    opacity: 0.6;
+  }
+}
