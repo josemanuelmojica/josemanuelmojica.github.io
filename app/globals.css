@@ -134,6 +134,11 @@ img {
   left: 0;
   width: 171.683%;
   max-width: none;
+  /* The <img> carries the master's intrinsic width/height attributes (which
+     reserve space and avoid CLS). Those attributes would otherwise fix the
+     rendered height at the master's 907px and burst this crop window, so the
+     height is derived from the cropped width instead. */
+  height: auto;
   transform: translate(-7.209%, -30.32%);
 }
 
@@ -376,8 +381,25 @@ img {
 }
 
 .properties {
+  position: relative;
   padding: clamp(7rem, 12vw, 12rem) 5vw clamp(8rem, 13vw, 13rem);
-  background: var(--paper);
+  /* Slightly translucent so the atlas field still registers underneath. A
+     fully opaque --paper fill made this the one section where the
+     cartographic identity disappeared entirely, leaving a generic listing
+     grid between two strongly drawn sections. */
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+}
+
+/* Datum rule entering the collection, in the same drafting vocabulary the
+   market chapters already use — one line, not a new effect system. */
+.properties::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 5vw;
+  width: min(38vw, 26rem);
+  height: 1px;
+  background: var(--rule);
 }
 
 .section-heading {
@@ -1653,7 +1675,16 @@ img {
 
   .hero__content {
     width: auto;
-    padding: 9.5rem 1.4rem 14rem;
+    /* The search bar is pinned to the bottom of the hero, so the old 14rem
+       bottom padding did not push anything — it just opened ~560px of void
+       between the lede and the bar on a 844px screen. Centring the block in
+       the space above the bar makes the crop deliberate: map band on top,
+       type seated in the middle, interaction pinned at the bottom. */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 6rem 1.4rem 11rem;
   }
 
   .hero h1 {
@@ -1669,8 +1700,11 @@ img {
   }
 
   .hero__seal {
-    right: 15vw;
-    bottom: 44vh;
+    /* Register the seal against the map band in the upper crop rather than
+       leaving it adrift in the open paper below the lede. */
+    right: 12vw;
+    bottom: auto;
+    top: 26vh;
   }
 
   .property-search {
@@ -2190,9 +2224,25 @@ img {
   .hero-reveal__marks {
     display: none;
   }
+
+  /* Mobile is a composed CROP of the same world, not the desktop split scaled
+     down. The hero photograph is already re-framed into a top band here (see
+     the 720px rule for .hero__map: right:-39vw; width:122vw; height:76%), so
+     the architectural trace registers onto that same band instead of running
+     full-height down the page. Left unconstrained it spans the headline
+     column and drops blue building footprints on top of the type. */
   .hero-reveal__map,
   .hero-reveal__buildings {
-    width: 84vw;
-    opacity: 0.6;
+    right: -39vw;
+    width: 122vw;
+    /* Stop above the headline block rather than covering it. */
+    height: 46%;
+    opacity: 0.5;
+  }
+
+  /* The drafting grid may still run full-bleed — it is the paper, not a
+     figure — but it eases off so the headline keeps the strongest contrast. */
+  .hero-reveal__grid {
+    opacity: 0.55;
   }
 }
