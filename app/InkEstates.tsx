@@ -11,7 +11,7 @@ import {
 import marketLinkOrigins from "../content/market-link-origins.json";
 import marketLinks from "../content/market-links.json";
 import { LeadInterview } from "./LeadInterview";
-import { AtlasRail } from "./components/AtlasRail";
+import { InfiniteAtlasCanvas } from "./components/InfiniteAtlasCanvas";
 import { publicPath } from "./lib/publicPath";
 import { responsiveSources } from "./lib/derivedMedia";
 
@@ -867,6 +867,7 @@ export function InkEstates() {
 
   return (
     <main>
+      <InfiniteAtlasCanvas />
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Ark and Text home">
           <BrandName />
@@ -1019,16 +1020,12 @@ export function InkEstates() {
         )}
       </section>
 
-      <section className="markets-intro markets-intro--atlas">
-        <AtlasRail />
-        <div className="markets-intro__copy">
-          <p className="eyebrow">A place-first practice</p>
-          <h2>A map tells you what a listing cannot.</h2>
-          <p>
-            Scroll eight real street networks. Each city gathers at the same
-            point. Then the next map takes over.
-          </p>
-        </div>
+      <section className="markets-intro">
+        <p className="eyebrow">A place-first practice</p>
+        <h2>A map tells you what a listing cannot.</h2>
+        <p>
+          Every neighborhood has a shape. We read it before we read the house.
+        </p>
       </section>
 
       <MarketStory reducedMotion={reducedMotion} />

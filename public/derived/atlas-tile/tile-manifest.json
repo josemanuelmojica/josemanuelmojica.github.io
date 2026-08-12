@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "scripts/media/generate-atlas-tile.mjs",
+  "composedFrom": [
+    "study-04.webp",
+    "study-06.webp",
+    "study-01.webp",
+    "study-05.webp"
+  ],
+  "seamless": "4-edge toroidal",
+  "sizes": {
+    "512": {
+      "size": 512,
+      "avif": {
+        "path": "/derived/atlas-tile/tile-512-36994e3d.avif",
+        "bytes": 41812
+      },
+      "webp": {
+        "path": "/derived/atlas-tile/tile-512-b1bfcb68.webp",
+        "bytes": 57182
+      }
+    },
+    "768": {
+      "size": 768,
+      "avif": {
+        "path": "/derived/atlas-tile/tile-768-57f42322.avif",
+        "bytes": 83711
+      },
+      "webp": {
+        "path": "/derived/atlas-tile/tile-768-61bf7938.webp",
+        "bytes": 114482
+      }
+    },
+    "1024": {
+      "size": 1024,
+      "avif": {
+        "path": "/derived/atlas-tile/tile-1024-79a0a804.avif",
+        "bytes": 130739
+      },
+      "webp": {
+        "path": "/derived/atlas-tile/tile-1024-a11bcf43.webp",
+        "bytes": 178088
+      }
+    }
+  }
+}

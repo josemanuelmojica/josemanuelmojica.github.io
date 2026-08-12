@@ -2012,68 +2012,47 @@ img {
   }
 }
 
-/* Ambient luxury atlas rail — decorative vertical map tapestry.
-   Transform-only motion; strictly cheaper than the interactive MarketStory. */
-.atlas-rail {
+/* Infinite atlas canvas — a fixed, site-wide decorative map plane behind all
+   content. One seamless (4-edge toroidal) tile, repeated, drifting diagonally
+   with scroll. Movement is applied to background-position by JS (rAF); this
+   block owns only the static presentation + reduced-motion fallback. */
+.infinite-atlas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  /* Warm ivory drafting paper shows through the tile's negative space and
+     stands in before the tile has loaded (no blank flash). */
+  background-color: var(--paper);
+  /* The atlas is a quiet ground, not a focal image. */
+  opacity: 0.42;
+}
+
+/* Foreground content sits above the atlas and can carry translucent ivory
+   masks so the continuous field reads more strongly in open areas and recedes
+   behind dense text. Sections opt in with .paper-mask. */
+.paper-mask {
+  position: relative;
+  isolation: isolate;
+}
+
+.paper-mask::before {
+  content: "";
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  z-index: -1;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
 }
 
-.atlas-rail__track {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  will-change: transform;
-}
-
-.atlas-rail__track--animate {
-  animation-name: atlas-rail-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.atlas-rail__frame {
-  display: block;
-  width: 100%;
-}
-
-.atlas-rail__img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-@keyframes atlas-rail-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    /* Shift up by exactly one atlas copy (half the two-copy track). */
-    transform: translate3d(0, -50%, 0);
-  }
+/* Denser mask variant for text-heavy regions that need more legibility. */
+.paper-mask--solid::before {
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .atlas-rail__track--animate {
-    animation: none;
+  /* No drift; the tiled field simply holds still (JS also skips the rAF loop). */
+  .infinite-atlas {
+    background-attachment: scroll;
   }
-}
-
-.markets-intro--atlas {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: clamp(28rem, 60vh, 44rem);
-  display: flex;
-  align-items: center;
-}
-
-.markets-intro__copy {
-  position: relative;
-  z-index: 1;
 }

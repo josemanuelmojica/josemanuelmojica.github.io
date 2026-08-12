@@ -31,12 +31,12 @@ const CRITICAL_BUDGETS = {
   },
 };
 
-// Atlas is decorative/off-critical-path, but the mobile breakpoint must still
-// stay reasonable so a phone doesn't pull a multi-MB ambient background.
-const ATLAS_BUDGETS = {
-  420: 400 * 1024, // mobile avif/webp per-variant ceiling
-  720: 900 * 1024,
-  1100: 1500 * 1024,
+// The seamless atlas tile is decorative/off-critical-path and one repeated
+// tile, so each size must stay small — a phone must not pull a heavy tile.
+const TILE_BUDGETS = {
+  512: 200 * 1024, // mobile
+  768: 300 * 1024,
+  1024: 400 * 1024,
 };
 
 const failures = [];
@@ -76,21 +76,21 @@ async function verifyDerivatives() {
   }
 }
 
-async function verifyAtlas() {
-  const manifestPath = path.join(PUBLIC, "derived/atlas/atlas-manifest.json");
-  check(existsSync(manifestPath), "derived/atlas/atlas-manifest.json missing");
+async function verifyAtlasTile() {
+  const manifestPath = path.join(PUBLIC, "derived/atlas-tile/tile-manifest.json");
+  check(existsSync(manifestPath), "derived/atlas-tile/tile-manifest.json missing");
   if (!existsSync(manifestPath)) return;
 
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-  for (const [widthKey, bp] of Object.entries(manifest.breakpoints)) {
-    const budget = ATLAS_BUDGETS[Number(widthKey)];
+  for (const [sizeKey, entry] of Object.entries(manifest.sizes)) {
+    const budget = TILE_BUDGETS[Number(sizeKey)];
     for (const format of ["avif", "webp"]) {
-      const abs = path.join(PUBLIC, bp[format].path.replace(/^\//, ""));
-      check(existsSync(abs), `missing atlas variant on disk: ${bp[format].path}`);
+      const abs = path.join(PUBLIC, entry[format].path.replace(/^\//, ""));
+      check(existsSync(abs), `missing atlas tile variant on disk: ${entry[format].path}`);
       if (budget != null) {
         check(
-          bp[format].bytes <= budget,
-          `atlas ${widthKey}w ${format} ${(bp[format].bytes / 1024).toFixed(0)} KB exceeds ceiling ${(budget / 1024).toFixed(0)} KB`
+          entry[format].bytes <= budget,
+          `atlas tile ${sizeKey}px ${format} ${(entry[format].bytes / 1024).toFixed(0)} KB exceeds ceiling ${(budget / 1024).toFixed(0)} KB`
         );
       }
     }
@@ -98,7 +98,7 @@ async function verifyAtlas() {
 }
 
 await verifyDerivatives();
-await verifyAtlas();
+await verifyAtlasTile();
 
 if (failures.length > 0) {
   console.error("Media budget check FAILED:");
