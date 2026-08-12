@@ -1,0 +1,21 @@
+{
+  // Isolated TypeScript config for the Cloudflare Worker.
+  //
+  // The Worker runs in the Workers runtime, not the browser, so it uses
+  // @cloudflare/workers-types instead of the DOM lib the site uses. Keeping
+  // this separate from the root tsconfig avoids Response/fetch type clashes
+  // between the two runtimes.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true
+  },
+  "include": ["index.ts"]
+}

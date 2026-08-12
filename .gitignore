@@ -10,3 +10,5 @@ npm-debug.log*
 *.tsbuildinfo
 __pycache__/
 *.py[cod]
+.wrangler/
+.dev.vars*

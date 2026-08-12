@@ -14,8 +14,11 @@
     "check:state-art": "python3 scripts/state-ink/generate_state_ink_maps.py --check",
     "manifest:reference": "node scripts/build-reference-inventory.mjs",
     "typecheck": "tsc --noEmit",
-    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs",
-    "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs"
+    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs tests/worker-contract.test.mjs",
+    "test": "npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs",
+    "cf:dev": "wrangler dev",
+    "cf:dry": "wrangler deploy --dry-run",
+    "cf:deploy": "wrangler deploy"
   },
   "dependencies": {
     "next": "16.2.6",
@@ -23,9 +26,11 @@
     "react-dom": "19.2.6"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "5.20260812.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.121.0"
   }
 }

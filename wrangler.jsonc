@@ -1,0 +1,25 @@
+{
+  // Cloudflare Workers configuration for Arχ & Teχt.
+  //
+  // The site is a static Next.js export (`output: "export"` -> ./out).
+  // Cloudflare serves those files directly from the edge asset store.
+  // The Worker script runs FIRST only for /api/* routes; every other
+  // request (HTML, CSS, images, the state-art corpus) is served straight
+  // from static assets without invoking the Worker.
+  //
+  // No D1, no Turnstile, no lead endpoint, no Appwrite are configured here.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ark-and-text",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-11",
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    // The Worker only executes ahead of static assets for /api/* paths.
+    // All other routes resolve directly to files in ./out.
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
