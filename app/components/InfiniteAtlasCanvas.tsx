@@ -45,6 +45,18 @@ const DRIFT_X = 0.11;
 // Below this delta (px) the plane is considered at rest and the loop parks.
 const REST_EPSILON = 0.05;
 
+/**
+ * True mathematical modulo, always returning a value in [0, m). JS's `%` is
+ * a remainder operator: for a negative dividend it returns a NEGATIVE
+ * result, e.g. -5 % 512 === -5, not 507. iOS Safari's rubber-band overscroll
+ * makes window.scrollY briefly negative at the top of the page, and a plain
+ * `%` there flips the drift transform's sign at the exact scrollY===0
+ * boundary — a visible one-frame snap right where the bounce happens.
+ */
+function wrap(value: number, m: number): number {
+  return ((value % m) + m) % m;
+}
+
 function pickTile(): TileEntry {
   // Choose the smallest tile whose size covers the viewport's smaller side,
   // so phones decode the 512 tile and large screens the 1024. SSR falls back
@@ -95,6 +107,30 @@ export function InfiniteAtlasCanvas() {
     };
   }, []);
 
+  // Re-pick the tile if a resize/orientation-change crosses a size
+  // threshold (e.g. rotating a tablet, or a window drag). Without this the
+  // plane keeps the tile chosen at mount, which was measured to still cover
+  // the viewport (calc(100vw + tileSize) uses live vw/vh) but at the wrong
+  // resolution for the new size, going soft or repeating more densely than
+  // intended. Debounced and only calls setTile when the ideal tile actually
+  // changes, so an ordinary window resize does no work.
+  useEffect(() => {
+    if (!tile) return;
+    let debounce = 0;
+    const onResize = () => {
+      window.clearTimeout(debounce);
+      debounce = window.setTimeout(() => {
+        const next = pickTile();
+        if (next.size !== tile.size) setTile(next);
+      }, 200);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(debounce);
+    };
+  }, [tile]);
+
   // Scroll-coupled diagonal drift via compositor transform. A passive scroll
   // listener records the latest scrollY; a demand-driven rAF loop writes the
   // plane's transform and parks itself once the field is at rest.
@@ -110,8 +146,11 @@ export function InfiniteAtlasCanvas() {
     let running = false;
 
     const draw = (scrollValue: number) => {
-      const x = -((scrollValue * DRIFT_X) % tileSize);
-      const y = -((scrollValue * DRIFT_Y) % tileSize);
+      // wrap() keeps x/y continuously in [-tileSize, 0] even when scrollValue
+      // is negative (rubber-band overscroll), so the transform never flips
+      // sign at the scrollY===0 boundary.
+      const x = -wrap(scrollValue * DRIFT_X, tileSize);
+      const y = -wrap(scrollValue * DRIFT_Y, tileSize);
       plane.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       renderedY = scrollValue;
     };

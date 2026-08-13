@@ -116,3 +116,51 @@ test("infinite atlas CSS holds a static field under reduced motion", async () =>
     "a reduced-motion block must address .infinite-atlas"
   );
 });
+
+test("InfiniteAtlasCanvas wraps drift with true modulo, not JS remainder", async () => {
+  const src = await readFile(path.join(ROOT, "app/components/InfiniteAtlasCanvas.tsx"), "utf8");
+  // JS `%` returns a NEGATIVE result for a negative dividend (-5 % 512 ===
+  // -5, not 507). iOS Safari's rubber-band overscroll briefly makes
+  // window.scrollY negative at the top of the page, and a plain `%` there
+  // flips the drift transform's sign at the exact scrollY===0 boundary — a
+  // visible one-frame snap right where the bounce happens. draw() must
+  // route through a true-modulo wrap() helper instead of `% tileSize`
+  // directly on the scroll-derived value.
+  const drawBody = src.match(/const draw = \(scrollValue: number\) => \{[^]*?\n {4}\};/)?.[0] ?? "";
+  assert.ok(drawBody.length > 0, "expected to locate the draw() body");
+  assert.doesNotMatch(drawBody, /scrollValue \* DRIFT_[XY]\) % tileSize/, "draw() must not use raw `%` on scrollValue directly");
+  assert.match(drawBody, /wrap\(scrollValue \* DRIFT_X, tileSize\)/, "draw() must wrap the X drift through wrap()");
+  assert.match(drawBody, /wrap\(scrollValue \* DRIFT_Y, tileSize\)/, "draw() must wrap the Y drift through wrap()");
+  assert.match(src, /function wrap\(value: number, m: number\): number \{/, "expected a dedicated wrap() helper");
+
+  // Pin the numeric contract wrap() must satisfy: true modulo, always in
+  // [0, m), so a regression to a plain `%` would fail this even if someone
+  // renamed the call site to still say "wrap".
+  const wrap = (value, m) => ((value % m) + m) % m;
+  assert.equal(wrap(-5, 512), 507, "wrap(-5, 512) must stay positive (JS % would give -5)");
+  assert.equal(wrap(-50, 512), 462, "wrap(-50, 512) must stay positive (JS % would give -50)");
+  assert.equal(wrap(100, 512), 100, "wrap must be a no-op for values already in range");
+  assert.equal(wrap(0, 512), 0, "wrap(0) must be exactly 0");
+
+  // Continuity across the scrollY===0 boundary: stepping scrollY by a small
+  // amount must move the wrapped value by a small amount too, in one
+  // direction around the tile's repeat — never a ~tileSize jump.
+  const DRIFT_X = 0.11;
+  const before = wrap(-0.5 * DRIFT_X, 512);
+  const at = wrap(0 * DRIFT_X, 512);
+  const after = wrap(0.5 * DRIFT_X, 512);
+  const stepBeforeToAt = Math.min(Math.abs(at - before), 512 - Math.abs(at - before));
+  const stepAtToAfter = Math.min(Math.abs(after - at), 512 - Math.abs(after - at));
+  assert.ok(stepBeforeToAt < 1, `crossing scrollY=0 from behind must not jump: got step of ${stepBeforeToAt}`);
+  assert.ok(stepAtToAfter < 1, `crossing scrollY=0 going forward must not jump: got step of ${stepAtToAfter}`);
+});
+
+test("InfiniteAtlasCanvas re-picks its tile on resize, debounced", async () => {
+  const src = await readFile(path.join(ROOT, "app/components/InfiniteAtlasCanvas.tsx"), "utf8");
+  assert.match(src, /addEventListener\("resize", onResize\)/, "must listen for resize");
+  const resizeEffect = src.match(/useEffect\(\(\) => \{\n {4}if \(!tile\) return;[^]*?\n {2}\}, \[tile\]\);/)?.[0] ?? "";
+  assert.ok(resizeEffect.length > 0, "expected to locate the resize effect");
+  assert.match(resizeEffect, /setTimeout/, "resize handling must be debounced");
+  assert.match(resizeEffect, /pickTile\(\)/, "must be able to re-pick the tile");
+  assert.match(resizeEffect, /next\.size !== tile\.size/, "must only setTile when the ideal tile size actually changes");
+});
