@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "name": "Arχ & Teχt National Ink Atlas",
+  "generatedFrom": "scripts/media/generate-atlas-masters.mjs",
+  "theme": "arx_text_graphite",
+  "source": {
+    "dataset": "OpenStreetMap via osmnx",
+    "attribution": "© OpenStreetMap contributors",
+    "note": "Attribution is rendered at the site/component level, never baked into the artwork."
+  },
+  "studies": {
+    "study-01-san-francisco": {
+      "id": "study-01-san-francisco",
+      "renders": {
+        "1024": {
+          "width": 1024,
+          "height": 1363,
+          "avif": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-1024-0685aa83.avif",
+            "bytes": 177347
+          },
+          "webp": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-1024-4eec4e0c.webp",
+            "bytes": 229020
+          }
+        },
+        "2048": {
+          "width": 2048,
+          "height": 2726,
+          "avif": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-2048-abfdccb9.avif",
+            "bytes": 389503
+          },
+          "webp": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-2048-4935f40f.webp",
+            "bytes": 622360
+          }
+        },
+        "3840": {
+          "width": 3840,
+          "height": 5110,
+          "avif": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-3840-159ac5cb.avif",
+            "bytes": 676208
+          },
+          "webp": {
+            "path": "/maps/national-ink-atlas/renders/study-01-san-francisco-3840-83b3b796.webp",
+            "bytes": 1369022
+          }
+        }
+      }
+    }
+  }
+}
