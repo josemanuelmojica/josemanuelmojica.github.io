@@ -29,6 +29,15 @@ html {
   color: var(--ink);
   background: var(--paper);
   scroll-behavior: smooth;
+  /* The sheet is a light surface. Without this the browser paints the
+     overscroll canvas (the area outside the document, revealed by
+     rubber-banding) with its own default, which reads as a warm/tan band
+     above the page. */
+  color-scheme: light;
+  /* No rubber-band at the top. The bounce exposed that canvas band and made
+     a drag-down gesture look like a pull-to-refresh affordance, which this
+     site does not have. */
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -38,6 +47,7 @@ body {
   color: var(--ink);
   font-family: var(--body);
   font-synthesis: none;
+  overscroll-behavior-y: none;
 }
 
 button,
@@ -2261,16 +2271,23 @@ img {
 
 .drawing-index {
   position: fixed;
-  top: 50%;
+  top: 0;
   left: 0;
   z-index: 30;
-  transform: translateY(-50%);
   display: none; /* desktop-only; mobile gets the tab strip below */
-  flex-direction: column;
-  gap: 2.4rem;
-  /* Sits inside the reserved binding edge. */
+  /* The rule runs the full height of the sheet edge, the way a scale rule
+     is laid along a drawing rather than floated in the middle of it. The
+     graduation and the section marks share the middle row so the marks
+     register against the rule. */
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "plate"
+    "rule"
+    "meta";
+  height: 100dvh;
   width: var(--index-margin, 8.5rem);
-  padding: 0 0 0 2.2rem;
+  padding: 2.2rem 0 2.2rem 2.2rem;
   pointer-events: none; /* only the links take pointer events */
 }
 
@@ -2305,12 +2322,82 @@ img {
   color: color-mix(in srgb, var(--ash) 72%, transparent);
 }
 
+/* --- The scale rule -------------------------------------------------- */
+
+/* Occupies the vertical space between the plate header and the coordinate
+   footer, so the graduation reads as measuring the whole sheet edge. The
+   section list is layered over it (same grid cell) so the marks register
+   against the rule rather than sitting under it. */
+.drawing-index__scale-rule {
+  position: relative;
+  grid-area: rule;
+  min-height: 0;
+  color: color-mix(in srgb, var(--ash) 62%, transparent);
+}
+
+.drawing-index__rule {
+  display: block;
+  width: 34px;
+  height: 100%;
+  /* Not `visible`: the ticks are drawn inside the viewBox, and letting the
+     SVG overflow extended the document's scroll width. */
+  overflow: hidden;
+}
+
+.drawing-index__numbers {
+  position: absolute;
+  inset: 0;
+  left: 15px;
+  pointer-events: none;
+}
+
+.drawing-index__number {
+  position: absolute;
+  left: 0;
+  /* Sit the digits on their tick rather than below it. */
+  transform: translateY(-50%);
+  font: 400 0.5rem/1 var(--utility);
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--ash) 85%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Travelling depth indicator: the position on the rule corresponding to how
+   far down the sheet the reader has measured. Driven by --rule-progress
+   (0..1), written directly to the rail element — never React state. */
+.drawing-index__cursor {
+  position: absolute;
+  top: calc(var(--rule-progress, 0) * 100%);
+  left: -2px;
+  width: 15px;
+  height: 1px;
+  background: var(--blueprint);
+  /* A cursor on a scale rule is a hairline with a tick, not a blob. */
+  box-shadow: 0 0 0 0 transparent;
+}
+
+.drawing-index__cursor::after {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  left: 13px;
+  width: 0;
+  height: 0;
+  border-top: 2.5px solid transparent;
+  border-bottom: 2.5px solid transparent;
+  border-left: 3.5px solid var(--blueprint);
+}
+
+/* The section marks share the rule's row and are distributed along it, so
+   each sits at its own depth on the scale like a registered survey mark. */
 .drawing-index__list {
+  grid-area: rule;
   display: flex;
   flex-direction: column;
-  gap: 1.55rem;
+  justify-content: space-around;
+  align-self: stretch;
   margin: 0;
-  padding: 0;
+  padding: 2.5rem 0;
   list-style: none;
 }
 
@@ -2462,7 +2549,7 @@ img {
 /* Desktop only: below this the rail becomes a bottom tab strip. */
 @media (min-width: 1180px) {
   .drawing-index {
-    display: flex;
+    display: grid;
   }
 
   /* Reserve the binding edge. The rail is fixed, so content must be inset
@@ -2488,6 +2575,17 @@ img {
 
   .markets-intro {
     padding-left: var(--index-margin);
+  }
+
+  /* The market chapters run full-bleed so their maps reach the edge, but
+     their text sat at 115px — inside the rail's binding edge, so the chapter
+     headings collided with the scale rule.
+     Inset the copy's own text children rather than the chapter or the copy
+     block: `.market-chapter__copy` contains a deliberately 100vw-wide
+     "Explore this market" link, so padding either ancestor pushed that link
+     past the viewport and extended the document's scroll width. */
+  .market-chapter__copy > :not(a) {
+    margin-left: var(--index-margin);
   }
 }
 
@@ -2628,4 +2726,19 @@ img {
   .site-footer {
     padding-bottom: 2rem;
   }
+}
+
+/* Grid-area assignment for the rail's header and footer rows, and clearance
+   so the section marks sit clear of the rule's graduation instead of on it. */
+.drawing-index__plate {
+  grid-area: plate;
+}
+
+.drawing-index__meta {
+  grid-area: meta;
+}
+
+.drawing-index__list .drawing-index__link {
+  /* Past the 34px rule plus its numbers. */
+  margin-left: 2.6rem;
 }

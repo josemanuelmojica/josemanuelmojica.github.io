@@ -1,30 +1,33 @@
 "use client";
 
 /**
- * DrawingIndex — the left-margin field index.
+ * DrawingIndex — the left-margin scale rule.
  *
- * This is the binding edge of a drawing sheet, not a sidebar: no panel, no
- * background fill, no border, no chrome. Marks sit directly on the paper and
- * stay quiet until a section becomes current, at which point the sheet is
- * "registered" — a datum line extends from the mark toward the content and
- * carries the section number at its terminus.
+ * This is an architect's scale rule laid down the binding edge of the sheet,
+ * not a sidebar. A drawn vertical rule carries graduated ticks — minor every
+ * unit, major every fifth with a number — and the numbers count DOWNWARD, so
+ * scrolling reads as measuring down the drawing. The five real sections
+ * register against that rule as survey marks at their measured depth.
  *
  * Sections are the real site IA only (#top, #properties, #markets, #approach,
  * #contact); nothing here is invented to fill the rail.
  *
- * Scroll awareness uses ONE IntersectionObserver with a middle-band
- * rootMargin, so whichever section owns the viewport's centre wins. State is
- * set only when the active section CHANGES — never per scroll event and never
- * per animation frame, which keeps the InfiniteAtlasCanvas stability work
- * intact (no competing continuous scroll listeners).
+ * Cost control:
+ *   - The graduation is ONE static inline SVG, rendered once. It never
+ *     re-renders on scroll.
+ *   - Section registration uses ONE IntersectionObserver with a middle-band
+ *     rootMargin; React state is set only when the active section CHANGES.
+ *   - The travelling position indicator is driven by a CSS custom property
+ *     written directly to the element (no React state per frame), inside a
+ *     rAF that is scheduled only while scrolling and parks when at rest —
+ *     the same demand-driven pattern as InfiniteAtlasCanvas, so the two do
+ *     not compete.
  *
- * On viewports below the desktop breakpoint this renders as a bottom-edge
- * drawing-sheet tab strip instead — the same vocabulary composed for the crop,
- * touch-sized, with no hover dependency. See .drawing-index rules in
- * globals.css.
+ * Below the desktop breakpoint the rule is replaced by a drawing-sheet tab
+ * strip; a vertical measuring scale is meaningless in a horizontal crop.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArchitecturalGlyph, type ArchitecturalGlyphName } from "./ArchitecturalGlyph";
 
 type IndexEntry = {
@@ -43,18 +46,89 @@ const ENTRIES: IndexEntry[] = [
   { id: "contact", label: "Inquire", plate: "04", glyph: "intersection" },
 ];
 
+/**
+ * Scale graduation. The rule spans the rail's height in a 0..1000 viewBox so
+ * it scales to any viewport without recomputing tick positions in JS.
+ * DIVISIONS minor ticks, every MAJOR_EVERY-th one long and numbered.
+ */
+const DIVISIONS = 40;
+const MAJOR_EVERY = 5;
+
+function ScaleRule() {
+  const ticks = [];
+  for (let i = 0; i <= DIVISIONS; i += 1) {
+    const y = (i / DIVISIONS) * 1000;
+    const isMajor = i % MAJOR_EVERY === 0;
+    ticks.push(
+      <line
+        key={`t${i}`}
+        x1="0"
+        y1={y}
+        x2={isMajor ? 11 : 5.5}
+        y2={y}
+        stroke="currentColor"
+        strokeWidth={isMajor ? 1 : 0.6}
+        vectorEffect="non-scaling-stroke"
+      />
+    );
+  }
+  return (
+    <svg
+      className="drawing-index__rule"
+      viewBox="0 0 34 1000"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      {/* The rule's spine. */}
+      <line
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="1000"
+        stroke="currentColor"
+        strokeWidth="1"
+        vectorEffect="non-scaling-stroke"
+      />
+      {ticks}
+    </svg>
+  );
+}
+
+/** Numbers counting down the rule, aligned to the major ticks. */
+function ScaleNumbers() {
+  const majors = [];
+  for (let i = 0; i <= DIVISIONS; i += MAJOR_EVERY) {
+    majors.push({
+      value: i,
+      pct: (i / DIVISIONS) * 100,
+    });
+  }
+  return (
+    <div className="drawing-index__numbers" aria-hidden="true">
+      {majors.map((m) => (
+        <span
+          key={m.value}
+          className="drawing-index__number"
+          style={{ top: `${m.pct}%` }}
+        >
+          {String(m.value).padStart(2, "0")}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function DrawingIndex() {
   const [active, setActive] = useState<string>("top");
+  const railRef = useRef<HTMLElement>(null);
 
+  // Section registration — one observer, state only on change.
   useEffect(() => {
     const sections = ENTRIES.map((e) => document.getElementById(e.id)).filter(
       (el): el is HTMLElement => el !== null
     );
     if (sections.length === 0) return;
 
-    // Whichever section occupies the viewport's middle band is "current".
-    // Ratios are compared across entries so a tall section that merely
-    // overlaps the band does not beat one centred in it.
     const visibility = new Map<string, number>();
 
     const observer = new IntersectionObserver(
@@ -70,7 +144,6 @@ export function DrawingIndex() {
             best = id;
           }
         }
-        // Only touch React state when the section actually changes.
         if (best) setActive((current) => (current === best ? current : best));
       },
       {
@@ -83,12 +156,82 @@ export function DrawingIndex() {
     return () => observer.disconnect();
   }, []);
 
+  // Travelling position indicator: writes a CSS custom property, never React
+  // state. Demand-driven rAF that parks when the value stops changing, and
+  // suspends while the tab is hidden — matching InfiniteAtlasCanvas so the
+  // two never both spin.
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Still position it, just never animate toward it.
+      const setOnce = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? window.scrollY / max : 0;
+        rail.style.setProperty("--rule-progress", String(p));
+      };
+      setOnce();
+      window.addEventListener("scroll", setOnce, { passive: true });
+      return () => window.removeEventListener("scroll", setOnce);
+    }
+
+    let raf = 0;
+    let running = false;
+    let rendered = -1;
+
+    const tick = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const target = max > 0 ? window.scrollY / max : 0;
+      if (Math.abs(target - rendered) < 0.0005) {
+        running = false;
+        raf = 0;
+        return;
+      }
+      rendered = target;
+      rail.style.setProperty("--rule-progress", String(target));
+      raf = requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (running || document.hidden) return;
+      running = true;
+      raf = requestAnimationFrame(tick);
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        running = false;
+      } else {
+        start();
+      }
+    };
+
+    tick();
+    window.addEventListener("scroll", start, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("scroll", start);
+      document.removeEventListener("visibilitychange", onVisibility);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
-    <nav className="drawing-index" aria-label="Drawing index">
+    <nav className="drawing-index" aria-label="Drawing index" ref={railRef}>
       <p className="drawing-index__plate" aria-hidden="true">
         A<span className="drawing-index__chi">χ</span>T / 001
         <span className="drawing-index__plate-sub">FIELD INDEX</span>
       </p>
+
+      {/* The rule itself: spine, graduation, descending numbers, and the
+          travelling depth indicator. All decorative. */}
+      <div className="drawing-index__scale-rule">
+        <ScaleRule />
+        <ScaleNumbers />
+        <span className="drawing-index__cursor" aria-hidden="true" />
+      </div>
 
       <ul className="drawing-index__list">
         {ENTRIES.map((entry) => {
