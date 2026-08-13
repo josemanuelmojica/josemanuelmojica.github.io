@@ -58,11 +58,18 @@ function wrap(value: number, m: number): number {
 }
 
 function pickTile(): TileEntry {
-  // Choose the smallest tile whose size covers the viewport's smaller side,
-  // so phones decode the 512 tile and large screens the 1024. SSR falls back
-  // to the middle tile; the effect corrects on mount.
+  // Choose the smallest tile that covers the viewport's smaller side IN
+  // PHYSICAL PIXELS. Selecting on CSS pixels alone (as this previously did)
+  // meant a Retina display got the same tile as a non-Retina one and the
+  // browser then upscaled it by the device pixel ratio — the single largest
+  // cause of the atlas reading soft on high-DPI screens.
+  //
+  // DPR is clamped to 2: beyond that the tile is decorative detail at
+  // 0.42 opacity behind content, and the byte cost of a 3x tile buys no
+  // perceptible sharpness.
   if (typeof window === "undefined") return TILES[Math.floor(TILES.length / 2)];
-  const min = Math.min(window.innerWidth, window.innerHeight);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const min = Math.min(window.innerWidth, window.innerHeight) * dpr;
   return TILES.find((t) => t.size >= min) ?? TILES[TILES.length - 1];
 }
 

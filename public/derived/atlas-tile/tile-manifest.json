@@ -12,34 +12,45 @@
     "512": {
       "size": 512,
       "avif": {
-        "path": "/derived/atlas-tile/tile-512-36994e3d.avif",
-        "bytes": 41812
+        "path": "/derived/atlas-tile/tile-512-9a973c0e.avif",
+        "bytes": 44547
       },
       "webp": {
-        "path": "/derived/atlas-tile/tile-512-b1bfcb68.webp",
-        "bytes": 57182
+        "path": "/derived/atlas-tile/tile-512-fa765d75.webp",
+        "bytes": 58728
       }
     },
     "768": {
       "size": 768,
       "avif": {
-        "path": "/derived/atlas-tile/tile-768-57f42322.avif",
-        "bytes": 83711
+        "path": "/derived/atlas-tile/tile-768-f2540fe3.avif",
+        "bytes": 118266
       },
       "webp": {
-        "path": "/derived/atlas-tile/tile-768-61bf7938.webp",
-        "bytes": 114482
+        "path": "/derived/atlas-tile/tile-768-42058682.webp",
+        "bytes": 146182
       }
     },
     "1024": {
       "size": 1024,
       "avif": {
-        "path": "/derived/atlas-tile/tile-1024-79a0a804.avif",
-        "bytes": 130739
+        "path": "/derived/atlas-tile/tile-1024-163e29c3.avif",
+        "bytes": 183794
       },
       "webp": {
-        "path": "/derived/atlas-tile/tile-1024-a11bcf43.webp",
-        "bytes": 178088
+        "path": "/derived/atlas-tile/tile-1024-f912596f.webp",
+        "bytes": 230094
+      }
+    },
+    "1536": {
+      "size": 1536,
+      "avif": {
+        "path": "/derived/atlas-tile/tile-1536-2e4bab46.avif",
+        "bytes": 244008
+      },
+      "webp": {
+        "path": "/derived/atlas-tile/tile-1536-511ee73a.webp",
+        "bytes": 324230
       }
     }
   }

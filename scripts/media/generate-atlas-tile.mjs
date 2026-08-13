@@ -36,14 +36,40 @@ const OUT_DIR = path.join(PUBLIC, "derived/atlas-tile");
 const MANIFEST_PATH = path.join(OUT_DIR, "tile-manifest.json");
 
 // Square tile sizes (px). Mobile gets a genuinely smaller decode.
-const SIZES = [512, 768, 1024];
+//
+// 1536 exists for high-DPI desktops: the runtime selects on physical pixels
+// (viewport * devicePixelRatio, clamped to 2x), so a Retina 1440x900 needs
+// ~1800 physical px of coverage and would otherwise upscale the 1024 tile.
+// It is still real detail rather than an upscale — composeSquare() crops at
+// size * 0.62, so a 1536 tile samples ~952px regions from the 1200x1600
+// masters.
+const SIZES = [512, 768, 1024, 1536];
 
 // Studies chosen for a continuous dense-fabric read (grids + arterials).
 const COMPOSE_SOURCES = ["study-04.webp", "study-06.webp", "study-01.webp", "study-05.webp"];
 
 const PAPER = { r: 242, g: 238, b: 231 }; // warm ivory drafting paper
-const WEBP = { quality: 70, effort: 6 };
-const AVIF = { quality: 46, effort: 4 };
+
+/**
+ * Quality scales with tile size rather than being uniform.
+ *
+ * The atlas is fine cartographic linework — the content type that low
+ * quality smears worst — and at 0.42 opacity those artefacts read as
+ * softness rather than as compression, which is what made the field look
+ * low-resolution. But the small tiles are chosen by small viewports (phones,
+ * often on cellular) where that detail is not perceptible, so spending the
+ * same bytes there is waste. Large tiles are chosen by high-DPI desktops
+ * where the linework is the whole point.
+ */
+function qualityFor(size) {
+  if (size <= 512) return { webp: { quality: 72, effort: 6 }, avif: { quality: 48, effort: 4 } };
+  if (size <= 1024) return { webp: { quality: 80, effort: 6 }, avif: { quality: 56, effort: 4 } };
+  // The 1536 tile is 2.25x the pixel count of the 1024, so it needs a lower
+  // quality number to land at a comparable weight. AVIF holds fine linework
+  // well at this setting, and the tile renders at 0.42 opacity behind
+  // content — effort 6 buys back some of the loss at build time only.
+  return { webp: { quality: 74, effort: 6 }, avif: { quality: 50, effort: 6 } };
+}
 
 function sha8(buffer) {
   return createHash("sha256").update(buffer).digest("hex").slice(0, 8);
@@ -160,7 +186,8 @@ async function generate() {
     const tile = await makeToroidal(square, size);
     const base = sharp(tile);
     const variants = {};
-    for (const [format, opts] of [["avif", AVIF], ["webp", WEBP]]) {
+    const q = qualityFor(size);
+    for (const [format, opts] of [["avif", q.avif], ["webp", q.webp]]) {
       const bytes = await base.clone()[format](opts).toBuffer();
       const name = `tile-${size}-${sha8(bytes)}.${format}`;
       await writeFile(path.join(OUT_DIR, name), bytes);

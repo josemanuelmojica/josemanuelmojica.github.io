@@ -1,14 +1,24 @@
 :root {
   --paper: #fffefd;
-  --paper-deep: #f1f5f8;
-  --wash: #e5edf3;
-  --ash: #96a8b5;
-  --graphite: #405563;
-  --ink: #172833;
-  --vermilion: #0a5f97;
-  --blueprint: #0a5f97;
-  --blueprint-deep: #063a64;
-  --blueprint-light: #58a9d8;
+  /* The neutrals previously carried a cool/blue cast chosen to sit with the
+     blueprint accent. With a graphite accent that cast reads as a colour
+     mismatch, so they are re-biased very slightly warm — still neutral, but
+     now analogous to the graphite rather than fighting it. */
+  --paper-deep: #f5f4f1;
+  --wash: #eae8e3;
+  --ash: #a3a099;
+  --graphite: #55534d;
+  --ink: #22262a;
+  /* Accent ramp — warm-neutral graphite, the colour of a leadholder on
+     paper. This replaces the former cyan-blue blueprint accent, which read
+     as digital/SaaS against the ivory rather than architectural. The token
+     names are kept so every existing call site keeps working; only the
+     values changed. The ramp is a genuine value ladder (deep/base/light),
+     not one flat grey, so marks still have depth and hierarchy. */
+  --vermilion: #3a3a38;
+  --blueprint: #3a3a38;
+  --blueprint-deep: #24241f;
+  --blueprint-light: #6f6f68;
   --blueprint-gradient: linear-gradient(135deg, var(--blueprint-deep) 0%, var(--blueprint) 52%, var(--blueprint-light) 100%);
   --display: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
   --body: Inter, "Hiragino Kaku Gothic ProN", system-ui, -apple-system, sans-serif;
