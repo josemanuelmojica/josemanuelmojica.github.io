@@ -15,6 +15,10 @@
   --utility: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --rule: color-mix(in srgb, var(--ink) 18%, transparent);
   --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Width of the reserved drawing-sheet binding edge that the DrawingIndex
+     rail occupies on desktop. Content is inset by this much so the fixed
+     rail never overlaps it. */
+  --index-margin: 8.5rem;
 }
 
 * {
@@ -2244,5 +2248,384 @@ img {
      figure — but it eases off so the headline keeps the strongest contrast. */
   .hero-reveal__grid {
     opacity: 0.55;
+  }
+}
+
+/* ==========================================================================
+   DRAWING INDEX — left-margin field index
+   The binding edge of a drawing sheet. No panel, no fill, no border: marks
+   sit directly on the paper. Quiet until a section is current, then the
+   sheet registers — a datum line extends toward the content carrying the
+   plate number. Never a filled hover rectangle, never a tooltip box.
+   ========================================================================== */
+
+.drawing-index {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 30;
+  transform: translateY(-50%);
+  display: none; /* desktop-only; mobile gets the tab strip below */
+  flex-direction: column;
+  gap: 2.4rem;
+  /* Sits inside the reserved binding edge. */
+  width: var(--index-margin, 8.5rem);
+  padding: 0 0 0 2.2rem;
+  pointer-events: none; /* only the links take pointer events */
+}
+
+.drawing-index__plate,
+.drawing-index__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  font: 400 0.58rem/1.5 var(--utility);
+  letter-spacing: 0.1em;
+  color: var(--ash);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The plate number is one line ("AχT / 001"); only the sub-label below it
+   is a separate row, so the inline chi must not become its own flex item. */
+.drawing-index__plate {
+  display: block;
+}
+
+.drawing-index__chi {
+  /* The wordmark's Greek chi, never re-typeset elsewhere — this is a plate
+     number, not the logotype. */
+  font-family: var(--display);
+}
+
+.drawing-index__plate-sub {
+  display: block;
+  margin-top: 0.15rem;
+  color: color-mix(in srgb, var(--ash) 72%, transparent);
+}
+
+.drawing-index__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drawing-index__link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 0.5rem;
+  width: max-content;
+  padding: 0.25rem 0;
+  color: var(--ash);
+  text-decoration: none;
+  pointer-events: auto;
+  transition: color 240ms var(--ease-ink);
+}
+
+.drawing-index__mark {
+  display: block;
+  grid-row: 1;
+  grid-column: 1;
+  line-height: 0;
+}
+
+.drawing-index__mark svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* The datum: a hairline that extends from the mark toward the content.
+   Collapsed at rest, partial on hover/focus, full when the section is
+   current — the sheet has been marked. */
+.drawing-index__datum {
+  grid-row: 1;
+  grid-column: 2;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 320ms var(--ease-ink);
+}
+
+.drawing-index__plate-no {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  font: 400 0.56rem/1 var(--utility);
+  letter-spacing: 0.08em;
+  color: var(--blueprint);
+  opacity: 0;
+  transition: opacity 240ms var(--ease-ink);
+}
+
+.drawing-index__label {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  margin-top: 0.3rem;
+  font: 400 0.56rem/1 var(--utility);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Hover / focus: a short registration extension, not a background. */
+.drawing-index__link:hover,
+.drawing-index__link:focus-visible {
+  color: var(--blueprint);
+}
+
+.drawing-index__link:hover .drawing-index__datum,
+.drawing-index__link:focus-visible .drawing-index__datum {
+  width: 2.1rem;
+}
+
+/* Focus is an architectural registration bracket, not the default ring. */
+.drawing-index__link:focus-visible {
+  outline: none;
+}
+
+/* Focus is expressed as registration corners bracketing the mark — the
+   drawing-sheet equivalent of a focus ring. The mark span establishes the
+   positioning context; without it the bracket has nothing to anchor to. */
+.drawing-index__mark {
+  position: relative;
+}
+
+.drawing-index__link:focus-visible .drawing-index__mark::before {
+  content: "";
+  position: absolute;
+  top: -0.32rem;
+  left: -0.32rem;
+  right: -0.32rem;
+  bottom: -0.32rem;
+  border: 1px solid var(--blueprint);
+  /* Corner brackets only: erase the middle third of every edge so what
+     remains reads as four registration corners, not a box. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) top right / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom right / 34% 34% no-repeat;
+  mask:
+    linear-gradient(#000 0 0) top left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) top right / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom right / 34% 34% no-repeat;
+}
+
+/* Fallback: if mask is unsupported, keep a visible (plain) focus outline
+   rather than silently losing the focus indicator entirely. */
+@supports not (mask: linear-gradient(#000 0 0)) {
+  .drawing-index__link:focus-visible {
+    outline: 1px solid var(--blueprint);
+    outline-offset: 3px;
+  }
+}
+
+/* Active: full datum expression + persistent plate number. */
+.drawing-index__link.is-active {
+  color: var(--ink);
+}
+
+.drawing-index__link.is-active .drawing-index__datum {
+  width: 4.2rem;
+  background: var(--blueprint);
+}
+
+.drawing-index__link.is-active .drawing-index__plate-no {
+  opacity: 1;
+}
+
+.drawing-index__meta {
+  gap: 0.25rem;
+}
+
+.drawing-index__scale {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+  color: color-mix(in srgb, var(--ash) 80%, transparent);
+}
+
+.drawing-index__scale svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Desktop only: below this the rail becomes a bottom tab strip. */
+@media (min-width: 1180px) {
+  .drawing-index {
+    display: flex;
+  }
+
+  /* Reserve the binding edge. The rail is fixed, so content must be inset
+     or it slides underneath the marks. This is the sheet margin, not a
+     sidebar gutter.
+     Specificity note: the section rules these override (.properties,
+     .approach, …) set `padding` as a shorthand, so a bare `main > section`
+     longhand loses on equal specificity. Doubling the class raises
+     specificity without adding !important. */
+  main > header.site-header,
+  main > section.properties,
+  main > section.approach,
+  main > section.contact,
+  main > footer.site-footer {
+    padding-left: var(--index-margin);
+  }
+
+  /* Full-bleed sections keep their bleed; only their text column insets, so
+     the maps and hero photograph still run to the edge. */
+  .hero__content {
+    padding-left: calc(var(--index-margin) + 1vw);
+  }
+
+  .markets-intro {
+    padding-left: var(--index-margin);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE / TABLET — drawing-sheet tab strip
+   Not the rail squeezed narrow: a composed bottom-edge index in the same
+   vocabulary. Touch-sized, no hover dependency, active state readable
+   without motion.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1179px) {
+  .drawing-index {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0;
+    /* Reset the desktop binding-edge width and centring transform, or the
+       strip only spans one margin's worth of the viewport and its labels
+       fall off the paper onto the page content. */
+    width: auto;
+    transform: none;
+    padding: 0.5rem 0.4rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    /* A drawn sheet edge rather than an app bar: paper with a single rule. */
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Plate header and coordinate footer belong to the margin, not the strip. */
+  .drawing-index__plate,
+  .drawing-index__meta {
+    display: none;
+  }
+
+  .drawing-index__list {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  .drawing-index__item {
+    flex: 1;
+  }
+
+  .drawing-index__link {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: 44px; /* touch target */
+    padding: 0.35rem 0.15rem;
+  }
+
+  .drawing-index__mark {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .drawing-index__mark svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .drawing-index__label {
+    grid-row: 2;
+    grid-column: 1;
+    max-width: 100%;
+    margin-top: 0.28rem;
+    /* Five items share the viewport; at 360px that is ~68px each, so the
+       label tightens rather than overrunning its neighbour. */
+    font-size: 0.44rem;
+    letter-spacing: 0.06em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* On the strip the datum reads as an underline beneath the active mark. */
+  .drawing-index__datum {
+    grid-row: 3;
+    grid-column: 1;
+    width: 0;
+    margin-top: 0.3rem;
+    transition: width 280ms var(--ease-ink);
+  }
+
+  .drawing-index__link.is-active .drawing-index__datum {
+    width: 1.5rem;
+  }
+
+  /* The plate number would crowd the strip; the datum carries the state. */
+  .drawing-index__plate-no {
+    display: none;
+  }
+
+  /* Hover states must not drive anything on touch. */
+  .drawing-index__link:hover .drawing-index__datum {
+    width: 0;
+  }
+
+  .drawing-index__link.is-active:hover .drawing-index__datum {
+    width: 1.5rem;
+  }
+
+  .drawing-index__link:focus-visible .drawing-index__mark::before {
+    top: -0.15rem;
+    left: 50%;
+    translate: -50% 0;
+  }
+}
+
+/* Reduced motion: the registered state renders immediately. Nothing about
+   the active section depends on having seen a transition. */
+@media (prefers-reduced-motion: reduce) {
+  .drawing-index__link,
+  .drawing-index__datum,
+  .drawing-index__plate-no {
+    transition: none;
+  }
+}
+
+/* Reserve room for the fixed tab strip so the footer and the hero's pinned
+   search bar are never covered by it. */
+@media (max-width: 1179px) {
+  body {
+    padding-bottom: calc(4.4rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .site-footer {
+    padding-bottom: 2rem;
   }
 }

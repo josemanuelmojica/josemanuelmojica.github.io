@@ -13,6 +13,7 @@ import marketLinks from "../content/market-links.json";
 import { LeadInterview } from "./LeadInterview";
 import { InfiniteAtlasCanvas } from "./components/InfiniteAtlasCanvas";
 import { HeroReveal } from "./components/architectural/HeroReveal";
+import { DrawingIndex } from "./components/architectural/DrawingIndex";
 import { publicPath } from "./lib/publicPath";
 import { responsiveSources } from "./lib/derivedMedia";
 
@@ -869,6 +870,7 @@ export function InkEstates() {
   return (
     <main>
       <InfiniteAtlasCanvas />
+      <DrawingIndex />
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Ark and Text home">
           <BrandName />
