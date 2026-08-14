@@ -1,9 +1,14 @@
 # Cloudflare / browser cache rules.
 #
-# Only content-hashed, immutable media may be long-lived-cached: their URL
+# Only content-hashed, immutable assets may be long-lived-cached: their URL
 # changes whenever their bytes change, so a stale cache entry is impossible.
-# Mutable files (HTML, the un-hashed masters) are intentionally NOT listed
-# here and fall back to Cloudflare's default caching.
+# Mutable files (HTML, unhashed masters) are intentionally NOT listed here and
+# fall back to Cloudflare's revalidation behavior.
+
+# Next.js static-export bundles and generated font/media files are fingerprinted
+# under /_next/static/, so repeat visitors can reuse them without revalidation.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
 
 # Content-hashed responsive derivatives (generate-derivatives.mjs) and the
 # content-hashed seamless atlas tiles (generate-atlas-tile.mjs), which live at
