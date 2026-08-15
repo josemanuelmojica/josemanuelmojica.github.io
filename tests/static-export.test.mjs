@@ -97,10 +97,14 @@ test("emits the static security boundary without framed content", async () => {
   for (const [, relativePath] of pages) {
     const html = await readOutput(relativePath);
     assert.match(html, /http-equiv="Content-Security-Policy"/i);
-    assert.match(html, /frame-src\s+(?:&#x27;|')none(?:&#x27;|')/i);
+    assert.match(html, /frame-src\s+https:\/\/challenges\.cloudflare\.com/i);
     assert.match(html, /name="referrer"\s+content="strict-origin-when-cross-origin"/i);
     assert.doesNotMatch(html, /<iframe\b/i);
   }
+
+  const headers = await readFile(path.join(output, "_headers"), "utf8");
+  assert.match(headers, /frame-ancestors 'none'/);
+  assert.match(headers, /X-Content-Type-Options: nosniff/);
 });
 
 test("renders the selected release's defining homepage behavior", async () => {

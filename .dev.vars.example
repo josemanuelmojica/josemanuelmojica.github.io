@@ -1,0 +1,8 @@
+# Copy to .dev.vars for local Worker development. Never commit real values.
+RATE_LIMIT_SALT=replace-with-a-long-random-local-value
+
+# Optional until the Turnstile widget is provisioned end to end.
+TURNSTILE_SECRET_KEY=
+
+# Optional comma-separated exact origins for intentionally cross-origin clients.
+LEAD_ALLOWED_ORIGINS=

@@ -1,6 +1,6 @@
 # Arχ & Teχt
 
-Portable static build of the Arχ & Teχt site and four architectural-graph-paper navigation studies. The same GitHub repository can deploy to Appwrite Sites for production and GitHub Pages for an optional public preview.
+Portable Next.js static build of the Arχ & Teχt site, four architectural-graph-paper navigation studies, and a Cloudflare Worker/D1 lead-capture boundary. The same frontend can deploy to Cloudflare Workers Static Assets, Appwrite Sites, or GitHub Pages.
 
 For the complete Claude/design handoff, start with `PROJECT_MANIFEST.md`, `handoff_checkpoint.md`, and `docs/DESIGN_LINEAGE.md`. The non-runtime `reference/` archive preserves the prior site, every available Japanese-ink map/poster asset, the puzzle/ant-motion libraries, original prompts/specs, and user feedback screenshots. `reference/FILE_INDEX.json` contains a SHA-256 inventory of the full archive.
 
@@ -32,7 +32,7 @@ The build output is `out/`. It contains `index.html` plus one HTML document for 
 
 ## Quiet Watersheds state art
 
-`public/maps/us-state-studies/v1/` contains the complete versioned runtime corpus: `manifest.json`, `fallback/unresolved.svg`, and 50 SVG + 50 WebP state plates under `states/`. Manifest-declared assets total 3,250,794 bytes (~3.10 MiB); the directory is ~3.3 MB. The Idaho plate is `US-ID`, ready for the future Boise → state-level response.
+`public/maps/us-state-studies/v1/` contains the complete versioned runtime corpus: `manifest.json`, `fallback/unresolved.svg`, and 50 SVG + 50 WebP state plates under `states/`. Manifest-declared assets total 3,250,794 bytes (~3.10 MiB); the directory is ~3.3 MB. The live interview maps the required Boise example to the `US-ID` plate.
 
 The deterministic generator uses pinned, public-domain Natural Earth 1:10m data from `reference/geodata/natural-earth/`:
 
@@ -42,7 +42,25 @@ npm run generate:state-art
 npm run check:state-art
 ```
 
-Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the source has no state-scale river/lake-centerline intersections there. No waterways are fabricated. The corpus is ready for selective use, but no atlas selector/gallery, place interpreter, conversational lead form, geocoding, or submission flow has been implemented.
+Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the source has no state-scale river/lake-centerline intersections there. No waterways are fabricated. The conversational interview resolves supported place/state/ZIP language to this corpus and never invents a state for unresolved input.
+
+## Production: Cloudflare Worker + D1
+
+Cloudflare is the complete full-stack target. Static pages and media are served from `out/`; only `/api/*` runs `worker/index.ts`. `POST /api/lead` validates the interview payload, verifies consent and the selected state-art ID, rejects unapproved origins, verifies Turnstile when its secret is present, rate-limits a salted client hash in D1, and stores the consented inquiry without retaining a raw IP address.
+
+The provisioned D1 database is `ark-and-text-leads`, bound as `LEADS`. Apply migrations, configure secrets, test an uploaded preview version, and only then promote it:
+
+```bash
+npx wrangler d1 migrations apply ark-and-text-leads --remote
+npx wrangler versions secret put RATE_LIMIT_SALT --name ark-and-text
+npx wrangler versions secret put TURNSTILE_SECRET_KEY --name ark-and-text
+npm test
+npx wrangler versions upload --tag architectural-symbol-system
+```
+
+Do not put either secret in `.env`, `.dev.vars.example`, `wrangler.jsonc`, GitHub, or Appwrite public variables. The Turnstile site key in `content/public-runtime-config.json` is intentionally public. `public/_headers` supplies the Cloudflare response-header policy in addition to the portable HTML meta policy.
+
+See `docs/security/CLOUDFLARE_LEAD_CAPTURE.md` for schema, controls, preview verification, lead handling, retention, and rollback.
 
 ## Production: Appwrite Sites from GitHub
 
@@ -129,4 +147,4 @@ The long-scroll market story intentionally contains no property photograph in it
 - the home page, preview index, and all four navigation studies were exported;
 - the key site and customer-learning copy is present;
 - required brand, map, icon, and property assets were copied to `out/`; and
-- the generated site contains no legacy Vinext, Wrangler, or Cloudflare-worker output.
+- the Worker API, D1 schema, Turnstile boundary, CORS allowlist, static response headers, and state-aware interview stay aligned.

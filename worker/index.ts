@@ -5,13 +5,16 @@
  * in wrangler.jsonc). Every other request is served directly from the static
  * export in ./out via the ASSETS binding and never reaches this code.
  *
- * Current API surface is intentionally minimal:
+ * Current API surface:
  *   GET /api/health -> liveness probe
+ *   POST /api/lead  -> validated, rate-limited D1 lead capture
  *
- * No lead endpoint, no D1, no Turnstile, and no Appwrite are wired in here.
+ * Turnstile verification becomes mandatory when its Worker secret is set.
  */
 
-export interface Env {
+import { handleLeadRequest, type LeadEnv } from "./lead.ts";
+
+export interface Env extends LeadEnv {
   /** Static assets binding for ./out (declared in wrangler.jsonc). */
   ASSETS: Fetcher;
 }
@@ -41,6 +44,10 @@ export default {
         return jsonResponse({ error: "Method not allowed" }, 405);
       }
       return jsonResponse({ status: "ok", service: "ark-and-text" });
+    }
+
+    if (url.pathname === "/api/lead") {
+      return handleLeadRequest(request, env);
     }
 
     return jsonResponse({ error: "Not found" }, 404);

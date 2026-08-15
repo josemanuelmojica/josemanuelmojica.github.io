@@ -1454,6 +1454,21 @@ img {
   color: #711e1e;
 }
 
+.lead-interview__turnstile {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 4.5rem;
+  align-content: start;
+}
+
+.lead-interview__turnstile > p {
+  margin: 0;
+  color: var(--graphite);
+  font: 500 0.5rem/1.4 var(--utility);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .lead-interview--sent {
   align-content: center;
   gap: 1.5rem;

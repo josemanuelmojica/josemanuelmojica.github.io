@@ -17,7 +17,7 @@
     "check:media": "node scripts/media/generate-derivatives.mjs --check && node scripts/media/generate-atlas-tile.mjs --check && node scripts/media/check-derivatives.mjs",
     "manifest:reference": "node scripts/build-reference-inventory.mjs",
     "typecheck": "tsc --noEmit",
-    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs tests/worker-contract.test.mjs tests/atlas-media.test.mjs tests/hero-reveal.test.mjs",
+    "test:source": "node --test tests/source-contract.test.mjs app/lib/locationResolver.test.mjs tests/worker-contract.test.mjs tests/lead-api.test.mjs tests/atlas-media.test.mjs tests/hero-reveal.test.mjs",
     "test": "npm run check:media && npm run test:source && npm run build && node --test tests/static-export.test.mjs tests/lead-interview.test.mjs",
     "cf:dev": "wrangler dev",
     "cf:dry": "wrangler deploy --dry-run",

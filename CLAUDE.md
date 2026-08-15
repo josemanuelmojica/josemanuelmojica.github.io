@@ -35,7 +35,8 @@ Treat `docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md` as the source of truth for t
 
 - `public/maps/us-state-studies/v1/` contains the complete versioned corpus: 50 SVG + 50 WebP state plates, `manifest.json`, and `fallback/unresolved.svg`. Manifest-declared assets total 3,250,794 bytes (~3.10 MiB); the directory is ~3.3 MB.
 - Generate and verify it with `npm run generate:state-art` and `npm run check:state-art`. The generator uses the pinned Natural Earth files in `reference/geodata/natural-earth/` and requires no network once its Python dependencies are installed.
-- Idaho is available as `US-ID`, so a future Boise interpretation has its state-level asset ready. Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the pinned Natural Earth centerlines have no state-scale intersections there.
+- The lead interview resolves Boise to `US-ID`. Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the pinned Natural Earth centerlines have no state-scale intersections there.
+- Treat `worker/lead.ts`, `migrations/0001_lead_capture.sql`, and `docs/security/CLOUDFLARE_LEAD_CAPTURE.md` as one security boundary. Never move D1 or Turnstile secrets into the static client.
 - This is an asset corpus, not an implemented atlas. No state selector/gallery, place interpreter, conversational lead form, geocoding, or lead-submission flow exists yet.
 
 ## Verification

@@ -93,7 +93,9 @@
     },
     "statesWithoutRecordedNaturalEarthRivers": ["US-DE", "US-HI", "US-RI"],
     "atlasUiImplemented": false,
-    "leadFormImplemented": false
+    "leadFormImplemented": true,
+    "leadSubmissionImplemented": true,
+    "leadSubmissionRuntime": "Cloudflare Worker + D1"
   },
   "referenceArchive": {
     "originalHandoff": "reference/original-handoff",
@@ -111,7 +113,7 @@
     {
       "id": "lead-capture-map-interview",
       "spec": "docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md",
-      "implemented": false,
+      "implemented": true,
       "acceptanceExample": "looking/selling in Boise -> Idaho state visual"
     }
   ],
@@ -122,6 +124,8 @@
     "appwriteConfiguredExternally": false
   },
   "deployment": {
+    "cloudflareWorker": "wrangler.jsonc",
+    "cloudflareLeadOperations": "docs/security/CLOUDFLARE_LEAD_CAPTURE.md",
     "appwrite": "docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md",
     "githubPagesWorkflow": ".github/workflows/pages.yml",
     "basePathHelper": "app/lib/publicPath.ts"
