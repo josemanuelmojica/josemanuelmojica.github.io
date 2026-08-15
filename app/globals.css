@@ -269,6 +269,28 @@ img {
   padding: clamp(10rem, 21vh, 14rem) 0 13rem 8vw;
 }
 
+/* On narrow viewports the re-cropped hero map runs up under the headline
+   band (see the 767px rule below), so the eyebrow and headline need a
+   soft paper-colored halo to stay legible where street lines cross under
+   the type. A blurred multi-direction shadow, not a hard outline — it
+   should read as the paper showing through, not as a sticker edge.
+   Excludes `.hero h1 em`: that word is a gradient painted via
+   background-clip: text with color: transparent, so a text-shadow behind
+   it paints a visible halo-colored blob in place of the (transparent)
+   glyph fill instead of sitting behind it. */
+.hero__content .eyebrow,
+.hero__content h1,
+.hero__content .hero__lede {
+  text-shadow:
+    0 0 0.4rem var(--paper),
+    0 0 0.9rem var(--paper),
+    0 0 1.5rem var(--paper);
+}
+
+.hero h1 em {
+  text-shadow: none;
+}
+
 .hero h1 {
   max-width: 10.3ch;
   margin: 1.5rem 0 1.8rem;
@@ -2272,6 +2294,97 @@ img {
 }
 
 /* ==========================================================================
+   TOP INDEX — top-margin field index, the X to DrawingIndex's Y
+   A thin horizontal rule mirroring the left rail's vocabulary (hairline
+   spine, tick marks, section marks) rotated 90°, sitting inside the header's
+   existing left inset so the two rules meet at the sheet's ruled corner
+   instead of reading as two unrelated nav bars. Deliberately quiet: no
+   fill, no border box, marks register only when their section is current.
+   Desktop only (display: block set in the ≥1180px block below, matching
+   DrawingIndex's own display: none / display: grid pairing) — the bottom
+   tab strip already carries the horizontal index below 1180px, and a
+   second one at that width would double the nav.
+   ========================================================================== */
+
+.top-index {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90; /* under site-header (100), which sits on the same edge */
+  width: 100%;
+  height: 1.6rem;
+  padding-left: var(--index-margin);
+  pointer-events: none;
+}
+
+.top-index__rule {
+  position: absolute;
+  top: 0;
+  left: var(--index-margin);
+  right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+
+.top-index__list {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0 4.5vw 0 0.4rem;
+  list-style: none;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.top-index__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: var(--ash);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.top-index__mark {
+  display: flex;
+  color: inherit;
+}
+
+.top-index__mark svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* The tick drops from the rule to the mark, the horizontal echo of the
+   left rail's datum line extending toward its content. Quiet until active. */
+.top-index__tick {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: 1px;
+  height: 0;
+  background: var(--blueprint);
+  transition: height 280ms var(--ease-ink);
+}
+
+.top-index__link:hover .top-index__mark,
+.top-index__link:focus-visible .top-index__mark,
+.top-index__link.is-active .top-index__mark {
+  color: var(--blueprint);
+}
+
+.top-index__link.is-active .top-index__tick {
+  height: 6px;
+}
+
+.top-index__link:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
    DRAWING INDEX — left-margin field index
    The binding edge of a drawing sheet. No panel, no fill, no border: marks
    sit directly on the paper. Quiet until a section is current, then the
@@ -2354,24 +2467,6 @@ img {
   overflow: hidden;
 }
 
-.drawing-index__numbers {
-  position: absolute;
-  inset: 0;
-  left: 15px;
-  pointer-events: none;
-}
-
-.drawing-index__number {
-  position: absolute;
-  left: 0;
-  /* Sit the digits on their tick rather than below it. */
-  transform: translateY(-50%);
-  font: 400 0.5rem/1 var(--utility);
-  letter-spacing: 0.06em;
-  color: color-mix(in srgb, var(--ash) 85%, transparent);
-  font-variant-numeric: tabular-nums;
-}
-
 /* Travelling depth indicator: the position on the rule corresponding to how
    far down the sheet the reader has measured. Driven by --rule-progress
    (0..1), written directly to the rail element — never React state. */
@@ -2386,16 +2481,18 @@ img {
   box-shadow: 0 0 0 0 transparent;
 }
 
+/* An open chevron, not a filled wedge — softer and thinner than a solid CSS
+   triangle, in keeping with the hairline cursor it points from. */
 .drawing-index__cursor::after {
   content: "";
   position: absolute;
   top: -2.5px;
   left: 13px;
-  width: 0;
-  height: 0;
-  border-top: 2.5px solid transparent;
-  border-bottom: 2.5px solid transparent;
-  border-left: 3.5px solid var(--blueprint);
+  width: 4px;
+  height: 5px;
+  border-top: 1px solid color-mix(in srgb, var(--blueprint) 70%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--blueprint) 70%, transparent);
+  transform: rotate(45deg);
 }
 
 /* The section marks share the rule's row and are distributed along it, so
@@ -2597,6 +2694,10 @@ img {
   .market-chapter__copy > :not(a) {
     margin-left: var(--index-margin);
   }
+
+  .top-index {
+    display: block;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -2619,6 +2720,11 @@ img {
     align-items: stretch;
     justify-content: space-around;
     gap: 0;
+    /* The desktop rule sets height: 100dvh for the full-height binding edge;
+       without an explicit override here the strip inherits that and covers
+       the whole viewport instead of forming a slim bottom bar. */
+    height: auto;
+    max-height: calc(4.4rem + env(safe-area-inset-bottom, 0px));
     /* Reset the desktop binding-edge width and centring transform, or the
        strip only spans one margin's worth of the viewport and its labels
        fall off the paper onto the page content. */
@@ -2631,9 +2737,14 @@ img {
     border-top: 1px solid var(--rule);
   }
 
-  /* Plate header and coordinate footer belong to the margin, not the strip. */
+  /* Plate header, coordinate footer, and the vertical scale rule (ticks,
+     descending numbers, travelling cursor) all belong to the desktop
+     binding edge, not the strip — a vertical measuring scale is meaningless
+     in a horizontal bar and, unhidden, its numbers overlapped the tab
+     labels once the strip's height stopped covering the whole viewport. */
   .drawing-index__plate,
-  .drawing-index__meta {
+  .drawing-index__meta,
+  .drawing-index__scale-rule {
     display: none;
   }
 

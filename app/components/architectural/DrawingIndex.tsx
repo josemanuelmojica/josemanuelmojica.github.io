@@ -30,15 +30,19 @@
 import { useEffect, useRef, useState } from "react";
 import { ArchitecturalGlyph, type ArchitecturalGlyphName } from "./ArchitecturalGlyph";
 
-type IndexEntry = {
+export type IndexEntry = {
   id: string;
   label: string;
   plate: string;
   glyph: ArchitecturalGlyphName;
 };
 
-/** Real sections only — these ids all exist in InkEstates. */
-const ENTRIES: IndexEntry[] = [
+/**
+ * Real sections only — these ids all exist in InkEstates. Exported so the
+ * top horizontal index (TopIndex.tsx) mirrors the same five entries rather
+ * than maintaining a second, driftable copy of the site's IA.
+ */
+export const ENTRIES: IndexEntry[] = [
   { id: "top", label: "Home", plate: "00", glyph: "origin" },
   { id: "properties", label: "Residences", plate: "01", glyph: "property-plate" },
   { id: "markets", label: "Places", plate: "02", glyph: "survey-point" },
@@ -91,30 +95,6 @@ function ScaleRule() {
       />
       {ticks}
     </svg>
-  );
-}
-
-/** Numbers counting down the rule, aligned to the major ticks. */
-function ScaleNumbers() {
-  const majors = [];
-  for (let i = 0; i <= DIVISIONS; i += MAJOR_EVERY) {
-    majors.push({
-      value: i,
-      pct: (i / DIVISIONS) * 100,
-    });
-  }
-  return (
-    <div className="drawing-index__numbers" aria-hidden="true">
-      {majors.map((m) => (
-        <span
-          key={m.value}
-          className="drawing-index__number"
-          style={{ top: `${m.pct}%` }}
-        >
-          {String(m.value).padStart(2, "0")}
-        </span>
-      ))}
-    </div>
   );
 }
 
@@ -225,11 +205,12 @@ export function DrawingIndex() {
         <span className="drawing-index__plate-sub">FIELD INDEX</span>
       </p>
 
-      {/* The rule itself: spine, graduation, descending numbers, and the
-          travelling depth indicator. All decorative. */}
+      {/* The rule itself: spine, graduation, and the travelling depth
+          indicator. All decorative. Inline numbers beside the major ticks
+          were removed — they crowded the rule at this width without adding
+          legible information the section marks don't already carry. */}
       <div className="drawing-index__scale-rule">
         <ScaleRule />
-        <ScaleNumbers />
         <span className="drawing-index__cursor" aria-hidden="true" />
       </div>
 

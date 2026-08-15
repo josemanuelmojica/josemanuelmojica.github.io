@@ -14,6 +14,7 @@ import { LeadInterview } from "./LeadInterview";
 import { InfiniteAtlasCanvas } from "./components/InfiniteAtlasCanvas";
 import { HeroReveal } from "./components/architectural/HeroReveal";
 import { DrawingIndex } from "./components/architectural/DrawingIndex";
+import { TopIndex } from "./components/architectural/TopIndex";
 import { FeaturedAtlas } from "./components/architectural/FeaturedAtlas";
 import { publicPath } from "./lib/publicPath";
 import { responsiveSources } from "./lib/derivedMedia";
@@ -872,6 +873,7 @@ export function InkEstates() {
     <main>
       <InfiniteAtlasCanvas />
       <DrawingIndex />
+      <TopIndex />
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Ark and Text home">
           <BrandName />
