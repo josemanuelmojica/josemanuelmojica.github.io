@@ -2752,3 +2752,109 @@ img {
   /* Past the 34px rule plus its numbers. */
   margin-left: 2.6rem;
 }
+
+/* Featured Atlas — curated plate index (independent of InfiniteAtlasCanvas) */
+
+.featured-atlas {
+  max-width: 94rem;
+  margin: 0 auto;
+  padding: 7rem 5vw;
+}
+
+.featured-atlas__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.featured-atlas__plate {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.featured-atlas__plate-number {
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  font-family: var(--utility);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--ash);
+}
+
+.featured-atlas__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  filter: grayscale(0.04);
+}
+
+.featured-atlas__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.featured-atlas__city {
+  margin: 0;
+  font: 400 1.15rem/1.2 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.featured-atlas__city span {
+  margin-left: 0.5rem;
+  font: 600 0.62rem/1 var(--utility);
+  letter-spacing: 0.1em;
+  color: var(--ash);
+  vertical-align: middle;
+}
+
+.featured-atlas__subtitle {
+  margin: 0;
+  font: 400 0.82rem/1.5 var(--body);
+  color: var(--graphite);
+}
+
+.featured-atlas__coordinates {
+  margin-top: 0.2rem;
+  font-family: var(--utility);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  color: var(--ash);
+}
+
+.featured-atlas__coordinates .coordinate-stamp__value {
+  color: var(--blueprint);
+}
+
+@media (max-width: 1080px) {
+  .featured-atlas__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .featured-atlas {
+    padding: 4.5rem 6vw;
+  }
+
+  .featured-atlas__grid {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+  }
+
+  .featured-atlas__image {
+    aspect-ratio: 5 / 6;
+  }
+}

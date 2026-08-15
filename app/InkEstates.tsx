@@ -14,6 +14,7 @@ import { LeadInterview } from "./LeadInterview";
 import { InfiniteAtlasCanvas } from "./components/InfiniteAtlasCanvas";
 import { HeroReveal } from "./components/architectural/HeroReveal";
 import { DrawingIndex } from "./components/architectural/DrawingIndex";
+import { FeaturedAtlas } from "./components/architectural/FeaturedAtlas";
 import { publicPath } from "./lib/publicPath";
 import { responsiveSources } from "./lib/derivedMedia";
 
@@ -1033,6 +1034,8 @@ export function InkEstates() {
       </section>
 
       <MarketStory reducedMotion={reducedMotion} />
+
+      <FeaturedAtlas />
 
       <section className="approach" id="approach">
         <div className="approach__statement">
