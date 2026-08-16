@@ -1,6 +1,6 @@
 # Cloudflare lead-capture operations
 
-Status: source, D1 schema, encrypted secrets, and Cloudflare preview version 17 are prepared at `https://7b13b5ea-ark-and-text.j-m-mojica-g.workers.dev`. Automated contracts plus the preview homepage headers, `/api/health`, and CORS preflight pass; production remains unchanged. The current branch adds fail-closed Turnstile configuration and exact hostname/request binding after version 17, so it requires a new preview upload and the complete release gate below before promotion.
+Status: commit `45e9abf`, the D1 schema, encrypted secrets, and immutable Cloudflare preview version 19 are prepared at `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev`. The preview contains fail-closed Turnstile configuration and exact action/hostname/request binding. Its homepage, response headers, `/api/health`, static build identity, bindings, and D1 tables have been verified; production remains unchanged. The interactive Turnstile submission and D1-row inspection remain the final open gate before promotion.
 
 ## Architecture
 

@@ -46,7 +46,7 @@ Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally h
 
 ## Production: Cloudflare Worker + D1
 
-Cloudflare is the complete full-stack target. Static pages and media are served from `out/`; only `/api/*` runs `worker/index.ts`. `POST /api/lead` validates the interview payload, verifies consent and the selected state-art ID, rejects unapproved origins, verifies Turnstile when its secret is present, rate-limits a salted client hash in D1, and stores the consented inquiry without retaining a raw IP address.
+Cloudflare is the complete full-stack target. Static pages and media are served from `out/`; only `/api/*` runs `worker/index.ts`. `POST /api/lead` validates the interview payload, verifies consent and the selected state-art ID, rejects unapproved origins, requires Turnstile server verification with exact action/hostname/UUID binding, rate-limits a salted client hash in D1, and stores the consented inquiry without retaining a raw IP address. A missing Turnstile secret fails closed with a service error.
 
 The provisioned D1 database is `ark-and-text-leads`, bound as `LEADS`. Apply migrations, configure secrets, test an uploaded preview version, and only then promote it:
 

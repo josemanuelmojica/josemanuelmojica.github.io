@@ -8,6 +8,8 @@ This repository is the complete local handoff for Arχ & Teχt: the working stat
 
 The `architectural-symbol-system` branch is pushed to the GitHub remote. Cloudflare D1 and Turnstile resources are provisioned, but the new Worker version has not been promoted to production. No Appwrite Site or custom domain has been created from this repository.
 
+Immutable Cloudflare preview version 19 is `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev` at commit `45e9abf`. Homepage/header, health, build identity, bindings, and D1 table checks pass. A synthetic interactive Turnstile submission and D1-row inspection remain required before production promotion. Use `CLAUDE_REVIEW_PROMPT.md` for the next constrained design-engineering pass.
+
 ## Current product state
 
 - Framework: Next.js 16.2.6, React 19.2.6, TypeScript 5.9.3.
@@ -132,7 +134,7 @@ Do not load the archival 3,000-piece files in the public page without a new perf
 
 `app/LeadInterview.tsx` implements the requested replacement for “Tell us what you’re looking forward to”: a conversational lead interview that interprets a place or ZIP, renders a stationary graph-paper state plate, confirms the interpretation, and only then asks for consented contact information. The required acceptance example maps “looking/selling in Boise” to the `US-ID` state visual rather than a Boise/Ada County boundary.
 
-`worker/lead.ts`, `migrations/0001_lead_capture.sql`, and `wrangler.jsonc` provide the Cloudflare Worker/D1 submission boundary. It is same-origin by default, exact-origin allowlisted when used from Appwrite or GitHub Pages, Turnstile-verified, payload-limited, consent-checked, idempotent, and durably rate-limited without storing raw client IP addresses.
+`worker/lead.ts`, `migrations/0001_lead_capture.sql`, and `wrangler.jsonc` provide the Cloudflare Worker/D1 submission boundary. It is same-origin by default, exact-origin allowlisted when used from Appwrite or GitHub Pages, fail-closed Turnstile-verified with action/hostname/UUID binding, payload-limited, consent-checked, idempotent, and durably rate-limited without storing raw client IP addresses.
 
 ## Security and deployment boundary
 
