@@ -8,7 +8,7 @@ This repository is the complete local handoff for Arχ & Teχt: the working stat
 
 The `architectural-symbol-system` branch is pushed to the GitHub remote. Cloudflare D1 and Turnstile resources are provisioned, but the new Worker version has not been promoted to production. No Appwrite Site or custom domain has been created from this repository.
 
-Immutable Cloudflare preview version 19 is `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev` at commit `45e9abf`. Homepage/header, health, build identity, bindings, and D1 table checks pass. A synthetic interactive Turnstile submission and D1-row inspection remain required before production promotion. Use `CLAUDE_REVIEW_PROMPT.md` for the next constrained design-engineering pass.
+Immutable Cloudflare preview version 19 is `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev` at commit `45e9abf`. Homepage/header, health, build identity, bindings, D1 tables, Boise → Idaho rendering, real Turnstile proof, public success state, and one-row D1 delivery checks pass. The synthetic row is marked `test`, and the schema has no raw-IP column. Production remains unchanged and requires explicit owner approval before promotion. Use `CLAUDE_REVIEW_PROMPT.md` for the next constrained design-engineering pass.
 
 ## Current product state
 
@@ -153,7 +153,7 @@ Read `docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md` and `docs/security/VERIF
 1. Replace the CSS neighborhood art slot with user-approved artwork while keeping the hover/focus/click contract.
 2. Obtain and validate exact public RealScout market, support, Learn, and Academy URLs from the work account.
 3. Add the real RealScout widget snippet and verify that it does not create an iframe.
-4. Approve a lead-retention period and complete a Cloudflare preview submission before production promotion.
+4. Approve a lead-retention period and explicit production promotion; the Cloudflare preview submission gate is complete.
 5. Decide whether the new opposing X/Y navigation becomes the final production system after Claude’s visual review.
 6. Consider extracting the 1,000+ line client component into focused client islands and establishing one typed market manifest.
 7. Optimize the wordmark crop and below-fold image variants without altering approved kerning or artwork.

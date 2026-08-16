@@ -1,6 +1,6 @@
 # Cloudflare lead-capture operations
 
-Status: commit `45e9abf`, the D1 schema, encrypted secrets, and immutable Cloudflare preview version 19 are prepared at `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev`. The preview contains fail-closed Turnstile configuration and exact action/hostname/request binding. Its homepage, response headers, `/api/health`, static build identity, bindings, and D1 tables have been verified; production remains unchanged. The interactive Turnstile submission and D1-row inspection remain the final open gate before promotion.
+Status: commit `45e9abf`, the D1 schema, encrypted secrets, and immutable Cloudflare preview version 19 are verified at `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev`. The preview contains fail-closed Turnstile configuration and exact action/hostname/request binding. Its homepage, response headers, `/api/health`, static build identity, bindings, D1 tables, and interactive Turnstile submission passed. The single synthetic inquiry is labeled `test`; production remains unchanged and still requires explicit owner approval before promotion.
 
 ## Architecture
 
@@ -41,6 +41,8 @@ Optional non-secret configuration:
 
 The committed `.dev.vars.example` contains names and placeholders only. A real `.dev.vars` file is ignored.
 
+The Turnstile widget allowlists the exact preview 19 hostname, the earlier preview 17 hostname, the stable Worker hostname, `josemanuelmojica.github.io`, and `localhost`. Do not replace these entries with a wildcard. Immutable preview hostnames must be added explicitly before browser verification and may be retired deliberately after they are no longer needed.
+
 ## Authentication and spoofing boundary
 
 The visitor interview is intentionally a public contact form, not an account login. Requiring brokerage credentials or a social login would block legitimate prospects without proving that their housing inquiry is truthful. Its security boundary is therefore Turnstile proof, exact-origin enforcement, strict validation, throttling, affirmative consent, and server-only database access.
@@ -52,6 +54,8 @@ Turnstile proves that Cloudflare accepted a short-lived browser challenge; it do
 For a custom production domain proxied through a Cloudflare zone, add a WAF rate-limiting rule for `POST /api/lead` as a coarse outer limit. Keep the D1 limit as the application-level backstop: the two layers protect different failure modes, and feature availability for WAF rules varies by Cloudflare plan.
 
 ## Preview release gate
+
+Completed on preview version 19 on 2026-08-16. The browser rendered Idaho for the Boise buy/sell example, Turnstile issued proof, the UI reached “We have your first point on the map,” and D1 stored exactly one row with `US-ID`, buy+sell intent, source `ark-and-text-lead-interview`, a consent timestamp, and no raw-IP column. The record uses the reserved invalid-domain email `release-test@example.invalid` and has status `test`; it is not a prospect.
 
 1. Run `npm run typecheck` and `npm test`.
 2. Confirm `npx wrangler d1 migrations list ark-and-text-leads --remote` has no pending migration.

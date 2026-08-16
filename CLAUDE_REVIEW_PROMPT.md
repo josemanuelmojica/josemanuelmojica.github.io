@@ -10,6 +10,7 @@ Work as the design-engineering teammate for **Arχ & Teχt**. Review the existin
 - Pull request: `https://github.com/josemanuelmojica/josemanuelmojica.github.io/pull/2`
 - Current immutable Cloudflare preview: `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev`
 - Production Cloudflare traffic has **not** been promoted to this version.
+- The Boise → Idaho browser flow, managed Turnstile proof, public success state, and one-row D1 delivery gate passed on 2026-08-16. The synthetic row is marked `test`; no raw-IP column exists.
 
 Read these files before editing:
 
@@ -105,6 +106,6 @@ After edits:
 2. Re-test desktop/tablet/mobile, keyboard, reduced motion, every preview route, and the full lead interview.
 3. Report exactly what changed, what remains simulated, and what still needs owner credentials/content.
 4. Commit and push to `architectural-symbol-system` (or a review branch based on it) without adding `.claude/`, secrets, build output, or personal lead data.
-5. Upload only an immutable Cloudflare preview. Do **not** merge the PR or promote production traffic without explicit owner approval and a successful synthetic Turnstile/D1 verification.
+5. Upload only an immutable Cloudflare preview. Do **not** merge the PR or promote production traffic without explicit owner approval. The version 19 synthetic Turnstile/D1 gate is complete; any new runtime version requires its own equivalent verification.
 
 Begin by giving me the prioritized audit and a concise implementation plan. Then make the highest-confidence additions and polish in the same working session.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "Arχ & Teχt",
   "updated": "2026-08-16",
-  "status": "secure-preview-ready-awaiting-interactive-lead-test",
+  "status": "secure-preview-verified-awaiting-production-approval",
   "claudeEntry": "CLAUDE.md",
   "claudeReviewPrompt": "CLAUDE_REVIEW_PROMPT.md",
   "repository": {
@@ -132,7 +132,10 @@
     "cloudflarePreviewVersion": 19,
     "cloudflarePreviewId": "64137e6e-c3fe-4419-89fa-fe1dfb00ff6a",
     "cloudflarePreviewUrl": "https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev",
-    "interactiveLeadTestComplete": false,
+    "interactiveLeadTestComplete": true,
+    "interactiveLeadTestDate": "2026-08-16",
+    "syntheticLeadStatus": "test",
+    "productionPromotionApproved": false,
     "appwrite": "docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md",
     "githubPagesWorkflow": ".github/workflows/pages.yml",
     "basePathHelper": "app/lib/publicPath.ts"
