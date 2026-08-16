@@ -1,6 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import worker from "../worker/index.ts";
+import { createWorker } from "../worker/index.ts";
+
+function workerFor(hostname = "example.com") {
+  return createWorker({
+    async fetch(_url, init) {
+      const body = new URLSearchParams(init.body);
+      return Response.json({
+        success: true,
+        action: "lead-interview",
+        hostname,
+        cdata: body.get("idempotency_key"),
+      });
+    },
+  });
+}
+
+const worker = workerFor();
 
 // A minimal ASSETS stub: records whether it was called and returns a
 // recognizable static-asset response so delegation can be asserted.
@@ -43,6 +59,7 @@ function makeEnv() {
       },
       LEADS: database,
       RATE_LIMIT_SALT: "test-only-rate-limit-salt",
+      TURNSTILE_SECRET_KEY: "test-only-turnstile-secret",
     },
   };
 }
@@ -55,7 +72,7 @@ function leadPayload(overrides = {}) {
     consent: true,
     consentAt: "2026-08-15T20:00:00.000Z",
     website: "",
-    turnstileToken: "",
+    turnstileToken: "browser-challenge-token",
     intent: ["buy"],
     location: {
       query: "Boise, Idaho",
@@ -143,8 +160,9 @@ test("POST /api/lead rejects cross-origin and malformed submissions", async () =
 test("POST /api/lead permits only configured cross-origin browser clients", async () => {
   const { env } = makeEnv();
   env.LEAD_ALLOWED_ORIGINS = "https://josemanuelmojica.github.io";
+  const crossOriginWorker = workerFor("josemanuelmojica.github.io");
 
-  const preflight = await worker.fetch(
+  const preflight = await crossOriginWorker.fetch(
     new Request("https://example.com/api/lead", {
       method: "OPTIONS",
       headers: {
@@ -162,7 +180,7 @@ test("POST /api/lead permits only configured cross-origin browser clients", asyn
   );
   assert.equal(preflight.headers.get("vary"), "Origin");
 
-  const accepted = await worker.fetch(
+  const accepted = await crossOriginWorker.fetch(
     leadRequest(leadPayload(), { origin: "https://josemanuelmojica.github.io" }),
     env,
   );
@@ -176,14 +194,15 @@ test("POST /api/lead permits only configured cross-origin browser clients", asyn
 test("POST /api/lead rate-limits repeated clients in durable storage", async () => {
   const { env } = makeEnv();
   for (let index = 0; index < 5; index += 1) {
+    const requestId = `00000000-0000-4000-8000-${String(index).padStart(12, "0")}`;
     const response = await worker.fetch(
-      leadRequest(leadPayload({ requestId: `request-${index}-valid` })),
+      leadRequest(leadPayload({ requestId })),
       env,
     );
     assert.equal(response.status, 202);
   }
   const limited = await worker.fetch(
-    leadRequest(leadPayload({ requestId: "request-six-valid" })),
+    leadRequest(leadPayload({ requestId: "00000000-0000-4000-8000-999999999999" })),
     env,
   );
   assert.equal(limited.status, 429);

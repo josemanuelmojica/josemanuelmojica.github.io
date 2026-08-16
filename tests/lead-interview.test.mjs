@@ -22,6 +22,7 @@ test("submission uses the same-origin Worker and never claims delivery after rej
   assert.match(interview, /publicPath\("\/api\/lead"\)/);
   assert.match(interview, /consentAt: new Date\(\)\.toISOString\(\)/);
   assert.match(interview, /<TurnstileWidget/);
+  assert.match(interview, /requestId=\{requestId\}/);
   assert.match(interview, /turnstileToken/);
   assert.match(interview, /if \(!response\.ok\)/);
   assert.match(interview, /setSubmitState\("error"\)/);

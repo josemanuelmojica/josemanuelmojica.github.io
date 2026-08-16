@@ -10,6 +10,7 @@ type TurnstileApi = {
       theme: "light";
       appearance: "interaction-only";
       action: "lead-interview";
+      cData: string;
       callback: (token: string) => void;
       "expired-callback": () => void;
       "error-callback": () => void;
@@ -29,9 +30,11 @@ const SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render
 
 export function TurnstileWidget({
   siteKey,
+  requestId,
   onToken,
 }: {
   siteKey: string;
+  requestId: string;
   onToken: (token: string) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +55,7 @@ export function TurnstileWidget({
         theme: "light",
         appearance: "interaction-only",
         action: "lead-interview",
+        cData: requestId,
         callback: onToken,
         "expired-callback": () => onToken(""),
         "error-callback": () => onToken(""),
@@ -76,7 +80,7 @@ export function TurnstileWidget({
       script?.removeEventListener("load", render);
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
     };
-  }, [onToken, siteKey]);
+  }, [onToken, requestId, siteKey]);
 
   return (
     <div className="lead-interview__turnstile">

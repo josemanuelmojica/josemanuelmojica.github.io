@@ -66,6 +66,18 @@ function leadDatabase({ failRates = false, failLeads = false } = {}) {
   };
 }
 
+function verifiedTurnstile(overrides = {}) {
+  return {
+    fetch: async () => Response.json({
+      success: true,
+      action: "lead-interview",
+      hostname: "example.com",
+      cdata: validLead.requestId,
+      ...overrides,
+    }),
+  };
+}
+
 test("accepts a complete state-aware interview payload", () => {
   const result = validateLeadPayload(validLead);
   assert.equal(result.ok, true);
@@ -102,6 +114,8 @@ test("rejects absent consent, malformed email, and unknown state artwork", () =>
 test("rejects oversized content and additional intent values", () => {
   assert.equal(validateLeadPayload({ ...validLead, needs: "x".repeat(2001) }).ok, false);
   assert.equal(validateLeadPayload({ ...validLead, intent: ["rent"] }).ok, false);
+  assert.equal(validateLeadPayload({ ...validLead, requestId: "request-one" }).ok, false);
+  assert.equal(validateLeadPayload({ ...validLead, turnstileToken: "x".repeat(2049) }).ok, false);
 });
 
 test("recognizes the honeypot without treating it as a real lead", () => {
@@ -123,7 +137,12 @@ test("verifies Turnstile server-side before writing a lead", async () => {
     {
       async fetch(_url, init) {
         verificationRequest = init;
-        return Response.json({ success: true, action: "lead-interview" });
+        return Response.json({
+          success: true,
+          action: "lead-interview",
+          hostname: "example.com",
+          cdata: validLead.requestId,
+        });
       },
     },
   );
@@ -159,20 +178,57 @@ test("does not accept a Turnstile token minted for another action", async () => 
       RATE_LIMIT_SALT: "test-rate-salt",
       TURNSTILE_SECRET_KEY: "server-only-secret",
     },
-    { fetch: async () => Response.json({ success: true, action: "newsletter" }) },
+    verifiedTurnstile({ action: "newsletter" }),
   );
 
   assert.equal(response.status, 400);
   assert.equal(leads.length, 0);
 });
 
+test("fails closed when the Turnstile secret is missing", async () => {
+  const { database, leads } = leadDatabase();
+  const response = await handleLeadRequest(leadRequest(), {
+    LEADS: database,
+    RATE_LIMIT_SALT: "test-rate-salt",
+  });
+
+  assert.equal(response.status, 503);
+  assert.equal(leads.length, 0);
+});
+
+test("binds Turnstile proof to the exact frontend hostname and request ID", async () => {
+  for (const result of [
+    { hostname: "attacker.example" },
+    { cdata: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" },
+  ]) {
+    const { database, leads } = leadDatabase();
+    const response = await handleLeadRequest(
+      leadRequest(),
+      {
+        LEADS: database,
+        RATE_LIMIT_SALT: "test-rate-salt",
+        TURNSTILE_SECRET_KEY: "server-only-secret",
+      },
+      verifiedTurnstile(result),
+    );
+
+    assert.equal(response.status, 400);
+    assert.equal(leads.length, 0);
+  }
+});
+
 test("returns a retryable service response when durable storage fails", async () => {
   for (const options of [{ failRates: true }, { failLeads: true }]) {
     const { database } = leadDatabase(options);
-    const response = await handleLeadRequest(leadRequest(), {
-      LEADS: database,
-      RATE_LIMIT_SALT: "test-rate-salt",
-    });
+    const response = await handleLeadRequest(
+      leadRequest(),
+      {
+        LEADS: database,
+        RATE_LIMIT_SALT: "test-rate-salt",
+        TURNSTILE_SECRET_KEY: "server-only-secret",
+      },
+      verifiedTurnstile(),
+    );
     assert.equal(response.status, 503);
     assert.deepEqual(await response.json(), { error: "Lead service unavailable" });
   }

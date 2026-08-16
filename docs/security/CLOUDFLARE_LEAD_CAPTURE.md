@@ -1,6 +1,6 @@
 # Cloudflare lead-capture operations
 
-Status: source, D1 schema, encrypted secrets, and Cloudflare preview version 17 are prepared at `https://7b13b5ea-ark-and-text.j-m-mojica-g.workers.dev`. Automated contracts plus the preview homepage headers, `/api/health`, and CORS preflight pass; production remains unchanged. Do not promote the preview until an interactive Turnstile submission and D1-row inspection complete the gate below.
+Status: source, D1 schema, encrypted secrets, and Cloudflare preview version 17 are prepared at `https://7b13b5ea-ark-and-text.j-m-mojica-g.workers.dev`. Automated contracts plus the preview homepage headers, `/api/health`, and CORS preflight pass; production remains unchanged. The current branch adds fail-closed Turnstile configuration and exact hostname/request binding after version 17, so it requires a new preview upload and the complete release gate below before promotion.
 
 ## Architecture
 
@@ -20,9 +20,10 @@ The endpoint is deny-by-default:
 4. The validator accepts only known fields, a valid email, affirmative consent, an ISO consent timestamp, a known `US-XX` state-art ID, the expected source ID, and a local page path.
 5. A honeypot submission receives the same accepted response but is not written.
 6. A salted SHA-256 client hash is rate-limited to five attempts per ten-minute window in D1. Raw IP addresses are never stored or logged.
-7. When `TURNSTILE_SECRET_KEY` exists, Siteverify must succeed with the exact `lead-interview` action before a lead is written.
-8. `request_id` is the D1 primary key and inserts use `ON CONFLICT DO NOTHING`, making retries idempotent.
-9. Responses are `no-store`; errors contain no submitted personal data.
+7. `TURNSTILE_SECRET_KEY` is mandatory. A missing secret returns `503`; the endpoint never falls back to accepting an unverified lead.
+8. Siteverify has an eight-second timeout and must return the exact `lead-interview` action, the requesting frontend's exact hostname, and the form's UUID in `cdata`. A token copied from another host or submission is rejected.
+9. `request_id` is a UUIDv4, the D1 primary key, the Turnstile `cdata` value, and the Siteverify idempotency key. Inserts use `ON CONFLICT DO NOTHING`, making retries idempotent.
+10. Responses are `no-store` and `nosniff`; errors contain no submitted personal data.
 
 `public/_headers` adds CSP, clickjacking, referrer, permissions, and MIME-sniffing protections to Cloudflare static responses. The CSP permits only the exact Turnstile origin in addition to the site itself.
 
@@ -40,6 +41,16 @@ Optional non-secret configuration:
 
 The committed `.dev.vars.example` contains names and placeholders only. A real `.dev.vars` file is ignored.
 
+## Authentication and spoofing boundary
+
+The visitor interview is intentionally a public contact form, not an account login. Requiring brokerage credentials or a social login would block legitimate prospects without proving that their housing inquiry is truthful. Its security boundary is therefore Turnstile proof, exact-origin enforcement, strict validation, throttling, affirmative consent, and server-only database access.
+
+Lead administration is authenticated separately. For the current release, reads and exports remain in Cloudflare's authenticated D1 console; the public Worker has no lead-list, lead-read, or lead-export endpoint. If a staff dashboard is added, protect its hostname or path with Cloudflare Access and also validate the `Cf-Access-Jwt-Assertion` JWT in the Worker against the exact Access audience and issuer. Do not rely on the Access cookie alone and do not reuse the public lead endpoint for administration.
+
+Turnstile proves that Cloudflare accepted a short-lived browser challenge; it does not prove that the visitor owns the email address they typed. If verified email ownership becomes a requirement, add a double-opt-in or one-time-code flow through an approved transactional-email provider. Until then, treat new leads as unverified contact requests and never automate irreversible actions from the submitted text.
+
+For a custom production domain proxied through a Cloudflare zone, add a WAF rate-limiting rule for `POST /api/lead` as a coarse outer limit. Keep the D1 limit as the application-level backstop: the two layers protect different failure modes, and feature availability for WAF rules varies by Cloudflare plan.
+
 ## Preview release gate
 
 1. Run `npm run typecheck` and `npm test`.
@@ -47,9 +58,9 @@ The committed `.dev.vars.example` contains names and placeholders only. A real `
 3. Configure both required secrets.
 4. Upload a version with `npx wrangler versions upload --tag architectural-symbol-system`; do not run `wrangler deploy` yet.
 5. On the version preview, complete the Boise buy/sell interview and confirm the Idaho state plate appears.
-6. Submit once through Turnstile. Confirm a single D1 row exists with the matching request ID, consent timestamp, `US-ID`, and no IP-address column.
+6. Submit once through Turnstile. Confirm a single D1 row exists with the matching UUID request ID, consent timestamp, `US-ID`, and no IP-address column.
 7. Submit the same request ID again and confirm no duplicate row appears.
-8. Test a malformed payload, an unapproved Origin, and six rapid valid attempts; expect 400, 403, and then 429 behavior.
+8. Test a malformed payload, an unapproved Origin, a mismatched Turnstile hostname/`cdata`, a missing Turnstile secret in a disposable local environment, and six rapid valid attempts; expect 400, 403, 400, 503, and then 429 behavior.
 9. Inspect Worker logs and confirm no name, email, narrative, Turnstile token, secret, or raw IP appears.
 10. Only after all checks pass should an authorized owner promote that exact version.
 

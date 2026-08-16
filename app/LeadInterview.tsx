@@ -30,7 +30,16 @@ function intentList(selected: SelectedIntent | null, detected: Intent[]): Intent
 }
 
 function createRequestId() {
-  return globalThis.crypto?.randomUUID?.() ?? `lead-${Date.now().toString(36)}`;
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const value = [...bytes]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
 }
 
 export function LeadInterview() {
@@ -45,6 +54,7 @@ export function LeadInterview() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState("");
+  const [requestId, setRequestId] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileAttempt, setTurnstileAttempt] = useState(0);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
@@ -94,7 +104,7 @@ export function LeadInterview() {
       process.env.NEXT_PUBLIC_SUBMIT_LEAD_URL?.trim() || publicPath("/api/lead");
 
     const payload = {
-      requestId: createRequestId(),
+      requestId,
       name,
       email,
       consent,
@@ -125,6 +135,7 @@ export function LeadInterview() {
       setSubmitState("idle");
       setStep("sent");
     } catch {
+      setRequestId(createRequestId());
       setTurnstileToken("");
       setTurnstileAttempt((current) => current + 1);
       setSubmitState("error");
@@ -235,6 +246,8 @@ export function LeadInterview() {
       {step === "needs" && (
         <form className="lead-interview__step" onSubmit={(event) => {
           event.preventDefault();
+          setRequestId(createRequestId());
+          setTurnstileToken("");
           setStep("contact");
         }}>
           <label htmlFor="lead-needs">What should life there make easier?</label>
@@ -271,6 +284,7 @@ export function LeadInterview() {
           <TurnstileWidget
             key={turnstileAttempt}
             siteKey={turnstileSiteKey}
+            requestId={requestId}
             onToken={setTurnstileToken}
           />
           {submitState === "error" && <p className="lead-interview__error" role="alert">{errorMessage}</p>}
@@ -278,7 +292,7 @@ export function LeadInterview() {
             <button type="button" className="lead-interview__back" onClick={() => setStep("needs")}>Back</button>
             <button
               type="submit"
-              disabled={submitState === "submitting" || !turnstileToken}
+              disabled={submitState === "submitting" || !requestId || !turnstileToken}
             >
               {submitState === "submitting" ? "Sending…" : "Request a private conversation"} <span>↗</span>
             </button>

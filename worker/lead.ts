@@ -4,7 +4,7 @@ const MAX_BODY_BYTES = 32_768;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 5;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const REQUEST_ID_PATTERN = /^[A-Za-z0-9-]{8,128}$/;
+const REQUEST_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const STATE_VISUALS = new Set(
   (stateManifest.states as Array<{ id: string }>).map((state) => state.id),
 );
@@ -82,7 +82,7 @@ export function validateLeadPayload(input: unknown): ValidationResult {
   const visualId = requiredText(location.visualId, 8);
   const needs = requiredText(input.needs, 2000);
   const pagePath = requiredText(input.pagePath, 500);
-  const turnstileToken = optionalText(input.turnstileToken, 4096);
+  const turnstileToken = optionalText(input.turnstileToken, 2048);
 
   const rawIntent = input.intent;
   const intent = Array.isArray(rawIntent)
@@ -159,6 +159,8 @@ function json(body: unknown, status: number, origin?: string): Response {
     headers: {
       "cache-control": "no-store",
       "content-type": "application/json; charset=utf-8",
+      "referrer-policy": "no-referrer",
+      "x-content-type-options": "nosniff",
       ...(origin ? corsHeaders(origin) : {}),
     },
   });
@@ -194,6 +196,7 @@ async function verifyTurnstile(
   token: string,
   secret: string,
   request: Request,
+  expectedOrigin: string,
   requestId: string,
   fetchImpl: typeof fetch,
 ): Promise<boolean> {
@@ -206,16 +209,30 @@ async function verifyTurnstile(
   const remoteIp = request.headers.get("cf-connecting-ip");
   if (remoteIp) body.set("remoteip", remoteIp);
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8_000);
   try {
     const response = await fetchImpl(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      { method: "POST", body },
+      { method: "POST", body, signal: controller.signal },
     );
     if (!response.ok) return false;
-    const result = await response.json<{ success?: boolean; action?: string }>();
-    return result.success === true && result.action === "lead-interview";
+    const result = await response.json<{
+      success?: boolean;
+      action?: string;
+      hostname?: string;
+      cdata?: string;
+    }>();
+    return (
+      result.success === true &&
+      result.action === "lead-interview" &&
+      result.hostname === new URL(expectedOrigin).hostname &&
+      result.cdata === requestId
+    );
   } catch {
     return false;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
@@ -260,7 +277,7 @@ export async function handleLeadRequest(
   // that their payload was discarded.
   if (lead.website) return respond({ status: "accepted", requestId: lead.requestId }, 202);
 
-  if (!env.LEADS || !env.RATE_LIMIT_SALT) {
+  if (!env.LEADS || !env.RATE_LIMIT_SALT || !env.TURNSTILE_SECRET_KEY) {
     return respond({ error: "Lead service unavailable" }, 503);
   }
 
@@ -285,16 +302,14 @@ export async function handleLeadRequest(
     return respond({ error: "Too many requests" }, 429);
   }
 
-  if (
-    env.TURNSTILE_SECRET_KEY &&
-    !(await verifyTurnstile(
-      lead.turnstileToken,
-      env.TURNSTILE_SECRET_KEY,
-      request,
-      lead.requestId,
-      runtime.fetch,
-    ))
-  ) {
+  if (!(await verifyTurnstile(
+    lead.turnstileToken,
+    env.TURNSTILE_SECRET_KEY,
+    request,
+    origin,
+    lead.requestId,
+    runtime.fetch,
+  ))) {
     return respond({ error: "Verification failed" }, 400);
   }
 
