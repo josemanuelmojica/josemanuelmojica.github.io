@@ -7,7 +7,8 @@
   // request (HTML, CSS, images, the state-art corpus) is served straight
   // from static assets without invoking the Worker.
   //
-  // No D1, no Turnstile, no lead endpoint, no Appwrite are configured here.
+  // Lead records and durable rate-limit counters use the D1 binding below.
+  // Turnstile and rate-limit secrets are configured in Cloudflare, never here.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ark-and-text",
   "main": "worker/index.ts",
@@ -19,6 +20,14 @@
     // All other routes resolve directly to files in ./out.
     "run_worker_first": ["/api/*"]
   },
+  "d1_databases": [
+    {
+      "binding": "LEADS",
+      "database_name": "ark-and-text-leads",
+      "database_id": "16918945-5497-4884-8c32-91c603862ee2",
+      "migrations_dir": "migrations"
+    }
+  ],
   "observability": {
     "enabled": true
   }

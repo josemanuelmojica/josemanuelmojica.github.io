@@ -11,7 +11,11 @@ import {
 import marketLinkOrigins from "../content/market-link-origins.json";
 import marketLinks from "../content/market-links.json";
 import { LeadInterview } from "./LeadInterview";
-import { AtlasRail } from "./components/AtlasRail";
+import { InfiniteAtlasCanvas } from "./components/InfiniteAtlasCanvas";
+import { HeroReveal } from "./components/architectural/HeroReveal";
+import { DrawingIndex } from "./components/architectural/DrawingIndex";
+import { TopIndex } from "./components/architectural/TopIndex";
+import { FeaturedAtlas } from "./components/architectural/FeaturedAtlas";
 import { publicPath } from "./lib/publicPath";
 import { responsiveSources } from "./lib/derivedMedia";
 
@@ -656,8 +660,8 @@ function MarketStory({ reducedMotion }: { reducedMotion: boolean }) {
         >
           <span className="market-portal__aperture" aria-hidden="true">
             <i className="market-portal__art-slot">
-              <span>Neighborhood artwork</span>
-              <small>Placeholder / pending</small>
+              <span>{portalStudy.subarea}</span>
+              <small>{portalStudy.city} / {portalStudy.state}</small>
             </i>
             <i className="market-portal__wash" />
             <i className="market-portal__axis market-portal__axis--horizontal" />
@@ -671,7 +675,7 @@ function MarketStory({ reducedMotion }: { reducedMotion: boolean }) {
         </a>
         <div className="ink-seal" aria-hidden="true"><span>χ</span></div>
         <div className="market-stage__label" aria-hidden="true">
-          Eight markets <span>/</span> one point of view
+          {portalStudy.city} <span>/</span> {portalStudy.state}
         </div>
       </div>
 
@@ -867,6 +871,9 @@ export function InkEstates() {
 
   return (
     <main>
+      <InfiniteAtlasCanvas />
+      <DrawingIndex />
+      <TopIndex />
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Ark and Text home">
           <BrandName />
@@ -891,8 +898,9 @@ export function InkEstates() {
       <section className="hero paper-stage" id="top">
         <HeroMap />
         <div className="hero__wash" />
+        <HeroReveal />
         <div className="hero__content">
-          <p className="eyebrow">Private real estate / eight American markets</p>
+          <p className="eyebrow">Private real estate / drawn to place</p>
           <h1>Be <em>drawn</em> to where you live.</h1>
           <p className="hero__lede">
             The house matters. So does the life outside it.
@@ -1019,19 +1027,17 @@ export function InkEstates() {
         )}
       </section>
 
-      <section className="markets-intro markets-intro--atlas">
-        <AtlasRail />
-        <div className="markets-intro__copy">
-          <p className="eyebrow">A place-first practice</p>
-          <h2>A map tells you what a listing cannot.</h2>
-          <p>
-            Scroll eight real street networks. Each city gathers at the same
-            point. Then the next map takes over.
-          </p>
-        </div>
+      <section className="markets-intro">
+        <p className="eyebrow">A place-first practice</p>
+        <h2>A map tells you what a listing cannot.</h2>
+        <p>
+          Every neighborhood has a shape. We read it before we read the house.
+        </p>
       </section>
 
       <MarketStory reducedMotion={reducedMotion} />
+
+      <FeaturedAtlas />
 
       <section className="approach" id="approach">
         <div className="approach__statement">

@@ -1,13 +1,16 @@
 {
   "schemaVersion": 1,
   "name": "Arχ & Teχt",
-  "updated": "2026-08-10",
-  "status": "local-handoff-ready",
+  "updated": "2026-08-16",
+  "status": "secure-preview-verified-awaiting-production-approval",
   "claudeEntry": "CLAUDE.md",
+  "claudeReviewPrompt": "CLAUDE_REVIEW_PROMPT.md",
   "repository": {
-    "branch": "main",
-    "remoteConfigured": false,
-    "published": false,
+    "branch": "architectural-symbol-system",
+    "remoteConfigured": true,
+    "published": true,
+    "headCommit": "45e9abf",
+    "pullRequest": "https://github.com/josemanuelmojica/josemanuelmojica.github.io/pull/2",
     "productionDeployed": false
   },
   "runtime": {
@@ -64,7 +67,7 @@
   "stateArtCorpus": {
     "name": "Quiet Watersheds",
     "corpusVersion": "2026-08-10.1",
-    "status": "asset-corpus-only",
+    "status": "runtime-corpus-used-by-lead-interview",
     "manifest": "public/maps/us-state-studies/v1/manifest.json",
     "assetDirectory": "public/maps/us-state-studies/v1/states",
     "fallback": "public/maps/us-state-studies/v1/fallback/unresolved.svg",
@@ -93,7 +96,9 @@
     },
     "statesWithoutRecordedNaturalEarthRivers": ["US-DE", "US-HI", "US-RI"],
     "atlasUiImplemented": false,
-    "leadFormImplemented": false
+    "leadFormImplemented": true,
+    "leadSubmissionImplemented": true,
+    "leadSubmissionRuntime": "Cloudflare Worker + D1"
   },
   "referenceArchive": {
     "originalHandoff": "reference/original-handoff",
@@ -111,7 +116,7 @@
     {
       "id": "lead-capture-map-interview",
       "spec": "docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md",
-      "implemented": false,
+      "implemented": true,
       "acceptanceExample": "looking/selling in Boise -> Idaho state visual"
     }
   ],
@@ -122,6 +127,15 @@
     "appwriteConfiguredExternally": false
   },
   "deployment": {
+    "cloudflareWorker": "wrangler.jsonc",
+    "cloudflareLeadOperations": "docs/security/CLOUDFLARE_LEAD_CAPTURE.md",
+    "cloudflarePreviewVersion": 19,
+    "cloudflarePreviewId": "64137e6e-c3fe-4419-89fa-fe1dfb00ff6a",
+    "cloudflarePreviewUrl": "https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev",
+    "interactiveLeadTestComplete": true,
+    "interactiveLeadTestDate": "2026-08-16",
+    "syntheticLeadStatus": "test",
+    "productionPromotionApproved": false,
     "appwrite": "docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md",
     "githubPagesWorkflow": ".github/workflows/pages.yml",
     "basePathHelper": "app/lib/publicPath.ts"

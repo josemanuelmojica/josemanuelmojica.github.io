@@ -1,21 +1,23 @@
 # Arχ & Teχt project manifest
 
-Updated: 2026-08-10
+Updated: 2026-08-15
 
 ## Purpose
 
-This repository is the complete local handoff for Arχ & Teχt: the working static real-estate site, four architectural navigation studies, deployment/security contracts, the prior site iteration, user feedback screenshots, the original Japanese Ink Scroll handoff, the full map-generation toolchain, all available puzzle/ant-motion source assets, and the generated 50-state Quiet Watersheds corpus.
+This repository is the complete local handoff for Arχ & Teχt: the working static real-estate site, four architectural navigation studies, opposing X/Y production navigation, Cloudflare Worker/D1 lead capture, deployment/security contracts, the prior site iteration, user feedback screenshots, the original Japanese Ink Scroll handoff, the full map-generation toolchain, all available puzzle/ant-motion source assets, and the generated 50-state Quiet Watersheds corpus.
 
-The repository is prepared for GitHub, but no remote repository, Appwrite project, domain, or production deployment has been created from this local copy.
+The `architectural-symbol-system` branch is pushed to the GitHub remote. Cloudflare D1 and Turnstile resources are provisioned, but the new Worker version has not been promoted to production. No Appwrite Site or custom domain has been created from this repository.
+
+Immutable Cloudflare preview version 19 is `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev` at commit `45e9abf`. Homepage/header, health, build identity, bindings, D1 tables, Boise → Idaho rendering, real Turnstile proof, public success state, and one-row D1 delivery checks pass. The synthetic row is marked `test`, and the schema has no raw-IP column. Production remains unchanged and requires explicit owner approval before promotion. Use `CLAUDE_REVIEW_PROMPT.md` for the next constrained design-engineering pass.
 
 ## Current product state
 
 - Framework: Next.js 16.2.6, React 19.2.6, TypeScript 5.9.3.
 - Rendering: static export (`output: "export"`) to `out/`.
 - Runtime: Node.js 22.13 or newer for install/build; no Node server is required after export.
-- Hosts: Appwrite Sites at the domain root; optional GitHub Pages with `NEXT_PUBLIC_BASE_PATH`.
+- Hosts: Cloudflare Workers Static Assets for the full stack; Appwrite Sites or GitHub Pages for the portable frontend.
 - Main experience: an endlessly scrolling editorial site with property filtering, favorites, property dialog, contact section, and eight sticky map chapters.
-- State-art readiness: the 50-state Quiet Watersheds asset corpus is generated and public-safe; no atlas UI or conversational lead form uses it yet.
+- State-art readiness: the 50-state Quiet Watersheds corpus is generated, validated, and used by the conversational lead interview.
 - Wordmark: the supplied artwork at `public/brand/ark-and-text-source.png`; never re-typeset.
 - Main line: “Be drawn to where you live.”
 
@@ -69,6 +71,8 @@ The right-side target deliberately renders **no property photograph**. It names 
 | Path | Responsibility |
 | --- | --- |
 | `app/InkEstates.tsx` | Current home experience, market animation, property interactions, and content data. |
+| `app/LeadInterview.tsx` | Five-step deterministic location/intent interview and state-art confirmation. |
+| `app/TurnstileWidget.tsx` | Explicitly rendered Cloudflare Turnstile browser challenge. |
 | `app/globals.css` | Home design system and responsive/reduced-motion behavior. |
 | `app/components/RealScoutWidgetSlot.tsx` | Reviewed placeholder for the real widget snippet. No widget is installed. |
 | `app/components/PreviewShared.tsx` | Shared preview wordmark/canvas/navigation. |
@@ -77,6 +81,9 @@ The right-side target deliberately renders **no property photograph**. It names 
 | `content/market-links.json` | Deny-by-default city-search link manifest. |
 | `content/market-link-origins.json` | Exact external-origin allowlist. |
 | `content/resources.json` | Empty verified RealScout learning/support manifest awaiting work-account research. |
+| `worker/lead.ts` | Validated, origin-bound, Turnstile-protected, rate-limited D1 submission endpoint. |
+| `migrations/0001_lead_capture.sql` | D1 lead and abuse-counter schema. |
+| `wrangler.jsonc` | Cloudflare static assets, API-first routing, and D1 binding. |
 | `public/maps/japanese-ink-scroll/` | Production-safe base images plus 160-piece active overlays/metadata. |
 | `public/maps/us-state-studies/v1/` | Quiet Watersheds runtime corpus: 50 SVG + 50 WebP state plates, manifest, and unresolved fallback. |
 | `scripts/state-ink/` | Deterministic state-art generator, requirements, and verification instructions. |
@@ -93,7 +100,7 @@ The right-side target deliberately renders **no property photograph**. It names 
 
 The generator is `scripts/state-ink/generate_state_ink_maps.py`. Run `npm run generate:state-art`, then `npm run check:state-art`. It uses the locally pinned Natural Earth 1:10m admin-1 and river/lake-centerline GeoJSON at commit `ca96624a56bd078437bca8184e78163e5039ad19`; source checksums are recorded in `reference/geodata/natural-earth/README.md` and `reference/state-art-corpus/v1/PROVENANCE.json`.
 
-Idaho (`US-ID`) is ready for the future Boise → state-level response. Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) contain no blue river line because the pinned Natural Earth data has no state-scale centerline intersections there; the generator does not fabricate waterways. This corpus does not implement an atlas route, selector/gallery, place interpreter, conversational lead form, geocoding, or lead submission.
+The live interview resolves Boise to Idaho (`US-ID`). Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) contain no blue river line because the pinned Natural Earth data has no state-scale centerline intersections there; the generator does not fabricate waterways. A separate all-state atlas selector is not implemented.
 
 ## Complete reference archive
 
@@ -123,18 +130,18 @@ The current live animation uses only the 160-piece active subset. The archive pr
 
 Do not load the archival 3,000-piece files in the public page without a new performance design. The original master prompt and performance notes explain the existing active-subset contract.
 
-## Future lead-capture concept
+## Lead-capture implementation
 
-`docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md` specifies the requested replacement for “Tell us what you’re looking forward to”: a conversational lead interview that interprets a place or ZIP, renders a rough stationary graph-paper map, confirms the interpretation, and only then asks for consented contact information. The required acceptance example maps “looking/selling in Boise” to an Idaho-level visual rather than a Boise/Ada County boundary. The `US-ID` Quiet Watersheds plate now supplies that future visual asset.
+`app/LeadInterview.tsx` implements the requested replacement for “Tell us what you’re looking forward to”: a conversational lead interview that interprets a place or ZIP, renders a stationary graph-paper state plate, confirms the interpretation, and only then asks for consented contact information. The required acceptance example maps “looking/selling in Boise” to the `US-ID` state visual rather than a Boise/Ada County boundary.
 
-This concept requires a server-side geocoding/NLP/lead endpoint, such as an Appwrite Function. Neither the conversational lead form nor an atlas interface is implemented in the current static site.
+`worker/lead.ts`, `migrations/0001_lead_capture.sql`, and `wrangler.jsonc` provide the Cloudflare Worker/D1 submission boundary. It is same-origin by default, exact-origin allowlisted when used from Appwrite or GitHub Pages, fail-closed Turnstile-verified with action/hostname/UUID binding, payload-limited, consent-checked, idempotent, and durably rate-limited without storing raw client IP addresses.
 
 ## Security and deployment boundary
 
-- The repository contains no Appwrite project/site IDs, API keys, live variables, or authenticated connector state.
+- The repository contains no private credentials; public Cloudflare resource identifiers are intentionally committed.
 - Static `NEXT_PUBLIC_*` values are public at build time. Secrets belong in a server-side function.
-- Source/output tests reject iframes and validate the exact market-link boundary.
-- The meta CSP blocks framed content and objects, but production clickjacking protection still requires response headers (`frame-ancestors 'none'` or `X-Frame-Options: DENY`) from Appwrite or an approved edge layer.
+- Source/output tests reject authored iframes and validate the exact market-link boundary. Turnstile owns its isolated runtime frame.
+- The meta CSP and Cloudflare `_headers` policy restrict Turnstile to `challenges.cloudflare.com`; Cloudflare response headers add clickjacking and MIME-sniffing protection.
 - Appwrite should run `npm test`, publish `out/`, and leave `NEXT_PUBLIC_BASE_PATH` empty.
 - GitHub Pages builds derive the repository base path in the workflow.
 - The workflow validates pull requests and grants deployment/OIDC permissions only to the deploy job.
@@ -146,12 +153,12 @@ Read `docs/security/APPWRITE_SITES_SECURITY_HANDOFF.md` and `docs/security/VERIF
 1. Replace the CSS neighborhood art slot with user-approved artwork while keeping the hover/focus/click contract.
 2. Obtain and validate exact public RealScout market, support, Learn, and Academy URLs from the work account.
 3. Add the real RealScout widget snippet and verify that it does not create an iframe.
-4. Design and implement the lead-capture map interview plus its server-side geocoding/lead boundary.
-5. Decide which elements from the four navigation previews should become production navigation.
+4. Approve a lead-retention period and explicit production promotion; the Cloudflare preview submission gate is complete.
+5. Decide whether the new opposing X/Y navigation becomes the final production system after Claude’s visual review.
 6. Consider extracting the 1,000+ line client component into focused client islands and establishing one typed market manifest.
 7. Optimize the wordmark crop and below-fold image variants without altering approved kerning or artwork.
 8. Profile the SVG scroll loop under CPU throttling before increasing the animated piece count.
-9. Create/authorize the actual GitHub remote and Appwrite Site; no external mutation has occurred.
+9. Connect Appwrite only if it remains a required secondary host; the Cloudflare preview must pass before production promotion.
 
 ## Claude starting sequence
 

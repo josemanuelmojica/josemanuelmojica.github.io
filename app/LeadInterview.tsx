@@ -8,6 +8,8 @@ import {
   stateNameFor,
 } from "./lib/locationResolver";
 import { publicPath } from "./lib/publicPath";
+import runtimeConfig from "../content/public-runtime-config.json";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 type InterviewStep = "intent" | "location" | "confirm" | "needs" | "contact" | "sent";
 type SelectedIntent = Intent | "both" | "exploring";
@@ -28,10 +30,21 @@ function intentList(selected: SelectedIntent | null, detected: Intent[]): Intent
 }
 
 function createRequestId() {
-  return globalThis.crypto?.randomUUID?.() ?? `lead-${Date.now().toString(36)}`;
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const value = [...bytes]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
 }
 
 export function LeadInterview() {
+  const turnstileSiteKey =
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || runtimeConfig.turnstileSiteKey;
   const [step, setStep] = useState<InterviewStep>("intent");
   const [selectedIntent, setSelectedIntent] = useState<SelectedIntent | null>(null);
   const [locationQuery, setLocationQuery] = useState("");
@@ -41,6 +54,9 @@ export function LeadInterview() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState("");
+  const [requestId, setRequestId] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileAttempt, setTurnstileAttempt] = useState(0);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -84,19 +100,17 @@ export function LeadInterview() {
     setSubmitState("submitting");
     setErrorMessage("");
 
-    const functionUrl = process.env.NEXT_PUBLIC_SUBMIT_LEAD_URL?.trim();
-    if (!functionUrl) {
-      setSubmitState("error");
-      setErrorMessage("This inquiry has not been sent yet. Secure lead delivery is still being connected.");
-      return;
-    }
+    const functionUrl =
+      process.env.NEXT_PUBLIC_SUBMIT_LEAD_URL?.trim() || publicPath("/api/lead");
 
     const payload = {
-      requestId: createRequestId(),
+      requestId,
       name,
       email,
       consent,
+      consentAt: new Date().toISOString(),
       website,
+      turnstileToken,
       intent: intentList(selectedIntent, interpretation?.intent ?? []),
       location: {
         query: locationQuery.trim(),
@@ -121,6 +135,9 @@ export function LeadInterview() {
       setSubmitState("idle");
       setStep("sent");
     } catch {
+      setRequestId(createRequestId());
+      setTurnstileToken("");
+      setTurnstileAttempt((current) => current + 1);
       setSubmitState("error");
       setErrorMessage("We could not send this inquiry. Your answers are still here—please try again shortly.");
     }
@@ -189,8 +206,8 @@ export function LeadInterview() {
       {step === "confirm" && interpretation && (
         <div className="lead-interview__step lead-interview__confirmation">
           <div className="lead-interview__plate">
-            <img src={visualUrl} alt={`${visualName} rendered as a quiet blue watershed study`} />
-            <span>Search study / {interpretation.visualId ?? "unresolved"}</span>
+            <img src={visualUrl} alt={`${visualName} rendered as a quiet blue watershed drawing`} />
+            <span>{visualName}</span>
           </div>
           <div className="lead-interview__confirm-copy">
             {interpretation.candidateStates.length > 0 ? (
@@ -229,6 +246,8 @@ export function LeadInterview() {
       {step === "needs" && (
         <form className="lead-interview__step" onSubmit={(event) => {
           event.preventDefault();
+          setRequestId(createRequestId());
+          setTurnstileToken("");
           setStep("contact");
         }}>
           <label htmlFor="lead-needs">What should life there make easier?</label>
@@ -262,10 +281,19 @@ export function LeadInterview() {
             <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required />
             <span>I agree that Arχ &amp; Teχt may contact me about this inquiry. I can ask to stop at any time.</span>
           </label>
+          <TurnstileWidget
+            key={turnstileAttempt}
+            siteKey={turnstileSiteKey}
+            requestId={requestId}
+            onToken={setTurnstileToken}
+          />
           {submitState === "error" && <p className="lead-interview__error" role="alert">{errorMessage}</p>}
           <div className="lead-interview__actions">
             <button type="button" className="lead-interview__back" onClick={() => setStep("needs")}>Back</button>
-            <button type="submit" disabled={submitState === "submitting"}>
+            <button
+              type="submit"
+              disabled={submitState === "submitting" || !requestId || !turnstileToken}
+            >
               {submitState === "submitting" ? "Sending…" : "Request a private conversation"} <span>↗</span>
             </button>
           </div>

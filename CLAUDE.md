@@ -2,6 +2,8 @@
 
 This repository is a complete local design/engineering handoff. Do not push, deploy, configure Appwrite, install a widget, or invent RealScout URLs unless the owner explicitly authorizes that external action.
 
+For the current review/add/polish assignment, follow `CLAUDE_REVIEW_PROMPT.md` after reading this file. The source checkpoint is commit `45e9abf`; immutable Cloudflare preview version 19 is `https://64137e6e-ark-and-text.j-m-mojica-g.workers.dev`. It is not production traffic.
+
 ## Read first
 
 1. `PROJECT_MANIFEST.md`
@@ -29,14 +31,15 @@ The exact archive inventory and SHA-256 digests are in `reference/FILE_INDEX.jso
 
 Compare the working homepage and all four `/previews/` routes, then propose how to recombine their strongest ideas. Study the earlier site and the original interaction spec before changing the long-scroll choreography. The archive deliberately preserves ring, spiral, wave, chain, streams, puzzle reassembly, and ant-like motion directions; none is automatically preferred.
 
-Treat `docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md` as the source of truth for the future conversational lead form. Its required behavior includes interpreting “looking/selling in Boise” as buy + sell intent and drawing an Idaho-level graph-paper response before requesting contact details.
+Treat `docs/concepts/LEAD_CAPTURE_MAP_INTERVIEW.md` as the product contract for the implemented conversational lead form. Its required behavior includes interpreting “looking/selling in Boise” as buy + sell intent and drawing an Idaho-level graph-paper response before requesting contact details.
 
 ## Quiet Watersheds readiness
 
 - `public/maps/us-state-studies/v1/` contains the complete versioned corpus: 50 SVG + 50 WebP state plates, `manifest.json`, and `fallback/unresolved.svg`. Manifest-declared assets total 3,250,794 bytes (~3.10 MiB); the directory is ~3.3 MB.
 - Generate and verify it with `npm run generate:state-art` and `npm run check:state-art`. The generator uses the pinned Natural Earth files in `reference/geodata/natural-earth/` and requires no network once its Python dependencies are installed.
-- Idaho is available as `US-ID`, so a future Boise interpretation has its state-level asset ready. Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the pinned Natural Earth centerlines have no state-scale intersections there.
-- This is an asset corpus, not an implemented atlas. No state selector/gallery, place interpreter, conversational lead form, geocoding, or lead-submission flow exists yet.
+- The lead interview resolves Boise to `US-ID`. Delaware (`US-DE`), Hawaii (`US-HI`), and Rhode Island (`US-RI`) intentionally have no blue river line because the pinned Natural Earth centerlines have no state-scale intersections there.
+- Treat `worker/lead.ts`, `migrations/0001_lead_capture.sql`, and `docs/security/CLOUDFLARE_LEAD_CAPTURE.md` as one security boundary. Never move D1 or Turnstile secrets into the static client.
+- The conversational place interpreter, state-plate confirmation, and protected lead-submission flow are implemented. A separate all-state selector/gallery, complete metro-art corpus, optional network geocoder, staff dashboard, CRM notification, and production promotion are not implemented.
 
 ## Verification
 

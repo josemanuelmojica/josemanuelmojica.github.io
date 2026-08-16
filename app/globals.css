@@ -1,20 +1,34 @@
 :root {
   --paper: #fffefd;
-  --paper-deep: #f1f5f8;
-  --wash: #e5edf3;
-  --ash: #96a8b5;
-  --graphite: #405563;
-  --ink: #172833;
-  --vermilion: #0a5f97;
-  --blueprint: #0a5f97;
-  --blueprint-deep: #063a64;
-  --blueprint-light: #58a9d8;
+  /* The neutrals previously carried a cool/blue cast chosen to sit with the
+     blueprint accent. With a graphite accent that cast reads as a colour
+     mismatch, so they are re-biased very slightly warm — still neutral, but
+     now analogous to the graphite rather than fighting it. */
+  --paper-deep: #f5f4f1;
+  --wash: #eae8e3;
+  --ash: #a3a099;
+  --graphite: #55534d;
+  --ink: #22262a;
+  /* Accent ramp — warm-neutral graphite, the colour of a leadholder on
+     paper. This replaces the former cyan-blue blueprint accent, which read
+     as digital/SaaS against the ivory rather than architectural. The token
+     names are kept so every existing call site keeps working; only the
+     values changed. The ramp is a genuine value ladder (deep/base/light),
+     not one flat grey, so marks still have depth and hierarchy. */
+  --vermilion: #3a3a38;
+  --blueprint: #3a3a38;
+  --blueprint-deep: #24241f;
+  --blueprint-light: #6f6f68;
   --blueprint-gradient: linear-gradient(135deg, var(--blueprint-deep) 0%, var(--blueprint) 52%, var(--blueprint-light) 100%);
   --display: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
   --body: Inter, "Hiragino Kaku Gothic ProN", system-ui, -apple-system, sans-serif;
   --utility: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --rule: color-mix(in srgb, var(--ink) 18%, transparent);
   --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Width of the reserved drawing-sheet binding edge that the DrawingIndex
+     rail occupies on desktop. Content is inset by this much so the fixed
+     rail never overlaps it. */
+  --index-margin: 8.5rem;
 }
 
 * {
@@ -25,6 +39,15 @@ html {
   color: var(--ink);
   background: var(--paper);
   scroll-behavior: smooth;
+  /* The sheet is a light surface. Without this the browser paints the
+     overscroll canvas (the area outside the document, revealed by
+     rubber-banding) with its own default, which reads as a warm/tan band
+     above the page. */
+  color-scheme: light;
+  /* No rubber-band at the top. The bounce exposed that canvas band and made
+     a drag-down gesture look like a pull-to-refresh affordance, which this
+     site does not have. */
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -34,6 +57,7 @@ body {
   color: var(--ink);
   font-family: var(--body);
   font-synthesis: none;
+  overscroll-behavior-y: none;
 }
 
 button,
@@ -134,6 +158,11 @@ img {
   left: 0;
   width: 171.683%;
   max-width: none;
+  /* The <img> carries the master's intrinsic width/height attributes (which
+     reserve space and avoid CLS). Those attributes would otherwise fix the
+     rendered height at the master's 907px and burst this crop window, so the
+     height is derived from the cropped width instead. */
+  height: auto;
   transform: translate(-7.209%, -30.32%);
 }
 
@@ -147,7 +176,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: invert(30%) sepia(53%) saturate(1692%) hue-rotate(168deg) brightness(88%) contrast(96%);
+  filter: invert(21%) sepia(6%) saturate(374%) hue-rotate(16deg) brightness(96%) contrast(90%);
 }
 
 .site-header nav {
@@ -220,7 +249,7 @@ img {
   height: 100%;
   object-fit: cover;
   object-position: 50% 54%;
-  filter: hue-rotate(188deg) saturate(0.78) contrast(0.98);
+  filter: saturate(0.42) contrast(1.02);
 }
 
 .hero__wash {
@@ -238,6 +267,28 @@ img {
   z-index: 2;
   width: min(44rem, 72vw);
   padding: clamp(10rem, 21vh, 14rem) 0 13rem 8vw;
+}
+
+/* On narrow viewports the re-cropped hero map runs up under the headline
+   band (see the 767px rule below), so the eyebrow and headline need a
+   soft paper-colored halo to stay legible where street lines cross under
+   the type. A blurred multi-direction shadow, not a hard outline — it
+   should read as the paper showing through, not as a sticker edge.
+   Excludes `.hero h1 em`: that word is a gradient painted via
+   background-clip: text with color: transparent, so a text-shadow behind
+   it paints a visible halo-colored blob in place of the (transparent)
+   glyph fill instead of sitting behind it. */
+.hero__content .eyebrow,
+.hero__content h1,
+.hero__content .hero__lede {
+  text-shadow:
+    0 0 0.4rem var(--paper),
+    0 0 0.9rem var(--paper),
+    0 0 1.5rem var(--paper);
+}
+
+.hero h1 em {
+  text-shadow: none;
 }
 
 .hero h1 {
@@ -376,8 +427,25 @@ img {
 }
 
 .properties {
+  position: relative;
   padding: clamp(7rem, 12vw, 12rem) 5vw clamp(8rem, 13vw, 13rem);
-  background: var(--paper);
+  /* Slightly translucent so the atlas field still registers underneath. A
+     fully opaque --paper fill made this the one section where the
+     cartographic identity disappeared entirely, leaving a generic listing
+     grid between two strongly drawn sections. */
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+}
+
+/* Datum rule entering the collection, in the same drafting vocabulary the
+   market chapters already use — one line, not a new effect system. */
+.properties::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 5vw;
+  width: min(38vw, 26rem);
+  height: 1px;
+  background: var(--rule);
 }
 
 .section-heading {
@@ -652,7 +720,7 @@ img {
 }
 
 .map-layer__base {
-  filter: hue-rotate(188deg) saturate(0.78) contrast(0.98);
+  filter: saturate(0.42) contrast(1.02);
 }
 
 .map-layer__base,
@@ -1025,7 +1093,7 @@ img {
   height: 2.4rem;
   object-fit: contain;
   opacity: 0.74;
-  filter: invert(30%) sepia(53%) saturate(1692%) hue-rotate(168deg) brightness(88%) contrast(96%);
+  filter: invert(21%) sepia(6%) saturate(374%) hue-rotate(16deg) brightness(96%) contrast(90%);
 }
 
 .filter-line__icon {
@@ -1080,7 +1148,7 @@ img {
   height: 100%;
   object-fit: cover;
   opacity: 0.38;
-  filter: hue-rotate(188deg) saturate(0.78) contrast(0.98);
+  filter: saturate(0.42) contrast(1.02);
 }
 
 .contact::before {
@@ -1386,6 +1454,21 @@ img {
   color: #711e1e;
 }
 
+.lead-interview__turnstile {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 4.5rem;
+  align-content: start;
+}
+
+.lead-interview__turnstile > p {
+  margin: 0;
+  color: var(--graphite);
+  font: 500 0.5rem/1.4 var(--utility);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .lead-interview--sent {
   align-content: center;
   gap: 1.5rem;
@@ -1653,7 +1736,16 @@ img {
 
   .hero__content {
     width: auto;
-    padding: 9.5rem 1.4rem 14rem;
+    /* The search bar is pinned to the bottom of the hero, so the old 14rem
+       bottom padding did not push anything — it just opened ~560px of void
+       between the lede and the bar on a 844px screen. Centring the block in
+       the space above the bar makes the crop deliberate: map band on top,
+       type seated in the middle, interaction pinned at the bottom. */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 6rem 1.4rem 11rem;
   }
 
   .hero h1 {
@@ -1669,8 +1761,11 @@ img {
   }
 
   .hero__seal {
-    right: 15vw;
-    bottom: 44vh;
+    /* Register the seal against the map band in the upper crop rather than
+       leaving it adrift in the open paper below the lede. */
+    right: 12vw;
+    bottom: auto;
+    top: 26vh;
   }
 
   .property-search {
@@ -2012,55 +2107,67 @@ img {
   }
 }
 
-/* Ambient luxury atlas rail — decorative vertical map tapestry.
-   Transform-only motion; strictly cheaper than the interactive MarketStory. */
-.atlas-rail {
+/* Infinite atlas canvas — a fixed, site-wide decorative map plane behind all
+   content. One seamless (4-edge toroidal) tile, repeated, drifting diagonally
+   with scroll. Movement is applied to background-position by JS (rAF); this
+   block owns only the static presentation + reduced-motion fallback. */
+.infinite-atlas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  /* Clips the oversized plane to the viewport. */
+  overflow: hidden;
+  /* Warm ivory drafting paper shows through the tile's negative space and
+     stands in before the tile has loaded (no blank flash). */
+  background-color: var(--paper);
+  /* The atlas is a quiet ground, not a focal image. */
+  opacity: 0.42;
+}
+
+/* The single moving layer. Only its transform changes, so the tiled field
+   rasters once and subsequent frames are compositor work rather than a
+   full-viewport repaint. Measured against the previous background-position
+   approach: ~10x fewer paints and ~97x less raster time while scrolling. */
+.infinite-atlas__plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width/height are set inline from the active tile size (viewport + one
+     tile of slack) so a wrapped translate never exposes an edge. */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Foreground content sits above the atlas and can carry translucent ivory
+   masks so the continuous field reads more strongly in open areas and recedes
+   behind dense text. Sections opt in with .paper-mask. */
+.paper-mask {
+  position: relative;
+  isolation: isolate;
+}
+
+.paper-mask::before {
+  content: "";
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  z-index: -1;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
 }
 
-.atlas-rail__track {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  will-change: transform;
-}
-
-.atlas-rail__track--animate {
-  animation-name: atlas-rail-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.atlas-rail__frame {
-  display: block;
-  width: 100%;
-}
-
-.atlas-rail__img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-@keyframes atlas-rail-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    /* Shift up by exactly one atlas copy (half the two-copy track). */
-    transform: translate3d(0, -50%, 0);
-  }
+/* Denser mask variant for text-heavy regions that need more legibility. */
+.paper-mask--solid::before {
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .atlas-rail__track--animate {
-    animation: none;
+  /* No drift; the tiled field simply holds still (JS also skips the rAF loop).
+     The plane is parked at its origin and drops the compositor hint, since
+     nothing will animate it. */
+  .infinite-atlas__plane {
+    transform: none;
+    will-change: auto;
   }
 }
 
@@ -2076,4 +2183,804 @@ img {
 .markets-intro__copy {
   position: relative;
   z-index: 1;
+}
+
+/* Hero architectural reveal — editorial opening sequence behind hero content.
+   Sits above the hero map (z -3) and wash (z -2), below content. Resolves to
+   stillness; the street draw-on is the only transient motion. */
+.hero-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-reveal__grid,
+.hero-reveal__map,
+.hero-reveal__buildings,
+.hero-reveal__marks {
+  position: absolute;
+  inset: 0;
+}
+
+/* Street/footprint trace canvas is inset to the right where the hero map sits. */
+.hero-reveal__map,
+.hero-reveal__buildings {
+  left: auto;
+  right: 0;
+  width: min(60vw, 62rem);
+  opacity: 0.85;
+}
+
+.hero-reveal__trace {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-reveal__road {
+  stroke: color-mix(in srgb, var(--ink) 62%, transparent);
+}
+
+.hero-reveal__footprint {
+  stroke: var(--blueprint);
+  fill: color-mix(in srgb, var(--blueprint) 6%, transparent);
+}
+
+/* Stroke draw-on: each road path starts fully dashed (invisible) and the dash
+   offset animates to 0, tracing the street. pathLength normalization via a
+   large dasharray keeps it resolution-independent. */
+.hero-reveal__trace--draw .hero-reveal__road {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: hero-trace-draw 1.1s var(--ease-ink, ease) forwards;
+}
+
+@keyframes hero-trace-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-reveal__datum {
+  position: absolute;
+  top: 28%;
+  right: 22%;
+}
+
+.hero-reveal__coords {
+  position: absolute;
+  top: calc(28% + 2.4rem);
+  right: 22%;
+  font-family: var(--utility);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-reveal__coords .coordinate-stamp__value {
+  color: var(--blueprint);
+}
+
+.hero-reveal__north {
+  position: absolute;
+  top: 12%;
+  right: 8%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal__trace--draw .hero-reveal__road {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* On small screens the marks would crowd the headline; keep only the grid
+     and a faint trace, hide the mark cluster. */
+  .hero-reveal__marks {
+    display: none;
+  }
+
+  /* Mobile is a composed CROP of the same world, not the desktop split scaled
+     down. The hero photograph is already re-framed into a top band here (see
+     the 720px rule for .hero__map: right:-39vw; width:122vw; height:76%), so
+     the architectural trace registers onto that same band instead of running
+     full-height down the page. Left unconstrained it spans the headline
+     column and drops blue building footprints on top of the type. */
+  .hero-reveal__map,
+  .hero-reveal__buildings {
+    right: -39vw;
+    width: 122vw;
+    /* Stop above the headline block rather than covering it. */
+    height: 46%;
+    opacity: 0.5;
+  }
+
+  /* The drafting grid may still run full-bleed — it is the paper, not a
+     figure — but it eases off so the headline keeps the strongest contrast. */
+  .hero-reveal__grid {
+    opacity: 0.55;
+  }
+}
+
+/* ==========================================================================
+   TOP INDEX — top-margin field index, the X to DrawingIndex's Y
+   A thin horizontal rule mirroring the left rail's vocabulary (hairline
+   spine, tick marks, section marks) rotated 90°, sitting inside the header's
+   existing left inset so the two rules meet at the sheet's ruled corner
+   instead of reading as two unrelated nav bars. Deliberately quiet: no
+   fill, no border box, marks register only when their section is current.
+   Desktop only (display: block set in the ≥1180px block below, matching
+   DrawingIndex's own display: none / display: grid pairing) — the bottom
+   tab strip already carries the horizontal index below 1180px, and a
+   second one at that width would double the nav.
+   ========================================================================== */
+
+.top-index {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90; /* under site-header (100), which sits on the same edge */
+  width: 100%;
+  height: 1.6rem;
+  padding-left: var(--index-margin);
+  pointer-events: none;
+}
+
+.top-index__rule {
+  position: absolute;
+  top: 0;
+  left: var(--index-margin);
+  right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+
+.top-index__list {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0 4.5vw 0 0.4rem;
+  list-style: none;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.top-index__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: var(--ash);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.top-index__mark {
+  display: flex;
+  color: inherit;
+}
+
+.top-index__mark svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* The tick drops from the rule to the mark, the horizontal echo of the
+   left rail's datum line extending toward its content. Quiet until active. */
+.top-index__tick {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: 1px;
+  height: 0;
+  background: var(--blueprint);
+  transition: height 280ms var(--ease-ink);
+}
+
+.top-index__link:hover .top-index__mark,
+.top-index__link:focus-visible .top-index__mark,
+.top-index__link.is-active .top-index__mark {
+  color: var(--blueprint);
+}
+
+.top-index__link.is-active .top-index__tick {
+  height: 6px;
+}
+
+.top-index__link:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   DRAWING INDEX — left-margin field index
+   The binding edge of a drawing sheet. No panel, no fill, no border: marks
+   sit directly on the paper. Quiet until a section is current, then the
+   sheet registers — a datum line extends toward the content carrying the
+   plate number. Never a filled hover rectangle, never a tooltip box.
+   ========================================================================== */
+
+.drawing-index {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  display: none; /* desktop-only; mobile gets the tab strip below */
+  /* The rule runs the full height of the sheet edge, the way a scale rule
+     is laid along a drawing rather than floated in the middle of it. The
+     graduation and the section marks share the middle row so the marks
+     register against the rule. */
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "plate"
+    "rule"
+    "meta";
+  height: 100dvh;
+  width: var(--index-margin, 8.5rem);
+  padding: 2.2rem 0 2.2rem 2.2rem;
+  pointer-events: none; /* only the links take pointer events */
+}
+
+.drawing-index__plate,
+.drawing-index__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  font: 400 0.58rem/1.5 var(--utility);
+  letter-spacing: 0.1em;
+  color: var(--ash);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The plate number is one line ("AχT / 001"); only the sub-label below it
+   is a separate row, so the inline chi must not become its own flex item. */
+.drawing-index__plate {
+  display: block;
+}
+
+.drawing-index__chi {
+  /* The wordmark's Greek chi, never re-typeset elsewhere — this is a plate
+     number, not the logotype. */
+  font-family: var(--display);
+}
+
+.drawing-index__plate-sub {
+  display: block;
+  margin-top: 0.15rem;
+  color: color-mix(in srgb, var(--ash) 72%, transparent);
+}
+
+/* --- The scale rule -------------------------------------------------- */
+
+/* Occupies the vertical space between the plate header and the coordinate
+   footer, so the graduation reads as measuring the whole sheet edge. The
+   section list is layered over it (same grid cell) so the marks register
+   against the rule rather than sitting under it. */
+.drawing-index__scale-rule {
+  position: relative;
+  grid-area: rule;
+  min-height: 0;
+  color: color-mix(in srgb, var(--ash) 62%, transparent);
+}
+
+.drawing-index__rule {
+  display: block;
+  width: 34px;
+  height: 100%;
+  /* Not `visible`: the ticks are drawn inside the viewBox, and letting the
+     SVG overflow extended the document's scroll width. */
+  overflow: hidden;
+}
+
+/* Travelling depth indicator: the position on the rule corresponding to how
+   far down the sheet the reader has measured. Driven by --rule-progress
+   (0..1), written directly to the rail element — never React state. */
+.drawing-index__cursor {
+  position: absolute;
+  top: calc(var(--rule-progress, 0) * 100%);
+  left: -2px;
+  width: 15px;
+  height: 1px;
+  background: var(--blueprint);
+  /* A cursor on a scale rule is a hairline with a tick, not a blob. */
+  box-shadow: 0 0 0 0 transparent;
+}
+
+/* An open chevron, not a filled wedge — softer and thinner than a solid CSS
+   triangle, in keeping with the hairline cursor it points from. */
+.drawing-index__cursor::after {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  left: 13px;
+  width: 4px;
+  height: 5px;
+  border-top: 1px solid color-mix(in srgb, var(--blueprint) 70%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--blueprint) 70%, transparent);
+  transform: rotate(45deg);
+}
+
+/* The section marks share the rule's row and are distributed along it, so
+   each sits at its own depth on the scale like a registered survey mark. */
+.drawing-index__list {
+  grid-area: rule;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-self: stretch;
+  margin: 0;
+  padding: 2.5rem 0;
+  list-style: none;
+}
+
+.drawing-index__link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 0.5rem;
+  width: max-content;
+  padding: 0.25rem 0;
+  color: var(--ash);
+  text-decoration: none;
+  pointer-events: auto;
+  transition: color 240ms var(--ease-ink);
+}
+
+.drawing-index__mark {
+  display: block;
+  grid-row: 1;
+  grid-column: 1;
+  line-height: 0;
+}
+
+.drawing-index__mark svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* The datum: a hairline that extends from the mark toward the content.
+   Collapsed at rest, partial on hover/focus, full when the section is
+   current — the sheet has been marked. */
+.drawing-index__datum {
+  grid-row: 1;
+  grid-column: 2;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 320ms var(--ease-ink);
+}
+
+.drawing-index__plate-no {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  font: 400 0.56rem/1 var(--utility);
+  letter-spacing: 0.08em;
+  color: var(--blueprint);
+  opacity: 0;
+  transition: opacity 240ms var(--ease-ink);
+}
+
+.drawing-index__label {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  margin-top: 0.3rem;
+  font: 400 0.56rem/1 var(--utility);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Hover / focus: a short registration extension, not a background. */
+.drawing-index__link:hover,
+.drawing-index__link:focus-visible {
+  color: var(--blueprint);
+}
+
+.drawing-index__link:hover .drawing-index__datum,
+.drawing-index__link:focus-visible .drawing-index__datum {
+  width: 2.1rem;
+}
+
+/* Focus is an architectural registration bracket, not the default ring. */
+.drawing-index__link:focus-visible {
+  outline: none;
+}
+
+/* Focus is expressed as registration corners bracketing the mark — the
+   drawing-sheet equivalent of a focus ring. The mark span establishes the
+   positioning context; without it the bracket has nothing to anchor to. */
+.drawing-index__mark {
+  position: relative;
+}
+
+.drawing-index__link:focus-visible .drawing-index__mark::before {
+  content: "";
+  position: absolute;
+  top: -0.32rem;
+  left: -0.32rem;
+  right: -0.32rem;
+  bottom: -0.32rem;
+  border: 1px solid var(--blueprint);
+  /* Corner brackets only: erase the middle third of every edge so what
+     remains reads as four registration corners, not a box. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) top right / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom right / 34% 34% no-repeat;
+  mask:
+    linear-gradient(#000 0 0) top left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) top right / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom left / 34% 34% no-repeat,
+    linear-gradient(#000 0 0) bottom right / 34% 34% no-repeat;
+}
+
+/* Fallback: if mask is unsupported, keep a visible (plain) focus outline
+   rather than silently losing the focus indicator entirely. */
+@supports not (mask: linear-gradient(#000 0 0)) {
+  .drawing-index__link:focus-visible {
+    outline: 1px solid var(--blueprint);
+    outline-offset: 3px;
+  }
+}
+
+/* Active: full datum expression + persistent plate number. */
+.drawing-index__link.is-active {
+  color: var(--ink);
+}
+
+.drawing-index__link.is-active .drawing-index__datum {
+  width: 4.2rem;
+  background: var(--blueprint);
+}
+
+.drawing-index__link.is-active .drawing-index__plate-no {
+  opacity: 1;
+}
+
+.drawing-index__meta {
+  gap: 0.25rem;
+}
+
+.drawing-index__scale {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+  color: color-mix(in srgb, var(--ash) 80%, transparent);
+}
+
+.drawing-index__scale svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Desktop only: below this the rail becomes a bottom tab strip. */
+@media (min-width: 1180px) {
+  .drawing-index {
+    display: grid;
+  }
+
+  /* Reserve the binding edge. The rail is fixed, so content must be inset
+     or it slides underneath the marks. This is the sheet margin, not a
+     sidebar gutter.
+     Specificity note: the section rules these override (.properties,
+     .approach, …) set `padding` as a shorthand, so a bare `main > section`
+     longhand loses on equal specificity. Doubling the class raises
+     specificity without adding !important. */
+  main > header.site-header,
+  main > section.properties,
+  main > section.approach,
+  main > section.contact,
+  main > footer.site-footer {
+    padding-left: var(--index-margin);
+  }
+
+  /* Full-bleed sections keep their bleed; only their text column insets, so
+     the maps and hero photograph still run to the edge. */
+  .hero__content {
+    padding-left: calc(var(--index-margin) + 1vw);
+  }
+
+  .markets-intro {
+    padding-left: var(--index-margin);
+  }
+
+  /* The market chapters run full-bleed so their maps reach the edge, but
+     their text sat at 115px — inside the rail's binding edge, so the chapter
+     headings collided with the scale rule.
+     Inset the copy's own text children rather than the chapter or the copy
+     block: `.market-chapter__copy` contains a deliberately 100vw-wide
+     "Explore this market" link, so padding either ancestor pushed that link
+     past the viewport and extended the document's scroll width. */
+  .market-chapter__copy > :not(a) {
+    margin-left: var(--index-margin);
+  }
+
+  .top-index {
+    display: block;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE / TABLET — drawing-sheet tab strip
+   Not the rail squeezed narrow: a composed bottom-edge index in the same
+   vocabulary. Touch-sized, no hover dependency, active state readable
+   without motion.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1179px) {
+  .drawing-index {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0;
+    /* The desktop rule sets height: 100dvh for the full-height binding edge;
+       without an explicit override here the strip inherits that and covers
+       the whole viewport instead of forming a slim bottom bar. */
+    height: auto;
+    max-height: calc(4.4rem + env(safe-area-inset-bottom, 0px));
+    /* Reset the desktop binding-edge width and centring transform, or the
+       strip only spans one margin's worth of the viewport and its labels
+       fall off the paper onto the page content. */
+    width: auto;
+    transform: none;
+    padding: 0.5rem 0.4rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    /* A drawn sheet edge rather than an app bar: paper with a single rule. */
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Plate header, coordinate footer, and the vertical scale rule (ticks,
+     descending numbers, travelling cursor) all belong to the desktop
+     binding edge, not the strip — a vertical measuring scale is meaningless
+     in a horizontal bar and, unhidden, its numbers overlapped the tab
+     labels once the strip's height stopped covering the whole viewport. */
+  .drawing-index__plate,
+  .drawing-index__meta,
+  .drawing-index__scale-rule {
+    display: none;
+  }
+
+  .drawing-index__list {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  .drawing-index__item {
+    flex: 1;
+  }
+
+  .drawing-index__link {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: 44px; /* touch target */
+    padding: 0.35rem 0.15rem;
+  }
+
+  .drawing-index__mark {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .drawing-index__mark svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .drawing-index__label {
+    grid-row: 2;
+    grid-column: 1;
+    max-width: 100%;
+    margin-top: 0.28rem;
+    /* Five items share the viewport; at 360px that is ~68px each, so the
+       label tightens rather than overrunning its neighbour. */
+    font-size: 0.44rem;
+    letter-spacing: 0.06em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* On the strip the datum reads as an underline beneath the active mark. */
+  .drawing-index__datum {
+    grid-row: 3;
+    grid-column: 1;
+    width: 0;
+    margin-top: 0.3rem;
+    transition: width 280ms var(--ease-ink);
+  }
+
+  .drawing-index__link.is-active .drawing-index__datum {
+    width: 1.5rem;
+  }
+
+  /* The plate number would crowd the strip; the datum carries the state. */
+  .drawing-index__plate-no {
+    display: none;
+  }
+
+  /* Hover states must not drive anything on touch. */
+  .drawing-index__link:hover .drawing-index__datum {
+    width: 0;
+  }
+
+  .drawing-index__link.is-active:hover .drawing-index__datum {
+    width: 1.5rem;
+  }
+
+  .drawing-index__link:focus-visible .drawing-index__mark::before {
+    top: -0.15rem;
+    left: 50%;
+    translate: -50% 0;
+  }
+}
+
+/* Reduced motion: the registered state renders immediately. Nothing about
+   the active section depends on having seen a transition. */
+@media (prefers-reduced-motion: reduce) {
+  .drawing-index__link,
+  .drawing-index__datum,
+  .drawing-index__plate-no {
+    transition: none;
+  }
+}
+
+/* Reserve room for the fixed tab strip so the footer and the hero's pinned
+   search bar are never covered by it. */
+@media (max-width: 1179px) {
+  body {
+    padding-bottom: calc(4.4rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .site-footer {
+    padding-bottom: 2rem;
+  }
+}
+
+/* Grid-area assignment for the rail's header and footer rows, and clearance
+   so the section marks sit clear of the rule's graduation instead of on it. */
+.drawing-index__plate {
+  grid-area: plate;
+}
+
+.drawing-index__meta {
+  grid-area: meta;
+}
+
+.drawing-index__list .drawing-index__link {
+  /* Past the 34px rule plus its numbers. */
+  margin-left: 2.6rem;
+}
+
+/* Featured Atlas — curated plate index (independent of InfiniteAtlasCanvas) */
+
+.featured-atlas {
+  max-width: 94rem;
+  margin: 0 auto;
+  padding: 7rem 5vw;
+}
+
+.featured-atlas__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.featured-atlas__plate {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.featured-atlas__plate-number {
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  font-family: var(--utility);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--ash);
+}
+
+.featured-atlas__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  filter: grayscale(0.04);
+}
+
+.featured-atlas__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.featured-atlas__city {
+  margin: 0;
+  font: 400 1.15rem/1.2 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.featured-atlas__city span {
+  margin-left: 0.5rem;
+  font: 600 0.62rem/1 var(--utility);
+  letter-spacing: 0.1em;
+  color: var(--ash);
+  vertical-align: middle;
+}
+
+.featured-atlas__subtitle {
+  margin: 0;
+  font: 400 0.82rem/1.5 var(--body);
+  color: var(--graphite);
+}
+
+.featured-atlas__coordinates {
+  margin-top: 0.2rem;
+  font-family: var(--utility);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  color: var(--ash);
+}
+
+.featured-atlas__coordinates .coordinate-stamp__value {
+  color: var(--blueprint);
+}
+
+@media (max-width: 1080px) {
+  .featured-atlas__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .featured-atlas {
+    padding: 4.5rem 6vw;
+  }
+
+  .featured-atlas__grid {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+  }
+
+  .featured-atlas__image {
+    aspect-ratio: 5 / 6;
+  }
 }

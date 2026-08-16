@@ -18,6 +18,7 @@ No credential values were read. These findings do not prove that the user has no
 
 ## Documents
 
+- [CLOUDFLARE_LEAD_CAPTURE.md](./CLOUDFLARE_LEAD_CAPTURE.md) defines the implemented Worker/D1 endpoint, abuse controls, secrets, preview gate, retention decision, and rollback.
 - [APPWRITE_SITES_SECURITY_HANDOFF.md](./APPWRITE_SITES_SECURITY_HANDOFF.md) defines the static-site boundary, variables, CSP and header posture, optional Function proxy, Git access, environments, logging, and rollback.
 - [VERIFICATION_CHECKLIST.md](./VERIFICATION_CHECKLIST.md) is the release gate for the account owner or deployer.
 - [realscout-allowlist.example.json](./realscout-allowlist.example.json) is a deny-by-default review artifact for the future RealScout resource manifest and widget contract.

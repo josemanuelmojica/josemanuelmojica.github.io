@@ -250,10 +250,18 @@ test("keeps static export configuration aligned for Appwrite and GitHub Pages", 
   assert.match(workflow, /deploy:\s*[\s\S]*pages: write/);
   assert.doesNotMatch(workflow, /uses:\s*[^\s]+@v\d+/);
 
-  assert.match(layout, /frame-src 'none'/);
+  assert.match(layout, /frame-src https:\/\/challenges\.cloudflare\.com/);
+  assert.match(layout, /script-src 'self' 'unsafe-inline' https:\/\/challenges\.cloudflare\.com/);
+  assert.doesNotMatch(layout, /(?:frame|script|connect)-src[^\n]*\*/);
   assert.match(layout, /object-src 'none'/);
   assert.match(layout, /strict-origin-when-cross-origin/);
   assert.match(layout, /resolveSiteUrl\(process\.env\.NEXT_PUBLIC_SITE_URL\)/);
+
+  const headers = await readFile(path.join(root, "public", "_headers"), "utf8");
+  assert.match(headers, /Content-Security-Policy:/);
+  assert.match(headers, /frame-ancestors 'none'/);
+  assert.match(headers, /X-Content-Type-Options: nosniff/);
+  assert.match(headers, /X-Frame-Options: DENY/);
   assert.match(layout, /metadataBase:\s*siteUrl/);
 
   assert.equal(appwrite.projectId, "");
