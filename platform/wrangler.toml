@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration for the Arχ & Teχt platform.
+#
+# `next build` writes a fully static export to ./out (see next.config.ts).
+# Pages serves those files from the edge; there is no server bundle and no
+# adapter. In the Pages dashboard use:
+#   Root directory:          platform
+#   Build command:           npm run pages:build
+#   Build output directory:  out
+#   Environment variable:    NODE_VERSION = 22
+name = "ark-and-text-platform"
+compatibility_date = "2026-08-11"
+pages_build_output_dir = "./out"

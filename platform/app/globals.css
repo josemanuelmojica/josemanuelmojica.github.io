@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Paper / ink / blueprint field shared with the Arχ & Teχt site. */
+:root {
+  --paper: #fffefd;
+  --ink: #172833;
+  --graphite: #405563;
+  --wash: #e5edf3;
+  --blue: #0a5f97;
+  --deep: #063a64;
+  --rule: rgb(23 40 51 / 0.16);
+
+  --radius: 0.75rem;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--blue);
+  --primary-foreground: var(--paper);
+  --secondary: var(--wash);
+  --secondary-foreground: var(--ink);
+  --muted: #eef3f6;
+  --muted-foreground: var(--graphite);
+  --accent: var(--wash);
+  --accent-foreground: var(--deep);
+  --destructive: #b42318;
+  --border: var(--rule);
+  --input: rgb(23 40 51 / 0.24);
+  --ring: var(--blue);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-wash: var(--wash);
+  --color-blue: var(--blue);
+  --color-deep: var(--deep);
+  --color-rule: var(--rule);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-garamond), Georgia, serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  --ease-drawn: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-padding-top: 96px;
+    background: var(--paper);
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+    font-synthesis: none;
+  }
+  ::selection {
+    color: var(--paper);
+    background: var(--blue);
+  }
+  /* One visible, high-contrast focus treatment for every custom control. */
+  :where(a, button, [role="tab"], [role="radio"], [tabindex]):focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Editorial type: Work Sans body, Garamond italic emphasis. */
+.display-em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* Faint drafting grid used on paper panels. */
+.graph-paper {
+  background-image:
+    linear-gradient(rgb(10 95 151 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(10 95 151 / 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* MapLibre attribution: keep it legible and out of the ink trail's way. */
+.maplibregl-ctrl-attrib {
+  font-size: 11px;
+}
+.maplibregl-ctrl-group button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Wordmark: crop the supplied artwork to its framed lettering without re-typesetting. */
+.wordmark-crop {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 415 / 147;
+}
+.wordmark-crop img {
+  position: absolute;
+  max-width: none;
+  width: 173.5%;
+  left: -13.25%;
+  top: -73.4%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
