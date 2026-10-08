@@ -4,7 +4,7 @@ import { test } from "node:test";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Run after `npm run build`: checks the Cloudflare Pages output contract.
+// Run after `npm run build`: checks the Cloudflare Workers static-assets output contract.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const out = path.join(root, "out");
 
@@ -14,7 +14,7 @@ test("exports every route as static HTML", async () => {
   }
 });
 
-test("ships Pages edge headers with framing and object protection", async () => {
+test("ships edge headers with framing and object protection", async () => {
   const headers = await readFile(path.join(out, "_headers"), "utf8");
   assert.match(headers, /X-Frame-Options: DENY/);
   assert.match(headers, /frame-ancestors 'none'/);
@@ -34,6 +34,7 @@ test("uses static export, not a deprecated adapter", async () => {
   assert.equal(deps["@cloudflare/next-on-pages"], undefined);
   const config = await readFile(path.join(root, "next.config.ts"), "utf8");
   assert.match(config, /output: "export"/);
-  const wrangler = await readFile(path.join(root, "wrangler.toml"), "utf8");
-  assert.match(wrangler, /pages_build_output_dir = "\.\/out"/);
+  const wrangler = await readFile(path.join(root, "wrangler.jsonc"), "utf8");
+  assert.match(wrangler, /"directory": "\.\/out"/);
+  assert.doesNotMatch(wrangler, /pages_build_output_dir/);
 });

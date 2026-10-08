@@ -1,4 +1,4 @@
-# Arχ & Teχt platform (Cloudflare Pages)
+# Arχ & Teχt platform (Cloudflare Workers)
 
 A Next.js App Router build of the cartography + real-estate experience: a full-screen OpenFreeMap background map, GSAP scroll choreography based on the Wispr storyboard, Framer Motion UI, shadcn/ui (Radix) controls, and the RealScout intake module for live REColorado listings.
 
@@ -9,16 +9,16 @@ This folder is its own project. The site at the repository root is not changed b
 | Concern | Choice |
 | --- | --- |
 | Framework | Next.js 16 App Router, `output: "export"` |
-| Hosting | Cloudflare Pages, serving `./out` from the edge |
+| Hosting | Cloudflare Workers static assets (assets-only Worker), serving `./out` from the edge |
 | Styling | Tailwind CSS v4 (`@tailwindcss/postcss`), `tw-animate-css` |
 | Components | shadcn/ui on `radix-ui` (Sheet, Tabs, ToggleGroup, Button, Separator) |
 | Type and icons | `next/font/google` Work Sans + EB Garamond italic, `lucide-react` |
 | Map | `react-map-gl/maplibre` + `maplibre-gl` v5, OpenFreeMap tiles |
 | Motion | `framer-motion` for UI, routes, and controls; `gsap` + `@gsap/react` + ScrollTrigger for scroll-scrubbed scenes |
 
-### Why static export instead of `@cloudflare/next-on-pages`
+### Why a static export on Workers
 
-`@cloudflare/next-on-pages` is deprecated and only supports Next.js up to 15.5.2. Everything here runs in the browser (map, widgets, motion), so a static export is the most edge-native option: Pages serves prebuilt files from every location, with no adapter and no server runtime. If server routes are needed later, move to `@opennextjs/cloudflare` on Workers, or add Pages Functions under `functions/`.
+`@cloudflare/next-on-pages` is deprecated and only supports Next.js up to 15.5.2, and Cloudflare now recommends Workers over Pages for new projects. Everything here runs in the browser (map, widgets, motion), so the site is a static export served by an assets-only Worker: prebuilt files from every location, no adapter, no server runtime. The repository root's site already deploys the same way (`wrangler.jsonc` at the root). If server routes are needed later (for example a lead-form `/api`), add a Worker script with `main` and `run_worker_first`, or move to `@opennextjs/cloudflare`.
 
 ## Commands to recreate from scratch
 
@@ -40,16 +40,18 @@ Node 22.13 or newer.
 npm ci
 npm run dev            # http://localhost:3000
 npm run check          # typecheck + build + output tests
-npm run pages:preview  # build, then serve ./out with wrangler pages dev
-npm run pages:deploy   # build, then wrangler pages deploy out (needs a Cloudflare login)
+npm run preview        # build, then serve ./out locally with wrangler dev
+npm run cf:dry         # build, then validate the Worker config without deploying
+npm run deploy         # build, then wrangler deploy (needs a Cloudflare login)
 ```
 
-Git-connected Pages project settings:
+Git-connected Worker (Workers Builds) settings, from **Workers & Pages → Create application → Import a repository**:
 
+- Worker name: `ark-and-text-platform` (must match `name` in `wrangler.jsonc`)
 - Root directory: `platform`
-- Build command: `npm run pages:build`
-- Build output directory: `out`
-- Environment variable: `NODE_VERSION=22`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Build variable: `NODE_VERSION=22`
 
 `public/_headers` sets the edge security headers (CSP, `X-Frame-Options: DENY`, `frame-ancestors 'none'`). The CSP allows OpenFreeMap tiles, `blob:` workers for MapLibre, and the RealScout script host.
 
