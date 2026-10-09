@@ -7,18 +7,18 @@ const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans", d
 const garamond = EB_Garamond({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-garamond", display: "swap" });
 
 const description =
-  "José Manuel Mojica Garcia: AI operations, integrations, and support systems. 60+ Claude skills, the knowledge base behind an AI support agent, and eight CRM integrations owned at API depth.";
+  "José Manuel Garcia designs AI support agents, runs Claude as daily work infrastructure, and builds enablement programs. 66 custom Claude skills, a live MCP support assistant, and 178 of 299 Help Center articles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${profile.domain}`),
-  title: { default: `${profile.name} · AI operations and support systems`, template: `%s · ${profile.name}` },
+  title: { default: `${profile.name} · AI support operations and enablement`, template: `%s · ${profile.name}` },
   description,
   alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
     url: "/",
     siteName: profile.name,
-    title: `${profile.name} · AI operations and support systems`,
+    title: `${profile.name} · AI support operations and enablement`,
     description,
   },
   twitter: { card: "summary", title: profile.name, description },

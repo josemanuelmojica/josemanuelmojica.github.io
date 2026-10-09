@@ -25,7 +25,7 @@ export default function Home() {
           <div className="graph-paper absolute inset-0" aria-hidden="true" />
           <Contour className="pointer-events-none absolute inset-x-0 bottom-0 h-56 w-full text-blue/50 md:h-72" />
           <div className="relative mx-auto max-w-6xl px-5 pt-20 pb-36 md:px-8 md:pt-28 md:pb-48">
-            <p className="eyebrow rise">AI operations · Integrations · Support systems</p>
+            <p className="eyebrow rise">AI support operations · Claude workflows · Enablement</p>
             <h1 id="hero-title" className="rise mt-5 max-w-4xl text-[clamp(2.7rem,7vw,5.6rem)] leading-[0.95] font-[450] tracking-[-0.04em]" style={{ animationDelay: "0.08s" }}>
               {profile.headline.plain} <span className="em block text-deep">{profile.headline.italic}</span>
             </h1>
@@ -50,7 +50,7 @@ export default function Home() {
               <div key={item.label} className={`px-5 py-8 md:px-8 ${i % 2 ? "border-l" : ""} ${i > 1 ? "border-t md:border-t-0" : ""} ${i === 2 ? "md:border-l" : ""}`}>
                 <dt className="sr-only">{item.label}</dt>
                 <dd>
-                  <span className="block text-4xl tracking-tight text-deep md:text-5xl">{item.value}</span>
+                  <span className="block text-3xl tracking-tight text-deep md:text-[2.6rem]">{item.value}</span>
                   <span className="mt-1 block text-sm text-graphite">{item.label}</span>
                 </dd>
               </div>
@@ -122,10 +122,11 @@ export default function Home() {
           <SectionHead id="experience-title" eyebrow="Experience" title="The title, and" italic="the actual scope." />
           <div className="mt-14 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
             <article className="rounded-2xl border p-6 md:p-8">
-              <p className="eyebrow">{experience.context}</p>
+              <p className="eyebrow">{experience.dates}</p>
               <h3 className="mt-2 text-2xl tracking-tight">
                 {experience.role} <span className="text-graphite">· {experience.company}</span>
               </h3>
+              <p className="mt-1 text-sm text-graphite">{experience.context}</p>
               <ul className="mt-6 space-y-3">
                 {experience.points.map((point) => (
                   <li key={point} className="flex gap-3 leading-relaxed">
@@ -139,13 +140,7 @@ export default function Home() {
               <div>
                 <h3 className="eyebrow">Certifications</h3>
                 <ul className="mt-3 space-y-2">
-                  {credentials.earned.map((c) => <li key={c}>{c}</li>)}
-                </ul>
-              </div>
-              <div>
-                <h3 className="eyebrow">In progress</h3>
-                <ul className="mt-3 space-y-2 text-graphite">
-                  {credentials.inProgress.map((c) => <li key={c}>{c}</li>)}
+                  {credentials.map((c) => <li key={c}>{c}</li>)}
                 </ul>
               </div>
               <div>
@@ -171,10 +166,14 @@ export default function Home() {
                 <li key={r} className="rounded-full border bg-paper px-4 py-2 text-sm">{r}</li>
               ))}
             </ul>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-graphite">{lookingFor.note}</p>
+            {lookingFor.note && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-graphite">{lookingFor.note}</p>}
+            <p className="mt-6 text-graphite">{profile.relocation}.</p>
             <div className="mt-10 flex flex-wrap gap-3">
               <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
                 <Mail className="size-4" aria-hidden="true" /> {profile.email}
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+                <ArrowUpRight className="size-4" aria-hidden="true" /> LinkedIn <span className="sr-only">(opens in a new tab)</span>
               </a>
               <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <Code2 className="size-4" aria-hidden="true" /> GitHub <span className="sr-only">(opens in a new tab)</span>

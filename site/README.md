@@ -1,6 +1,6 @@
 # mojicagarcia.com
 
-José Manuel Mojica Garcia's personal site: a one-page portfolio and a printable one-page résumé.
+José Manuel Garcia's personal site: a one-page portfolio and a printable one-page résumé.
 
 - `lib/profile.ts` holds every claim on the site. Edit facts there; both pages update.
 - `app/page.tsx` is the home page; `app/resume/page.tsx` prints to a single Letter page.
@@ -22,4 +22,4 @@ npm run cf:dry  # validate the Worker config without deploying
 2. Worker name `mojicagarcia`, root directory `site`, build command `npm run build`, deploy command `npx wrangler deploy`, variable `NODE_VERSION=22`.
 3. If the domain was bought outside Cloudflare, add it as a site in Cloudflare and switch the registrar's nameservers to the two Cloudflare gives you.
 4. Worker → **Settings** → **Domains & Routes** → **Add** → **Custom domain** → `mojicagarcia.com` (and `www.mojicagarcia.com`). Or uncomment `routes` in `wrangler.jsonc`.
-5. **Email Routing** for the domain: forward `hello@mojicagarcia.com` to your inbox, since the site links to that address.
+5. **Email Routing** for the domain: forward `jm@mojicagarcia.com` to your inbox (the address on your résumés), if that mailbox isn't already set up.

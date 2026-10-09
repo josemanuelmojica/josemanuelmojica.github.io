@@ -16,8 +16,8 @@ test("exports home, résumé, 404, and sitemap", async () => {
 
 test("home page carries name, contact, and skip link", async () => {
   const html = await readFile(path.join(out, "index.html"), "utf8");
-  assert.match(html, /José Manuel Mojica Garcia/);
-  assert.match(html, /mailto:hello@mojicagarcia\.com/);
+  assert.match(html, /José Manuel Garcia/);
+  assert.match(html, /mailto:jm@mojicagarcia\.com/);
   assert.match(html, /href="#main"/);
   assert.doesNotMatch(html, /<iframe\b/i);
 });

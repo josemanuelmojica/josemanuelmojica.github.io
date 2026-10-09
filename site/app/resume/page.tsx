@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { credentials, experience, lookingFor, profile, toolkit, work } from "@/lib/profile";
+import { credentials, earlierExperience, education, experience, lookingFor, profile, toolkit } from "@/lib/profile";
 import { PrintButton } from "@/components/print-button";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: `Résumé of ${profile.name}: AI operations, integrations, and support systems.`,
+  description: `Résumé of ${profile.name}: AI support operations, Claude workflows, and enablement.`,
   alternates: { canonical: "/resume/" },
 };
 
@@ -22,10 +22,11 @@ export default function Resume() {
 
       <header className="border-b pb-5">
         <h1 className="text-4xl tracking-tight print:text-[22pt]">{profile.name}</h1>
-        <p className="mt-1 text-lg text-deep print:text-[12pt]">AI operations · Integrations · Support systems</p>
+        <p className="mt-1 text-lg text-deep print:text-[12pt]">{lookingFor.roles.join(" · ")}</p>
         <p className="mt-2 text-sm text-graphite">
-          {profile.location} · <a href={`mailto:${profile.email}`} className="underline">{profile.email}</a> · {profile.domain} · github.com/josemanuelmojica
+          {profile.location} · <a href={`mailto:${profile.email}`} className="underline">{profile.email}</a> · {profile.linkedinLabel} · {profile.domain}
         </p>
+        <p className="text-sm text-graphite">{profile.relocation}</p>
       </header>
 
       <section aria-labelledby="r-summary" className="mt-6">
@@ -36,42 +37,31 @@ export default function Resume() {
       <section aria-labelledby="r-experience" className="mt-6">
         <h2 id="r-experience" className="eyebrow">Experience</h2>
         <h3 className="mt-2 font-medium">
-          {experience.role}, {experience.company} <span className="font-normal text-graphite">({experience.context})</span>
+          {experience.company} · {experience.role} <span className="font-normal text-graphite">· {experience.dates}</span>
         </h3>
         <ul className="mt-2 list-disc space-y-1 pl-5">
           {experience.points.map((p) => <li key={p}>{p}</li>)}
         </ul>
       </section>
 
-      <section aria-labelledby="r-work" className="mt-6">
-        <h2 id="r-work" className="eyebrow">Selected work</h2>
-        <ul className="mt-2 space-y-3">
-          {work.map((item) => (
-            <li key={item.id} className="break-inside-avoid">
-              <h3 className="font-medium">{item.title} {item.italic}</h3>
-              <p className="text-graphite">{item.summary}</p>
-            </li>
-          ))}
-        </ul>
+      <section aria-labelledby="r-tools" className="mt-6">
+        <h2 id="r-tools" className="eyebrow">Daily stack</h2>
+        <p className="mt-2">{toolkit.join(" · ")}</p>
       </section>
 
-      <section aria-labelledby="r-creds" className="mt-6 grid gap-6 sm:grid-cols-2 print:grid-cols-2">
-        <div>
-          <h2 id="r-creds" className="eyebrow">Certifications</h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5">
-            {credentials.earned.map((c) => <li key={c}>{c}</li>)}
-          </ul>
-          <h3 className="eyebrow mt-4">In progress</h3>
-          <ul className="mt-2 list-disc space-y-1 pl-5">
-            {credentials.inProgress.map((c) => <li key={c}>{c}</li>)}
-          </ul>
-        </div>
-        <div>
-          <h2 className="eyebrow">Toolkit</h2>
-          <p className="mt-2">{toolkit.join(" · ")}</p>
-          <h2 className="eyebrow mt-4">Looking for</h2>
-          <p className="mt-2">{lookingFor.roles.join(" · ")}</p>
-        </div>
+      <section aria-labelledby="r-creds" className="mt-6">
+        <h2 id="r-creds" className="eyebrow">Certifications</h2>
+        <p className="mt-2">{credentials.join(" · ")}</p>
+      </section>
+
+      <section aria-labelledby="r-earlier" className="mt-6">
+        <h2 id="r-earlier" className="eyebrow">Earlier experience</h2>
+        <p className="mt-2">{earlierExperience.join(" · ")}</p>
+      </section>
+
+      <section aria-labelledby="r-education" className="mt-6">
+        <h2 id="r-education" className="eyebrow">Education</h2>
+        <p className="mt-2">{education}</p>
       </section>
     </main>
   );
