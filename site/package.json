@@ -1,0 +1,34 @@
+{
+  "name": "mojicagarcia-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run typecheck && npm run build && npm test",
+    "preview": "next build && wrangler dev",
+    "cf:dry": "next build && wrangler deploy --dry-run",
+    "deploy": "next build && wrangler deploy"
+  },
+  "dependencies": {
+    "lucide-react": "1.40.0",
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "wrangler": "4.121.0"
+  }
+}

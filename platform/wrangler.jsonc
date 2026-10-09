@@ -1,0 +1,25 @@
+{
+  // Cloudflare Workers configuration for the Arχ & Teχt platform.
+  //
+  // `next build` writes a fully static export to ./out (see next.config.ts).
+  // This is an assets-only Worker: Cloudflare serves those files from the
+  // edge with no Worker script and no Next.js adapter. public/_headers is
+  // applied to every response.
+  //
+  // Workers Builds (dashboard) settings:
+  //   Root directory:  platform
+  //   Build command:   npm run build
+  //   Deploy command:  npx wrangler deploy
+  //   Worker name must match "name" below.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ark-and-text-platform",
+  "compatibility_date": "2026-08-11",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
