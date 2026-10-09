@@ -9,5 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://mojicagarcia.com/work/privacy-gate/", priority: 0.9 },
     { url: "https://mojicagarcia.com/work/import-preflight/", priority: 0.9 },
     { url: "https://mojicagarcia.com/resume/", priority: 0.8 },
+    { url: "https://mojicagarcia.com/privacy/", priority: 0.3 },
   ];
 }

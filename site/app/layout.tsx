@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { EB_Garamond, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/profile";
+import { Analytics } from "@/components/analytics";
+import { bootstrapScript } from "@/lib/analytics";
 
 const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans", display: "swap" });
 const garamond = EB_Garamond({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-garamond", display: "swap" });
@@ -29,6 +31,10 @@ export const viewport: Viewport = { themeColor: "#fffefd" };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${workSans.variable} ${garamond.variable}`}>
+      <head>
+        {/* Google Analytics (and Meta Pixel once its ID is set), in the page head as Google recommends. */}
+        <script id="analytics" dangerouslySetInnerHTML={{ __html: bootstrapScript() }} />
+      </head>
       <body>
         <a
           href="#main"
@@ -37,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );

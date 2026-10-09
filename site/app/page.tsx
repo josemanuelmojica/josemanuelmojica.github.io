@@ -34,13 +34,13 @@ export default function Home() {
               {profile.summary}
             </p>
             <div className="rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: "0.24s" }}>
-              <a href="#lab" className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
+              <a href="#lab" data-track="try_the_work" className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
                 Try the work <ArrowRight className="size-4" aria-hidden="true" />
               </a>
-              <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+              <a href={`mailto:${profile.email}`} data-track="email" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <Mail className="size-4" aria-hidden="true" /> Email me
               </a>
-              <Link href="/resume/" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+              <Link href="/resume/" data-track="resume" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <FileText className="size-4" aria-hidden="true" /> Résumé
               </Link>
             </div>
@@ -204,16 +204,16 @@ export default function Home() {
             {lookingFor.note && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-graphite">{lookingFor.note}</p>}
             <p className="mt-6 text-graphite">{profile.relocation}.</p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
+              <a href={`mailto:${profile.email}`} data-track="email" className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
                 <Mail className="size-4" aria-hidden="true" /> {profile.email}
               </a>
-              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+              <a href={profile.linkedin} data-track="linkedin" target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <ArrowUpRight className="size-4" aria-hidden="true" /> LinkedIn <span className="sr-only">(opens in a new tab)</span>
               </a>
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+              <a href={profile.github} data-track="github" target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <Code2 className="size-4" aria-hidden="true" /> GitHub <span className="sr-only">(opens in a new tab)</span>
               </a>
-              <Link href="/resume/" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
+              <Link href="/resume/" data-track="resume" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <FileText className="size-4" aria-hidden="true" /> Printable résumé
               </Link>
             </div>
@@ -223,7 +223,10 @@ export default function Home() {
       <footer className="border-t">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-8 text-sm text-graphite md:px-8">
           <span>{profile.name} · {profile.location}</span>
-          <span>Designed and built with Claude Code.</span>
+          <span>
+            Designed and built with Claude Code ·{" "}
+            <Link href="/privacy/" className="underline underline-offset-4 hover:text-ink">Privacy</Link>
+          </span>
         </div>
       </footer>
     </>

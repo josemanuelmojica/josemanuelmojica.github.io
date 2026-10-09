@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { track } from "@/lib/analytics";
 
 /** Shared input panel: a labeled textarea with run / sample / clear controls. */
 export function DemoInput({
@@ -23,7 +24,7 @@ export function DemoInput({
         className="mt-3 w-full resize-y rounded-lg border bg-white p-3 font-mono text-[13px] leading-relaxed focus-visible:border-blue"
       />
       <div className="mt-3 flex flex-wrap gap-2">
-        <button type="button" onClick={onRun} className="inline-flex h-10 items-center rounded-lg bg-blue px-4 text-sm font-medium text-paper hover:bg-deep">Run check</button>
+        <button type="button" onClick={() => { onRun(); track("demo_run", { demo: id.replace(/-input$/, "") }); }}className="inline-flex h-10 items-center rounded-lg bg-blue px-4 text-sm font-medium text-paper hover:bg-deep">Run check</button>
         <button type="button" onClick={onSample} className="inline-flex h-10 items-center rounded-lg border px-4 text-sm hover:border-blue hover:text-blue">Load sample</button>
         <button type="button" onClick={() => onChange("")} className="inline-flex h-10 items-center rounded-lg border px-4 text-sm hover:border-blue hover:text-blue">Clear</button>
       </div>
