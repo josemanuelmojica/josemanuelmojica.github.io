@@ -1,9 +1,12 @@
 // Every claim on the site lives here, so it can be reviewed and corrected in
-// one place. Sources: José's October 2026 Anthropic résumés and the Notion
-// "Knowledge Architecture & Impact Standard". Public-site rules:
+// one place. Primary source: José's approved Onboarding Program Manager résumé
+// (October 2026), plus claims from his other October résumés that the Notion
+// "Knowledge Architecture & Impact Standard" grades as usable. Public-site rules:
 // - numbers describe José's own output; company performance metrics stay off
 //   the public site (company scale, e.g. "100,000+ agents", is public context);
 // - claims the Notion standard marks do-not-use or retired are not used here.
+//   José confirmed (Oct 9) to keep these off: the Fin resolution rate, "400+
+//   agents across 27 brands", and the "12 requests a month to one" claim.
 
 export const profile = {
   name: "José Manuel Garcia",
@@ -13,7 +16,7 @@ export const profile = {
   linkedinLabel: "linkedin.com/in/josemanuelmgarcia",
   github: "https://github.com/josemanuelmojica",
   location: "Northern California",
-  relocation: "Relocating to the San Francisco Bay Area · available three office days per week",
+  relocation: "Relocating to the San Francisco Bay Area",
   title: "Senior Member Support Coach & Trainer",
   employer: "RealScout",
   employerContext: "Real estate search platform used by 100,000+ agents",
@@ -23,14 +26,14 @@ export const profile = {
     italic: "systems AI can run on.",
   },
   summary:
-    "I design how an AI support agent answers and when a person takes over, run Claude as daily work infrastructure, and turn what surfaces in support calls into programs people run without me.",
+    "Nearly six years building support systems and live learning programs for a platform used by 100,000+ agents. I design how AI answers and when a person takes over, run Claude as daily work infrastructure, and turn what surfaces in support into programs that keep running without me.",
 } as const;
 
 export const proof = [
   { value: "66", label: "custom Claude skills in daily use" },
   { value: "178 of 299", label: "Help Center articles, current author of record" },
   { value: "12,000+", label: "assigned support conversations, 2022 to 2026" },
-  { value: "8", label: "CRM integration paths owned at API depth" },
+  { value: "36", label: "live sessions hosted solo since April 2026" },
 ] as const;
 
 export interface WorkItem {
@@ -71,6 +74,7 @@ export const work: WorkItem[] = [
       "A prompt eval loop backed by a 28-scenario red-team suite.",
       "Loom recordings and call notes go through Claude into engineering-ready Linear tickets with reproduction steps and proposed fixes. Teammates adopted the workflow.",
       "Loom, Zoom, and Intercom transcripts pass through a sanitizer pipeline (6,109 redactions across 95 sessions) before becoming indexed support guidance and workshop material.",
+      "Shared ready-to-use skills with the team and brought teammates who were new to AI, or wary of it, in through small, low-risk wins.",
       "Wrote the team's working guide for Claude and Wispr Flow.",
     ],
     tools: ["Claude", "Claude Code", "Cowork", "Skills", "MCP", "Linear", "Loom"],
@@ -90,18 +94,32 @@ export const work: WorkItem[] = [
   },
   {
     id: "enablement",
-    kicker: "Enablement",
-    title: "Training that",
-    italic: "keeps running without me",
+    kicker: "Live programs",
+    title: "A weekly program",
+    italic: "with no single point of failure",
     summary:
-      "I turn recurring support questions into live programs, and I train the trainers.",
+      "I run a recurring live program end to end, train the trainers, and build the run-of-show and prep that let anyone pick it up.",
     points: [
-      "Runs a weekly customer workshop plus an enterprise session every other week: 36 sessions solo since April 2026.",
-      "Named trainer on 14+ brokerage trainings in 2026, scheduled by another team.",
-      "Prepared a brokerage's corporate trainer, who serves about 2,000 agents, to teach the platform independently.",
-      "One recorded webinar has drawn nearly 4,000 views.",
+      "Runs the weekly program from invitations and agenda to demo, Q&A, recording, and follow-up, plus an every-other-week enterprise session whose takeaways roll out across 20+ brokerage labels: 36 sessions hosted solo since April 2026.",
+      "The April 2026 relaunch drew 160 registrants and 62 attendees, 3.6x to 5.1x the prior baseline.",
+      "Named trainer on 14+ brokerage trainings in 2026, scheduled by another team. Prepared a corporate brokerage trainer who serves about 2,000 agents to teach independently, and many regular attendees now train their own offices.",
+      "Built the run-of-show documents, checklists, SOPs, and 154 workshop artifacts. Follow-on workshops were redesigned into narrower, more tactical sessions after attendee feedback.",
     ],
-    tools: ["Live facilitation", "Curriculum design", "Train-the-trainer", "Zoom"],
+    tools: ["Live facilitation", "Run-of-show", "Train-the-trainer", "Zoom", "Loom"],
+  },
+  {
+    id: "coaching",
+    kicker: "New-hire coaching",
+    title: "From first ticket",
+    italic: "to independence",
+    summary:
+      "A repeatable method for bringing new teammates up to speed.",
+    points: [
+      "Each coaching moment covers the answer, the reasoning, a reusable reply in their own words, the article to reuse, and a clear escalation rule, backed by Loom walkthroughs.",
+      "Teammates coached in 2024 now help others.",
+      "Built the team's operating model (system map, one rule per tool, ownership, SOPs) and trained the team and its Director on it.",
+    ],
+    tools: ["Coaching", "Loom", "SOPs", "Notion"],
   },
   {
     id: "integrations",
@@ -163,28 +181,30 @@ export const principles = [
   },
 ];
 
+// Mirrors the approved résumé, minus the claims José asked to keep off the site.
 export const experience = {
   role: profile.title,
   company: profile.employer,
   context: profile.employerContext,
   dates: profile.dates,
   points: [
-    "Designed the knowledge, routing, identity checks, and handoff rules for a production Intercom Fin agent.",
-    "Shipped a live MCP support assistant (Cloudflare Worker, Anthropic API, Notion MCP) that answers support questions from the knowledge base.",
-    "Runs Claude as daily work infrastructure: 66 custom skills, multi-agent workflows with human approval on irreversible steps, and a prompt eval loop backed by a 28-scenario red-team suite.",
-    "Current author of record on 178 of 299 published Help Center articles; shipped 161 link fixes across 82 articles to zero, with a linter and runbook.",
-    "Handled 12,000+ assigned support conversations from 2022 to 2026; joined colleagues' conversations as the senior backstop 287 times in 2025, up from 24 in 2022.",
-    "Built the team's operating model (system map, one rule per tool, ownership, SOPs), trained the team and its Director on it, and led the move to Intercom.",
-    "Runs a weekly customer workshop and a biweekly enterprise session, 36 sessions solo since April 2026; prepared a brokerage corporate trainer who serves about 2,000 agents.",
+    "Weekly delivery: run the Thursday program end to end, from invitations and agenda to demo, Q&A, recording, and follow-up, plus an every-other-week session for enterprise and A/B-tier accounts whose takeaways roll out as best practice across 20+ brokerage labels; 36 sessions hosted solo since April 2026.",
+    "Relaunch: the April 2026 relaunch of the recurring series drew 160 registrants and 62 attendees, 3.6x to 5.1x the prior baseline, with returning participants.",
+    "Presenters and trainers: named trainer on 14+ brokerage trainings in 2026, scheduled by another team; prepared a corporate brokerage trainer who serves about 2,000 agents to teach independently; many regular attendees became advocates who train their own offices.",
+    "New-hire coaching: brought new teammates from first tickets to independence with a repeatable method and Loom walkthroughs; teammates coached in 2024 now help others.",
+    "Operating system: built run-of-show documents, 154 workshop artifacts, checklists, and SOPs, plus the team's operating model and the training on it for the team and its Director.",
+    "Feedback into content: redesigned follow-on workshops into narrower, more tactical sessions after attendee feedback, and updates training with Product and Engineering as the product changes.",
+    "AI that lowers the barrier: Claude and Notion workflows with human review for prep, intake, and reporting (66 custom skills); shared ready-to-use skills with the team and brought teammates new to or wary of AI in through small, low-risk wins.",
+    "Calm when plans change: the senior escalation point for the most charged customer situations, across 12,000+ assigned support conversations since 2022.",
   ],
 };
 
 export const earlierExperience = [
-  "AT&T, Sales and Service Representative (2010 to 2012): built response templates adopted by 12 colleagues, then 500+; ranked #1 in sales from a service role",
-  "FishBowl360, Sales Manager and Virtual Tour Photographer (2012 to 2016)",
+  "Starbucks, Shift Supervisor and Learning Coach (2006 to 2009): onboarded and coached new partners in store; training notes and SOPs adopted at the district level",
+  "AT&T, Sales and Service Representative (2010 to 2012): response templates adopted by 12 colleagues, then 500+",
   "Peet's Coffee, Barista (2016 to 2019)",
-  "Starbucks, Shift Supervisor and Learning Coach (2006 to 2009)",
-  "Special Education Paraeducator; AmeriCorps Head Start Aide",
+  "FishBowl360, Sales Manager and Virtual Tour Photographer (2012 to 2016)",
+  "Special Education Paraeducator and AmeriCorps Head Start Support Aide: in-classroom teaching support",
 ];
 
 export const education =
@@ -205,7 +225,7 @@ export const toolkit = [
 ];
 
 export const lookingFor = {
-  roles: ["AI deployment", "Support operations", "Technical enablement", "AI operations"],
+  roles: ["Onboarding and live programs", "Technical enablement", "Support operations", "AI deployment"],
   // Write this in your own words. Anthropic's candidate AI guidance asks for a
   // candidate-authored first draft, and your Notion rules say the same. It is
   // only shown when filled in.

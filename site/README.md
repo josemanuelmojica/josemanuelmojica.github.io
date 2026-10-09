@@ -22,4 +22,4 @@ npm run cf:dry  # validate the Worker config without deploying
 2. Worker name `mojicagarcia`, root directory `site`, build command `npm run build`, deploy command `npx wrangler deploy`, variable `NODE_VERSION=22`.
 3. If the domain was bought outside Cloudflare, add it as a site in Cloudflare and switch the registrar's nameservers to the two Cloudflare gives you.
 4. Worker → **Settings** → **Domains & Routes** → **Add** → **Custom domain** → `mojicagarcia.com` (and `www.mojicagarcia.com`). Or uncomment `routes` in `wrangler.jsonc`.
-5. **Email Routing** for the domain: forward `jm@mojicagarcia.com` to your inbox (the address on your résumés), if that mailbox isn't already set up.
+5. **Email Routing** for the domain: `jm@mojicagarcia.com` (the address on your résumés) forwards to your inbox; keep that forwarding rule in place.
