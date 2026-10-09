@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowUpRight, Code2, FileText, Mail } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Code2, FileText, Mail } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { Contour } from "@/components/contour";
 import { credentials, experience, lookingFor, principles, profile, proof, toolkit, work } from "@/lib/profile";
+import { caseStudies } from "@/lib/case-studies";
 
 function SectionHead({ id, eyebrow, title, italic }: { id: string; eyebrow: string; title: string; italic: string }) {
   return (
@@ -33,13 +34,43 @@ export default function Home() {
               {profile.summary}
             </p>
             <div className="rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: "0.24s" }}>
-              <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
+              <a href="#lab" className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue px-5 font-medium text-paper hover:bg-deep">
+                Try the work <ArrowRight className="size-4" aria-hidden="true" />
+              </a>
+              <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <Mail className="size-4" aria-hidden="true" /> Email me
               </a>
               <Link href="/resume/" className="inline-flex h-12 items-center gap-2 rounded-lg border bg-paper px-5 font-medium hover:border-blue hover:text-blue">
                 <FileText className="size-4" aria-hidden="true" /> Résumé
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* Lab: working case studies */}
+        <section aria-labelledby="lab-title" id="lab" className="border-b bg-wash/40">
+          <div className="mx-auto max-w-6xl px-5 py-24 md:px-8">
+            <SectionHead id="lab-title" eyebrow="Case studies you can run" title="Don't take my word for it." italic="Try the method." />
+            <p className="mt-5 max-w-2xl text-graphite">
+              Three problems from my work, each written up and paired with a small working version you can use right here. Everything runs in your browser; nothing you paste is sent anywhere.
+            </p>
+            <ul className="mt-12 grid gap-5 md:grid-cols-3">
+              {caseStudies.map((study, i) => (
+                <li key={study.slug}>
+                  <Link href={`/work/${study.slug}/`} className="group flex h-full flex-col rounded-2xl border bg-paper p-6 transition-colors hover:border-blue">
+                    <span className="eyebrow"><span className="tabular-nums text-blue">0{i + 1}</span> · {study.kicker}</span>
+                    <span className="mt-3 block text-2xl leading-[1.1] tracking-tight">
+                      {study.title.replace(/:$/, "")}
+                    </span>
+                    <span className="em mt-1 block text-lg text-deep">{study.italic}</span>
+                    <span className="mt-4 block flex-1 text-graphite">{study.oneLine}</span>
+                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-blue">
+                      Read and try it <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -60,7 +91,7 @@ export default function Home() {
 
         {/* Work */}
         <section aria-labelledby="work-title" id="work" className="mx-auto max-w-6xl px-5 py-24 md:px-8">
-          <SectionHead id="work-title" eyebrow="Selected work" title="Systems I built" italic="and still run." />
+          <SectionHead id="work-title" eyebrow="More of the work" title="Systems I built" italic="and still run." />
           <ol className="mt-14 space-y-6">
             {work.map((item, i) => (
               <li key={item.id}>
@@ -78,11 +109,15 @@ export default function Home() {
                         <li key={tool} className="rounded-full border px-3 py-1 text-xs text-graphite">{tool}</li>
                       ))}
                     </ul>
-                    {item.link && (
+                    {item.link && (item.link.href.startsWith("/") ? (
+                      <Link href={item.link.href} className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-blue underline-offset-4 hover:underline">
+                        {item.link.label} <ArrowRight className="size-4" aria-hidden="true" />
+                      </Link>
+                    ) : (
                       <a href={item.link.href} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-blue underline-offset-4 hover:underline">
                         {item.link.label} <ArrowUpRight className="size-4" aria-hidden="true" /><span className="sr-only">(opens in a new tab)</span>
                       </a>
-                    )}
+                    ))}
                   </div>
                   <ul className="space-y-4 border-t pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10">
                     {item.points.map((point) => (
@@ -159,7 +194,7 @@ export default function Home() {
           <div className="relative mx-auto max-w-6xl px-5 py-24 md:px-8">
             <p className="eyebrow">What I&apos;m looking for</p>
             <h2 id="contact-title" className="mt-3 max-w-3xl text-[clamp(2.2rem,5vw,4rem)] leading-[1] tracking-[-0.035em]">
-              Let&apos;s put Claude <span className="em text-deep">to work, properly.</span>
+              Let&apos;s talk about <span className="em text-deep">what your team needs.</span>
             </h2>
             <ul className="mt-8 flex flex-wrap gap-2" aria-label="Roles">
               {lookingFor.roles.map((r) => (

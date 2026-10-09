@@ -9,7 +9,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const out = path.join(root, "out");
 
 test("exports home, résumé, 404, and sitemap", async () => {
-  for (const file of ["index.html", "resume/index.html", "404.html", "sitemap.xml", "robots.txt"]) {
+  for (const file of ["index.html", "resume/index.html", "404.html", "sitemap.xml", "robots.txt",
+    "work/knowledge-linter/index.html", "work/privacy-gate/index.html", "work/import-preflight/index.html"]) {
     assert.ok((await stat(path.join(out, file))).isFile(), `${file} missing`);
   }
 });

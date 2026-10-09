@@ -2,8 +2,8 @@ import Link from "next/link";
 import { profile } from "@/lib/profile";
 
 const nav = [
-  { href: "/#work", label: "Work" },
-  { href: "/#approach", label: "Approach", wide: true },
+  { href: "/#lab", label: "Case studies" },
+  { href: "/#work", label: "Work", wide: true },
   { href: "/#experience", label: "Experience", wide: true },
   { href: "/#contact", label: "Contact" },
 ];

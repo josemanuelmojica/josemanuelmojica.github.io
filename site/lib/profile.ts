@@ -1,6 +1,7 @@
 // Every claim on the site lives here, so it can be reviewed and corrected in
-// one place. Primary source: José's approved Onboarding Program Manager résumé
-// (October 2026), plus claims from his other October résumés that the Notion
+// one place. The site is for any employer, not one company. Primary source:
+// José's approved résumé (October 2026), plus claims from his other October
+// résumés that the Notion
 // "Knowledge Architecture & Impact Standard" grades as usable. Public-site rules:
 // - numbers describe José's own output; company performance metrics stay off
 //   the public site (company scale, e.g. "100,000+ agents", is public context);
@@ -62,6 +63,7 @@ export const work: WorkItem[] = [
       "Closed a whole defect class: 161 link fixes across 82 articles, then a linter and runbook so it stays closed.",
     ],
     tools: ["Intercom Fin", "Help Center", "Conversation design", "Content audits"],
+    link: { href: "/work/knowledge-linter/", label: "Try the Knowledge Linter" },
   },
   {
     id: "claude-infrastructure",
@@ -78,6 +80,7 @@ export const work: WorkItem[] = [
       "Wrote the team's working guide for Claude and Wispr Flow.",
     ],
     tools: ["Claude", "Claude Code", "Cowork", "Skills", "MCP", "Linear", "Loom"],
+    link: { href: "/work/privacy-gate/", label: "Try the Privacy Gate" },
   },
   {
     id: "mcp-assistant",
@@ -225,9 +228,8 @@ export const toolkit = [
 ];
 
 export const lookingFor = {
-  roles: ["Onboarding and live programs", "Technical enablement", "Support operations", "AI deployment"],
-  // Write this in your own words. Anthropic's candidate AI guidance asks for a
-  // candidate-authored first draft, and your Notion rules say the same. It is
-  // only shown when filled in.
+  roles: ["AI operations", "Support operations", "Enablement and live programs", "Implementation and AI deployment"],
+  // Optional: a short note in your own words about the work you want next,
+  // written for any employer. It is only shown when filled in.
   note: "",
 };
