@@ -39,6 +39,7 @@
     "node_modules",
     "reference",
     "worker",
-    "platform"
+    "platform",
+    "site"
   ]
 }

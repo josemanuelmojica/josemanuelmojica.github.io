@@ -1,0 +1,31 @@
+{
+  // Cloudflare Workers configuration for mojicagarcia.com.
+  //
+  // `next build` writes a static export to ./out; this assets-only Worker
+  // serves it from the edge. public/_headers applies security headers.
+  //
+  // Workers Builds (dashboard) settings:
+  //   Worker name:     mojicagarcia (must match "name" below)
+  //   Root directory:  site
+  //   Build command:   npm run build
+  //   Deploy command:  npx wrangler deploy
+  //
+  // Custom domain: once mojicagarcia.com is a zone in this Cloudflare
+  // account, either add it under the Worker's Settings > Domains & Routes,
+  // or uncomment "routes" below so every deploy attaches it.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mojicagarcia",
+  "compatibility_date": "2026-08-11",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  // "routes": [
+  //   { "pattern": "mojicagarcia.com", "custom_domain": true },
+  //   { "pattern": "www.mojicagarcia.com", "custom_domain": true }
+  // ],
+  "observability": {
+    "enabled": true
+  }
+}
